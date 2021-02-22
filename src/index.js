@@ -4,8 +4,6 @@ import ReactDOM from "react-dom";
 import App from "./components/App.jsx";
 import playGame from "./phaser/scene";
 
-//console.log(App);
-
 export const config = {
   type: Phaser.AUTO,
   parent: "phaser",
