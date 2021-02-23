@@ -6,18 +6,18 @@ class playGame extends Phaser.Scene {
     super("PlayGame");
   }
   preload() {
-    this.load.image("Baby", CharlieBrown);
+    // this.load.image("Baby", CharlieBrown);
   }
   create() {
-    const baby = this.add.image(400, 150, "Baby");
-    this.tweens.add({
-      targets: baby,
-      y: 450,
-      duration: 2000,
-      ease: "Power2",
-      yoyo: true,
-      loop: -1
-    });
+    // const baby = this.add.image(400, 150, "Baby");
+    // this.tweens.add({
+    //   targets: baby,
+    //   y: 450,
+    //   duration: 2000,
+    //   ease: "Power2",
+    //   yoyo: true,
+    //   loop: -1
+    // });
   }
 }
 

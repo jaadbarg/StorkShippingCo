@@ -4,12 +4,13 @@ import ReactDOM from "react-dom";
 import App from "./components/App.jsx";
 import homeTrack from "./phaser/scene";
 import CharlieBrown from "./assets/CharlieBrown.jpg"
+import playGame from "./phaser/scene";
 
 export const config = {
   type: Phaser.AUTO,
   parent: "phaser",
   width: 800,
-  height: 600,
+  height: 800,
   scene: {
     preload: preload,
     create: create,
@@ -17,9 +18,9 @@ export const config = {
   }
 };
 
-var follower;
-var path;
-var graphics;
+let follower;
+let path;
+let graphics;
 
 function preload() {
   this.load.image("Baby", CharlieBrown);
@@ -27,40 +28,48 @@ function preload() {
 
 function create ()
 {
-  const baby = this.add.image(400, 150, "Baby");
-    graphics = this.add.graphics();
+  graphics = this.add.graphics();   
+  follower = { t: 0, vec: new Phaser.Math.Vector2() }; 
+    
+    // the path for our enemies
+    // parameters are the start x and y of our path
+    path = this.add.path(50, 800);
+    path.lineTo(50, 550);
+    path.lineTo(300, 550);
+    path.lineTo(300, 300);
+    path.lineTo(300, 300);
+    path.lineTo(500, 300);
+    path.ellipseTo(200, 100, 90, 270, true);
+    path.lineTo(600, 500);
+    path.ellipseTo(150, 150, 0, 360, false, 315);
+    path.lineTo(500, 605);
 
-    follower = { t: 0, vec: new Phaser.Math.Vector2() };
-
-    //  Path starts at 100x100
-    path = new Phaser.Curves.Path(100, 100);
-
-    path.lineTo(500, 200);
-    path.lineTo(200, 300);
-    path.lineTo(400, 500);
-
-    this.tweens.add({
-        targets: follower,
-        t: 1,
-        ease: 'Sine.easeInOut',
-        duration: 4000,
-        yoyo: true,
-        repeat: -1
+    var placeHolder = this.tweens.add({
+      targets: follower,
+      t: 1,
+      ease: 'Sine.easeInOut',
+      duration: 30000,
+      yoyo: false,
+      repeat: -1
     });
+
 }
 
 function update ()
 {
-    graphics.clear();
 
-    graphics.lineStyle(2, 0xffffff, 1);
+  graphics.clear();
+  graphics.lineStyle(2, 0xffffff, 1);
 
-    path.draw(graphics);
+  path.draw(graphics);
 
-    path.getPoint(follower.t, follower.vec);
+  path.getPoint(follower.t, follower.vec);
 
-    graphics.fillStyle(0xff0000, 1);
-    graphics.fillCircle(follower.vec.x, follower.vec.y, 12);
+  graphics.fillStyle(0xfff000, 1);
+  graphics.fillCircle(follower.vec.x, follower.vec.y, 32);
+  var newBaby = this.add.image(follower.vec.x, follower.vec.y, "Baby");
+  newBaby.setScale(0.4);
+  setTimeout(() => {  newBaby.destroy(); }, 1);
 }
 
 var game = new Phaser.Game(config);
