@@ -13,10 +13,10 @@ const Home = () => {
                     <button class="button title">Play</button>
                 </div>
                 <div class="column">
-                    <button class="button title">How to play</button>
+                    <button class="button title">Instructions</button>
                 </div>
                 <div class="column">
-                    <button class="button title">Additional resources</button>
+                    <button class="button title">Additional Resources</button>
                 </div>
             </div>
         </div>
