@@ -1,18 +1,17 @@
 import Phaser from "phaser";
-import logoImg from "../assets/logo.png";
+import CharlieBrown from "../assets/CharlieBrown.jpg"
 
 class playGame extends Phaser.Scene {
   constructor() {
     super("PlayGame");
   }
   preload() {
-    this.load.image("logo", logoImg);
+    this.load.image("Baby", CharlieBrown);
   }
   create() {
-    const logo = this.add.image(400, 150, "logo");
-
+    const baby = this.add.image(400, 150, "Baby");
     this.tweens.add({
-      targets: logo,
+      targets: baby,
       y: 450,
       duration: 2000,
       ease: "Power2",

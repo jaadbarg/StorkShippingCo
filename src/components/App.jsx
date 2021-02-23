@@ -1,13 +1,12 @@
 import React from "react";
+import '../css/App.sass';
+import Home from "./Home";
 
 export default class App extends React.Component {
 	render() {
 		return (
 			<div style={{ textAlign: "center" }}>
-				<h1>Hello World </h1>
-				<p>Muyan check</p>
-				<p>Evan check</p>
-				<p>Daniel check 1</p>
+				<Home />
 			</div>
 		);
 	}
