@@ -5,18 +5,20 @@ const Home = () => {
     return (
         <div>
             <div class="section">
-                <h1 class="title has-text-primary">Stork Shipping Co.</h1>
-                <div class="subtitle has-text-primary">"9 month shipping, guaranteed!"</div>
+                <div class="title has-text-primary is-size-1">Stork Shipping Co.</div>
+                <div class="subtitle has-text-primary is-size-2">"9 month shipping, guaranteed!"</div>
             </div>
             <div class="columns">
                 <div class="column">
+                </div>
+                <div class="column">
                     <button class="button title">Play</button>
-                </div>
-                <div class="column">
+                    <div></div>
                     <button class="button title">Instructions</button>
+                    <div></div>
+                    <button class="button title">Additional Resources</button>
                 </div>
                 <div class="column">
-                    <button class="button title">Additional Resources</button>
                 </div>
             </div>
         </div>

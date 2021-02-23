@@ -37,7 +37,6 @@ function create ()
     path.lineTo(50, 550);
     path.lineTo(300, 550);
     path.lineTo(300, 300);
-    path.lineTo(300, 300);
     path.lineTo(500, 300);
     path.ellipseTo(200, 100, 90, 270, true);
     path.lineTo(600, 500);
@@ -65,11 +64,23 @@ function update ()
 
   path.getPoint(follower.t, follower.vec);
 
-  graphics.fillStyle(0xfff000, 1);
-  graphics.fillCircle(follower.vec.x, follower.vec.y, 32);
+  graphics.fillStyle(0xff0000, 1);
+  graphics.fillCircle(follower.vec.x, follower.vec.y, 1);
+  fillHazards();
   var newBaby = this.add.image(follower.vec.x, follower.vec.y, "Baby");
   newBaby.setScale(0.4);
   setTimeout(() => {  newBaby.destroy(); }, 1);
+}
+
+function fillHazards() {
+  graphics.fillCircle(50, 550, 30);
+  graphics.fillStyle(0x07e000, 1);
+  graphics.fillCircle(300, 550, 30);
+  graphics.fillCircle(300, 300, 30);
+  graphics.fillStyle(0xff0000, 1);
+  graphics.fillCircle(500, 300, 30);
+  graphics.fillStyle(0x07e000, 1);
+  graphics.fillCircle(600, 500, 30);
 }
 
 var game = new Phaser.Game(config);
