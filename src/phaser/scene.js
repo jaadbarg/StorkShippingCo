@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import CharlieBrown from "../assets/CharlieBrown.jpg"
+import Baby1 from "../assets/baby1.jpg"
 
 let graphics;
 let path;
@@ -14,7 +14,7 @@ class playGame extends Phaser.Scene {
     super("PlayGame");
   }
   preload() {
-    this.load.image("Baby", CharlieBrown);
+    this.load.image("Baby", Baby1);
   }
   create() {
     graphics = this.add.graphics();
