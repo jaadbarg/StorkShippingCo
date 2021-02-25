@@ -1,16 +1,12 @@
 import Phaser from "phaser";
 import CharlieBrown from "../assets/CharlieBrown.jpg"
 
-let toddler1;
 let graphics;
 let path;
-let placeHolder;
 let spawnEvent;
 
-let toddlerList;
-let graphicsList;
-let pathList;
-let placeHolderList;
+let toddlerList = [];
+let placeHolderList = [];
 
 
 class playGame extends Phaser.Scene {
@@ -21,27 +17,19 @@ class playGame extends Phaser.Scene {
     this.load.image("Baby", CharlieBrown);
   }
   create() {
-    toddler1 = this.add.image(50, 800, "Baby").setScale(0.4);
     graphics = this.add.graphics();
-    placeHolder = { t: 0, vec: new Phaser.Math.Vector2() }; 
-    //spawnEvent = this.time.addEvent({ delay: 3000, callback: onSpawn, callbackScope: this, repeat: 10})
+    spawnEvent = this.time.addEvent({ delay: 3000, callback: this.onSpawn, callbackScope: this, repeat: 10})
 
     this.createTrack();
 
     graphics.lineStyle(2, 0xffffff, 1);
     path.draw(graphics);
 
-    let marker = this.tweens.add({
-      targets: placeHolder,
-      t: 1,
-      ease: 'Sine.easeInOut',
-      duration: 30000,
-      yoyo: false,
-      repeat: -1
-    });
   }
   update() {
-    this.moveToddler(toddler1, placeHolder);
+    for(let i = 0; i < toddlerList.length; i++) {
+      this.moveToddler(toddlerList[i], placeHolderList[i]);
+    }
   }
   createTrack() {
     path = this.add.path(50, 800);
@@ -57,7 +45,20 @@ class playGame extends Phaser.Scene {
     toddler.y = placeHolder.vec.y;
   }
   onSpawn() {
+    let toddler = this.add.image(50, 800, "Baby").setScale(0.4);
+    let placeHolder = { t: 0, vec: new Phaser.Math.Vector2() };
 
+    let marker = this.tweens.add({
+      targets: placeHolder,
+      t: 1,
+      ease: 'Sine.easeInOut',
+      duration: 30000,
+      yoyo: false,
+      repeat: -1
+    });
+
+    toddlerList.push(toddler);
+    placeHolderList.push(placeHolder);
   }
 }
 
