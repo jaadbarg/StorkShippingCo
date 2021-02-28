@@ -1,5 +1,8 @@
 import Phaser from "phaser";
 import baby1 from "../assets/baby1.png"
+import grasstile from "../assets/grasstile.png"
+import pathtile from "../assets/pathtile.png"
+import map1 from "../assets/map1.json"
 
 let graphics;
 let path;
@@ -15,29 +18,47 @@ class playGame extends Phaser.Scene {
   }
   preload() {
     this.load.image("Baby", baby1);
+    this.load.image('grass', grasstile);
+    this.load.image('path', pathtile);
+    this.load.tilemapTiledJSON('map', map1);
   }
   create() {
+    this.createMap();
+
     graphics = this.add.graphics();
-    spawnEvent = this.time.addEvent({ delay: 3000, callback: this.onSpawn, callbackScope: this, repeat: 10})
+    spawnEvent = this.time.addEvent({ delay: 4000, callback: this.onSpawn, callbackScope: this, repeat: 10 })
 
     this.createTrack();
 
     graphics.lineStyle(2, 0xffffff, 1);
-    path.draw(graphics);
+    //path.draw(graphics);
 
   }
   update() {
-    for(let i = 0; i < toddlerList.length; i++) {
+    for (let i = 0; i < toddlerList.length; i++) {
       this.moveToddler(toddlerList[i], placeHolderList[i]);
     }
   }
   createTrack() {
-    path = this.add.path(50, 800);
-    path.lineTo(50, 550);
-    path.lineTo(300, 550);
-    path.lineTo(300, 150);
-    path.lineTo(700, 230);
-    path.lineTo(700, 800);
+    path = this.add.path(800, 40);
+    path.lineTo(550, 40);
+    path.lineTo(550, 275);
+    path.lineTo(725, 275);
+    path.lineTo(725, 525);
+    path.lineTo(50, 525);
+    path.lineTo(50, 50);
+    path.lineTo(300, 50);
+    path.lineTo(300, 280);
+    path.lineTo(138, 280);
+    path.lineTo(138, 420);
+    path.lineTo(422, 420);
+    path.lineTo(422, 100);
+  }
+  createMap() {
+    let map = this.make.tilemap({key: "map"});
+    let grassTile = map.addTilesetImage('grass', 'grass');
+    let pathTile = map.addTilesetImage('path', 'path');
+    map.createLayer("Tile Layer 1", [grassTile, pathTile]).setScale(0.312);
   }
   moveToddler(toddler, placeHolder) {
     path.getPoint(placeHolder.t, placeHolder.vec);
@@ -52,7 +73,7 @@ class playGame extends Phaser.Scene {
       targets: placeHolder,
       t: 1,
       ease: 'Sine.easeInOut',
-      duration: 30000,
+      duration: 40000,
       yoyo: false,
       repeat: -1
     });
