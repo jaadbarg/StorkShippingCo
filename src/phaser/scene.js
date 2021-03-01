@@ -66,7 +66,7 @@ class playGame extends Phaser.Scene {
     toddler.y = placeHolder.vec.y;
   }
   onSpawn() {
-    let toddler = this.add.image(50, 800, "Baby").setScale(0.4);
+    let toddler = this.add.image(50, 800, "Baby").setScale(0.15);
     let placeHolder = { t: 0, vec: new Phaser.Math.Vector2() };
 
     let marker = this.tweens.add({
