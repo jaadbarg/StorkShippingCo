@@ -4,62 +4,73 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
-	mode: "development",
-	devtool: "eval-source-map",
-	entry: "./src/index.js", //do we need this?
-	output: {
-		path: path.resolve("dist"),
-		filename: "index_bundle.js",
-	},
-	module: {
-		rules: [
-			{
-				test: /\.s[ac]ss$/i,
-				use: [
-				  // Creates `style` nodes from JS strings
-				  "style-loader",
-				  // Translates CSS into CommonJS
-				  "css-loader",
-				  // Compiles Sass to CSS
-				  "sass-loader",
-				],
-			  },
-			{
-				test: /\.css$/,
-				use: [{ loader: "style-loader" }, { loader: "css-loader" }],
-			},
-			{
-				test: /\.js$/,
-				exclude: /node_modules/,
-				use: {
-					loader: "babel-loader",
-				},
-			},
-			{
-				test: /\.jsx?$/,
-				exclude: /node_modules/,
-				use: "babel-loader",
-			},
-			{
-				test: [/\.vert$/, /\.frag$/],
-				use: "raw-loader",
-			},
-			{
-				test: /\.(gif|png|jpe?g|svg|xml)$/i,
-				use: "file-loader",
-			},
-		],
-	},
-	plugins: [
-		new CleanWebpackPlugin(),
-		new webpack.DefinePlugin({
-			CANVAS_RENDERER: JSON.stringify(true),
-			WEBGL_RENDERER: JSON.stringify(true),
-		}),
-		new HtmlWebpackPlugin({
-			template: "./index.html",
-			filename: "index.html",
-			inject: "body",
-		}),
-	],
+  mode: "development",
+  devtool: "eval-source-map",
+  entry: "./src/index.js", //do we need this?
+  output: {
+    path: path.resolve("dist"),
+    filename: "index_bundle.js",
+  },
+  module: {
+    rules: [
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          // Creates `style` nodes from JS strings
+          "style-loader",
+          // Translates CSS into CommonJS
+          "css-loader",
+          // Compiles Sass to CSS
+          "sass-loader",
+        ],
+      },
+      {
+        test: /\.css$/,
+        use: [{ loader: "style-loader" }, { loader: "css-loader" }],
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+        },
+      },
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: "babel-loader",
+      },
+      {
+        test: [/\.vert$/, /\.frag$/],
+        use: "raw-loader",
+      },
+      {
+        test: /\.(gif|png|jpe?g|svg|xml)$/i,
+        use: "file-loader",
+      },
+      {
+        test: /\.(mp3|wav|wma|ogg)$/,
+        use: {
+          loader: "file-loader",
+          options: {
+            name: "[name].[contenthash].[ext]",
+            outputPath: "assets/audio/",
+            publicPath: "assets/audio/",
+          },
+        },
+      },
+    ],
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new webpack.DefinePlugin({
+      CANVAS_RENDERER: JSON.stringify(true),
+      WEBGL_RENDERER: JSON.stringify(true),
+    }),
+    new HtmlWebpackPlugin({
+      template: "./index.html",
+      filename: "index.html",
+      inject: "body",
+    }),
+  ],
 };
