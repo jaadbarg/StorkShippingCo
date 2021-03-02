@@ -34,7 +34,7 @@ class gameScene extends Phaser.Scene {
     this.createTrack();
 
     graphics.lineStyle(2, 0xffffff, 1);
-    path.draw(graphics);
+    //path.draw(graphics);
 
   }
   update() {
