@@ -2,22 +2,37 @@ import Phaser from "phaser";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App.jsx";
-import homeTrack from "./phaser/scene";
-import CharlieBrown from "./assets/CharlieBrown.jpg"
-import playGame from "./phaser/scene";
-import createMap from "./phaser/map";
+import GameScene from "./phaser/GameScene.js";
+import TitleScene from "./phaser/TitleScene.js";
+import ResourceScene from "./phaser/ResourceScene.js";
+import InstructScene from "./phaser/InstructScene.js";
 
+// import PreloadScene from "./phaser/PreloadScene.js";
+
+// Initializing game scenes
+// let preloadScene = new PreloadScene();
+let gameScene = new GameScene();
+let titleScene = new TitleScene();
+
+let resourceScene = new ResourceScene();
+let instructScene = new InstructScene();
+
+//set up phaser config
 export const config = {
   type: Phaser.AUTO,
-  parent: "phaser",
   width: 800,
   height: 600,
-  scene: playGame
 };
+let game = new Phaser.Game(config);
 
-var game = new Phaser.Game(config);
+//load scenes
+// game.scene.add("preloadScene", preloadScene); this isn't loading in for some reason, even the constructor doesn't get initiated to console.log
+game.scene.add("titleScene", titleScene);
+game.scene.add("gameScene", gameScene);
 
-ReactDOM.render(
-  <App />,
-  document.getElementById("root") || document.createElement("div")
-);
+game.scene.add("resourceScene", resourceScene);
+game.scene.add("instructScene", instructScene);
+
+// start the title scene
+game.scene.start("titleScene");
+
