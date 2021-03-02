@@ -6,6 +6,8 @@ class PreloadScene extends Phaser.Scene {
   }
 
   preload() {
+    const fakeLoadSpeed = 150; //our game is super tiny lol it doesnt have any assets to load but we are pretending it does.
+
     this.graphics = this.add.graphics();
     this.newGraphics = this.add.graphics();
     let progressBar = new Phaser.Geom.Rectangle(200, 200, 400, 50);
@@ -22,7 +24,7 @@ class PreloadScene extends Phaser.Scene {
       fill: "#FFF",
     });
 
-    for (let i = 0; i < 300; i++) {
+    for (let i = 0; i < fakeLoadSpeed; i++) {
       this.load.image("background_" + i, fakeLoadAsset);
     }
 
