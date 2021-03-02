@@ -22,8 +22,8 @@ class TitleScene extends Phaser.Scene {
     };
 
     let themusic = this.sound.add("smoov", { loop: true });
-    this.add.image(400, 300, "background");
     themusic.play();
+    this.add.image(400, 300, "background");
 
     let title = this.add.text(100, 100, "Stork Shipping Co.", { ...fontFam });
     let subtitle = this.add.text(100, 150, "9 month shipping, guaranteed!", {
