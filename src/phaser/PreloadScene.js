@@ -1,3 +1,5 @@
+import fakeLoadAsset from "../assets/logo.png";
+
 class PreloadScene extends Phaser.Scene {
   constructor() {
     super({ key: "preloadScene" });
@@ -20,8 +22,8 @@ class PreloadScene extends Phaser.Scene {
       fill: "#FFF",
     });
 
-    for (let i = 0; i < 30; i++) {
-      this.load.image("background_" + i, "../assets/logo.png");
+    for (let i = 0; i < 300; i++) {
+      this.load.image("background_" + i, fakeLoadAsset);
     }
 
     this.load.on("progress", this.updateBar, {
@@ -32,7 +34,7 @@ class PreloadScene extends Phaser.Scene {
     this.load.on("complete", this.complete, { scene: this.scene });
   }
 
-  updateBar() {
+  updateBar(percentage) {
     this.newGraphics.clear();
     this.newGraphics.fillStyle(0x3587e2, 1);
     this.newGraphics.fillRectShape(
@@ -41,11 +43,11 @@ class PreloadScene extends Phaser.Scene {
 
     percentage = percentage * 100;
     this.loadingText.setText("Loading: " + percentage.toFixed(2) + "%");
-    console.log("P:" + percentage);
+    // console.log("P:" + percentage);
   }
 
   complete() {
-    console.log("COMPLETE!");
+    // console.log("COMPLETE!");
     this.scene.start("titleScene");
   }
 }

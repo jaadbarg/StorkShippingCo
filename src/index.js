@@ -7,10 +7,10 @@ import TitleScene from "./phaser/TitleScene.js";
 import ResourceScene from "./phaser/ResourceScene.js";
 import InstructScene from "./phaser/InstructScene.js";
 
-// import PreloadScene from "./phaser/PreloadScene.js";
+import PreloadScene from "./phaser/PreloadScene.js";
 
 // Initializing game scenes
-// let preloadScene = new PreloadScene();
+let preloadScene = new PreloadScene();
 let gameScene = new GameScene();
 let titleScene = new TitleScene();
 
@@ -26,7 +26,7 @@ export const config = {
 let game = new Phaser.Game(config);
 
 //load scenes
-// game.scene.add("preloadScene", preloadScene); this isn't loading in for some reason, even the constructor doesn't get initiated to console.log
+game.scene.add("preloadScene", preloadScene); //this isn't loading in for some reason, even the constructor doesn't get initiated to console.log
 game.scene.add("titleScene", titleScene);
 game.scene.add("gameScene", gameScene);
 
@@ -34,5 +34,4 @@ game.scene.add("resourceScene", resourceScene);
 game.scene.add("instructScene", instructScene);
 
 // start the title scene
-game.scene.start("titleScene");
-
+game.scene.start("preloadScene");
