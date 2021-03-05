@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import background from "../assets/houseFake.jpg";
+import background from "../assets/logo.png";
 import smoov from "../assets/smoov.mp3";
 
 class TitleScene extends Phaser.Scene {
@@ -25,14 +25,9 @@ class TitleScene extends Phaser.Scene {
     themusic.play();
     this.add.image(400, 300, "background");
 
-    let title = this.add.text(100, 100, "Stork Shipping Co.", { ...fontFam });
-    let subtitle = this.add.text(100, 150, "9 month shipping, guaranteed!", {
-      ...fontFam,
-    });
-
-    let startBtn = this.add.text(100, 300, "Start", { ...fontFam });
-    let instructBtn = this.add.text(100, 350, "Instructions", { ...fontFam });
-    let resourceBtn = this.add.text(100, 400, "Resources", { ...fontFam });
+    let startBtn = this.add.text(350, 500, "Start", { ...fontFam });
+    let instructBtn = this.add.text(50, 550, "Instructions", { ...fontFam });
+    let resourceBtn = this.add.text(550, 550, "Resources", { ...fontFam });
 
     // let muteBtn = this.add.text(700, 100, "Mute", { ...fontFam });
     // muteBtn.setInteractive({ useHandCursor: true });
