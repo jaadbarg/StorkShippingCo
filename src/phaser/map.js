@@ -24,7 +24,7 @@ class createMap extends Phaser.Scene {
     let grassTile = map.addTilesetImage("grass", "grass");
     let pathTile = map.addTilesetImage("path", "path");
     map.createLayer("Tile Layer 1", [grassTile, pathTile]).setScale(0.312);
-
+  
     //this.add.image(200, 200, "baby")
 
     this.createTrack();
