@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import background from "../assets/menu.jpg";
+import background from "../assets/logo.png";
 
 class ResourceScene extends Phaser.Scene {
   constructor() {
