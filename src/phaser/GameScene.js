@@ -8,13 +8,16 @@ import water from "../assets/openwater.png"
 import house from "../assets/house.png";
 import gate from "../assets/gate.png";
 import map from "../assets/map.png";
+import boundary from "../assets/boundary.png"
 
-let graphics;
-let path;
-let spawnEvent;
-
-let toddlerList = [];
 let hazardGroup;
+let spawnEvent;
+let toddlerList = [];
+let boundaryList = [];
+let directionList = [];
+
+let velocityConstant = 50;
+let accelerationConstant = 40;
 
 class gameScene extends Phaser.Scene {
   constructor() {
@@ -31,17 +34,15 @@ class gameScene extends Phaser.Scene {
     this.load.image('water', water)
     this.load.image('house', house);
     this.load.image("gate", gate);
+    this.load.image("boundary", boundary)
   }
   create() {
 
     //this.createMap(); hold on to this (Evan)
     this.add.image(400, 300, 'map').setScale(1.3); //not sure if scale exactly fits window
-    graphics = this.add.graphics();
-    this.add.image(420, 90, 'house').setScale(0.1);
-    this.add.image(175, 170, 'water').setScale(0.25);
-    this.add.image(345, 370, 'water').setScale(0.25);
-    this.add.image(630, 460, 'water').setScale(0.25);
 
+    this.createBoundary();
+    this.createStaticImages();
     this.createHazards();
 
     this.onSpawn();
@@ -52,77 +53,35 @@ class gameScene extends Phaser.Scene {
       repeat: 10,
     });
 
-    this.createTrack();
-
-    graphics.lineStyle(2, 0xffffff, 1);
-    //path.draw(graphics);
-
   }
   update() {
-    for (let i = 0; i < toddlerList.length; i++) {
-      this.moveToddler(toddlerList[i]);
-    }
+    // max of 10 children on the track
   }
-  moveToddler(i) {
-    if(Math.round(i.x) == 545 && Math.round(i.y) == 40) {
-      i.setVelocityX(0);
-      i.setVelocityY(35);
-      i.setAcceleration(0, 5);
-    } else if ((i.x > 544 && i.x < 546) && (i.y > 280 && i.y < 282)) {
-      i.setVelocityX(35);
-      i.setVelocityY(0);
-      i.setAcceleration(5, 0);
-      i.setFlipX(false);
-    } else if (Math.round(i.x) == 735 && (i.y > 280 && i.y < 282)) {
-      i.setVelocityX(0);
-      i.setVelocityY(35);
-      i.setAcceleration(0, 5);
-    } else if ((i.x > 734 && i.x < 736) && (i.y > 520 && i.y < 522)) {
-      i.setVelocityX(-35);
-      i.setVelocityY(0);
-      i.setAcceleration(-10, 0);
-      i.setFlipX(true);
-    } else if ((i.x > 63 && i.x < 67) && (i.y > 519 && i.y < 523)) {
-      i.setVelocityX(0);
-      i.setVelocityY(-35);
-      i.setAcceleration(0, -5);
-    } else if ((i.x > 63 && i.x < 67) && (i.y > 39 && i.y < 41)) {
-      i.setVelocityX(35);
-      i.setVelocityY(0);
-      i.setAcceleration(0, 0);
-      i.setFlipX(false);
-    } else if ((i.x > 298 && i.x < 302) && (i.y > 39 && i.y < 41)) {
-      i.setVelocityX(0);
-      i.setVelocityY(35);
-      i.setAcceleration(0, 10);
-    } else if ((i.x > 298 && i.x < 302) && (i.y > 278 && i.y < 284)) {
-      i.setVelocityX(-35);
-      i.setVelocityY(0);
-      i.setAcceleration(-5, 0);
-      i.setFlipX(true);
-    } else if ((i.x > 135 && i.x < 143) && (i.y > 278 && i.y < 284)) {
-      i.setVelocityX(0);
-      i.setVelocityY(35);
-      i.setAcceleration(0, 5);
-    } else if ((i.x > 135 && i.x < 143) && (i.y > 439 && i.y < 443)) {
-      i.setVelocityX(35);
-      i.setVelocityY(0);
-      i.setAcceleration(5, 0);
-      i.setFlipX(false);
-    } else if ((i.x > 419 && i.x < 425) && (i.y > 439 && i.y < 443)) {
-      i.setVelocityX(0);
-      i.setVelocityY(-35);
-      i.setAcceleration(0, -5);
-    } else if ((i.x > 419 && i.x < 425) && (i.y > 96 && i.y < 104)) {
-      i.setVelocityX(0);
-      i.setVelocityY(0);
-      i.setVisible(false);
-      i.body.setEnable(false);
-      i.setAcceleration(0, 0);
-    }
+  createStaticImages(){
+    this.add.image(420, 90, 'house').setScale(0.1);
+    this.add.image(175, 170, 'water').setScale(0.25);
+    this.add.image(345, 370, 'water').setScale(0.25);
+    this.add.image(630, 460, 'water').setScale(0.25);
   }
-  createHazardImages(x, y, type, scale) {
-    this.add.image(x, y, type).setScale(scale);
+  createBoundary() {
+    this.addBoundary(505, 45, "down");
+    this.addBoundary(545, 321, "right");
+    this.addBoundary(775, 281, "down");
+    this.addBoundary(735, 561, "left");
+    this.addBoundary(0, 521, "up");
+    this.addBoundary(65, 0, "right");
+    this.addBoundary(340, 40, "down");
+    this.addBoundary(300, 321, "left");
+    this.addBoundary(99, 281, "down");
+    this.addBoundary(139, 481, "right");
+    this.addBoundary(462, 441, "up");
+    this.addBoundary(422, 60, "void");
+  }
+  addBoundary(x, y, direction) {
+    let boundary = this.physics.add.image(x, y, "boundary").setScale(0.02).setVisible(false);
+    boundary.setPushable(false);
+    boundaryList.push(boundary);
+    directionList.push(direction);
   }
   createHazards() {
     hazardGroup = this.physics.add.group();
@@ -138,25 +97,10 @@ class gameScene extends Phaser.Scene {
     hazard.setPushable(false);
     hazardGroup.add(hazard);
   }
-  toggleHazard(hazard){
-    hazard.on('pointerdown', function (){
+  toggleHazard(hazard) {
+    hazard.on('pointerdown', function () {
       hazard.destroy();
     });
-  }
-  createTrack() {
-    path = this.add.path(800, 40);
-    path.lineTo(545, 40);
-    path.lineTo(545, 281);
-    path.lineTo(735, 281);
-    path.lineTo(735, 521);
-    path.lineTo(65, 521);
-    path.lineTo(65, 40);
-    path.lineTo(300, 40);
-    path.lineTo(300, 281);
-    path.lineTo(138, 281);
-    path.lineTo(138, 441);
-    path.lineTo(422, 441);
-    path.lineTo(422, 100);
   }
   createMap() {
     //this does nothing rn
@@ -164,25 +108,52 @@ class gameScene extends Phaser.Scene {
   onSpawn() {
     let toddler;
     let index = Math.floor(Math.random() * 5); // there are currently 5 baby designs
-    console.log(index);
-    let babies = ["Baby1","Baby2","Baby3","Baby4","Baby5"];
+    let babies = ["Baby1", "Baby2", "Baby3", "Baby4", "Baby5"];
     toddler = this.physics.add.image(800, 40, babies[index]).setScale(0.15);
 
-    toddler.setVelocityX(-35);
-    toddler.setAcceleration(-5, 0);
-    toddler.setPushable(false);
-    toddler.setFlipX(true);
-    this.physics.add.collider(hazardGroup, toddler);
+    this.setUp(toddler);
     this.collisionBetween(toddler);
 
     toddlerList.push(toddler);
   }
+  setUp(toddler) {
+    toddler.setVelocityX(velocityConstant * -1);
+    toddler.setAcceleration(accelerationConstant * -1, 0);
+    toddler.setPushable(false);
+    toddler.setFlipX(true);
+    this.physics.add.collider(hazardGroup, toddler);
+    for (let i = 0; i < boundaryList.length; i++) {
+      this.physics.add.collider(toddler, boundaryList[i],
+        function () {
+          toddler.setVelocityX(0);
+          toddler.setVelocityY(0);
+          if (directionList[i] == "left") {
+            toddler.setVelocityX(velocityConstant * -1);
+            toddler.setAcceleration(accelerationConstant * -1, 0)
+          } else if (directionList[i] == "right") {
+            toddler.setVelocityX(velocityConstant);
+            toddler.setAcceleration(accelerationConstant, 0);
+          } else if (directionList[i] == "up") {
+            toddler.setVelocityY(velocityConstant * -1);
+            toddler.setAcceleration(0, accelerationConstant * -1);
+          } else if (directionList[i] == "down") {
+            toddler.setVelocityY(velocityConstant);
+            toddler.setAcceleration(0, accelerationConstant)
+          } else {
+            toddler.setVisible(false);
+            toddler.body.setEnable(false);
+            toddler.setAcceleration(0, 0);
+          }
+        });
+    }
+  }
   collisionBetween(toddler) {
     let l = toddlerList.length;
-    if(l != 0) {
+    if (l != 0) {
       this.physics.add.collider(toddler, toddlerList[l - 1]);
     }
   }
 }
+
 
 export default gameScene;
