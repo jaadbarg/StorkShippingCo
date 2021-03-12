@@ -4,12 +4,10 @@ import baby2 from "../assets/baby2.png";
 import baby3 from "../assets/baby3.png";
 import baby4 from "../assets/baby4.png";
 import baby5 from "../assets/baby5.png";
-import grasstile from "../assets/grasstile.png";
-import pathtile from "../assets/pathtile.png";
 import water from "../assets/openwater.png"
-import map1 from "../assets/map1.json";
 import house from "../assets/house.png";
-import gate from "../assets/gate.png"
+import gate from "../assets/gate.png";
+import map from "../assets/map.png";
 
 let graphics;
 let path;
@@ -29,16 +27,15 @@ class gameScene extends Phaser.Scene {
     this.load.image("Baby3", baby3);
     this.load.image("Baby4", baby4);
     this.load.image("Baby5", baby5);
-    this.load.image("grass", grasstile);
-    this.load.image("path", pathtile);
+    this.load.image("map", map);
     this.load.image('water', water)
     this.load.image('house', house);
     this.load.image("gate", gate);
-    this.load.tilemapTiledJSON("map", map1);
   }
   create() {
 
-    this.createMap();
+    //this.createMap(); hold on to this (Evan)
+    this.add.image(400, 300, 'map').setScale(1.3); //not sure if scale exactly fits window
     graphics = this.add.graphics();
     this.add.image(420, 90, 'house').setScale(0.1);
     this.add.image(175, 170, 'water').setScale(0.25);
@@ -162,10 +159,7 @@ class gameScene extends Phaser.Scene {
     path.lineTo(422, 100);
   }
   createMap() {
-    let map = this.make.tilemap({ key: "map" });
-    let grassTile = map.addTilesetImage("grass", "grass");
-    let pathTile = map.addTilesetImage("path", "path");
-    map.createLayer("Tile Layer 1", [grassTile, pathTile]).setScale(0.312);
+    //this does nothing rn
   }
   onSpawn() {
     let toddler;

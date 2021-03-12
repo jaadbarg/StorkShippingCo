@@ -4,9 +4,7 @@ import baby2 from "../assets/baby2.png";
 import baby3 from "../assets/baby3.png";
 import baby4 from "../assets/baby4.png";
 import baby5 from "../assets/baby5.png";
-import grasstile from "../assets/grasstile.png";
-import pathtile from "../assets/pathtile.png";
-import map1 from "../assets/map1.json";
+import map from "../assets/map.png";
 
 let graphics;
 let path;
@@ -26,13 +24,11 @@ class gameScene extends Phaser.Scene {
     this.load.image("Baby3", baby3);
     this.load.image("Baby4", baby4);
     this.load.image("Baby5", baby5);
-    this.load.image("grass", grasstile);
-    this.load.image("path", pathtile);
-    this.load.tilemapTiledJSON("map", map1);
+    this.load.image("map", map);
   }
   create() {
-    this.createMap();
-
+    //this.createMap();
+    this.add.image(400, 300, 'map').setScale(1.3);
     graphics = this.add.graphics();
     this.onSpawn();
     spawnEvent = this.time.addEvent({
@@ -69,10 +65,7 @@ class gameScene extends Phaser.Scene {
     path.lineTo(422, 100);
   }
   createMap() {
-    let map = this.make.tilemap({ key: "map" });
-    let grassTile = map.addTilesetImage("grass", "grass");
-    let pathTile = map.addTilesetImage("path", "path");
-    map.createLayer("Tile Layer 1", [grassTile, pathTile]).setScale(0.312);
+    //no
   }
   moveToddler(toddler, placeHolder) {
     path.getPoint(placeHolder.t, placeHolder.vec);
