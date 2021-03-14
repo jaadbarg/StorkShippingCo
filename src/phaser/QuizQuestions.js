@@ -49,7 +49,7 @@ let questionsWindow = [
     [`About 1 foot or more`,`6 inches`,`2 inches`,`None of the above`], 1, `RATIONALE`),
 
     new Question('True or False: Window guards are one size fits all.',
-    [`True`, `False`], 0, `False, make sure to purchase window guards that fit your home’s windows’ sizes.`)
+    [`True`, `False`], 1, `False, make sure to purchase window guards that fit your home’s windows’ sizes.`)
 ];
 
 let questionsWater = [
