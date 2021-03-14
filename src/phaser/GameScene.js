@@ -4,7 +4,6 @@ import baby2 from "../assets/babies/baby2.png";
 import baby3 from "../assets/babies/baby3.png";
 import baby4 from "../assets/babies/baby4.png";
 import baby5 from "../assets/babies/baby5.png";
-import water from "../assets/openwater.png"
 import house from "../assets/house.png";
 import gate1 from "../assets/gate.png";
 import map from "../assets/map.png";
@@ -33,7 +32,6 @@ class gameScene extends Phaser.Scene {
     this.load.image("baby4", baby4);
     this.load.image("baby5", baby5);
     this.load.image("map", map);
-    this.load.image('water', water)
     this.load.image('house', house);
     this.load.image("gate1", gate1);
     this.load.image("boundary", boundary)
@@ -44,7 +42,6 @@ class gameScene extends Phaser.Scene {
     this.add.image(400, 300, 'map').setScale(1.3); //adds map
     this.createBoundary();
     this.add.image(420, 90, 'house').setScale(0.1); //adds StorkBuilding
-    this.createHazards(); //adds hazard icons to map
     this.createGates(); //adds gates that sit next to hazards
 
     this.onSpawn(); //spawn toddler?
@@ -59,12 +56,6 @@ class gameScene extends Phaser.Scene {
 
   update() {
     // max of 10 children on the track
-  }
-
-  createHazards(){ //adds 6 unique hazards to map
-    this.add.image(175, 170, 'water').setScale(0.25);
-    this.add.image(345, 370, 'water').setScale(0.25);
-    this.add.image(630, 460, 'water').setScale(0.25);
   }
 
   createBoundary() { //mass insert boundaries to keep babies on the screen
@@ -91,10 +82,12 @@ class gameScene extends Phaser.Scene {
 
   createGates() { //inserts all gates into game
     gateGroup = this.physics.add.group();
-    this.addGate(70, 180, 'gate1', 0.1, 0);
-    this.addGate(120, 540, 'gate1', 0.1, 270);
-    this.addGate(735, 480, 'gate1', 0.1, 0);
-    this.addGate(422, 300, 'gate1', 0.1, 0);
+    this.addGate(550, 190, 'gate1', 0.05, 0); //openwater
+    this.addGate(750, 440, 'gate1', 0.05, 0); //stairs
+    this.addGate(525, 550, 'gate1', 0.05, 270); //windows
+    this.addGate(50, 120, 'gate1', 0.05, 0); //baby walkers
+    this.addGate(290, 250, 'gate1', 0.05, 0); //baby equipment
+    this.addGate(275, 465, 'gate1', 0.05, 270); //furniture
   }
 
   addGate(x, y, type, scale, angle) { //adds gate to game
