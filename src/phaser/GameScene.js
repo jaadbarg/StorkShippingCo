@@ -108,7 +108,18 @@ class gameScene extends Phaser.Scene {
   toggleGate(gate) { //makes gate clickable/breakable
     gate.on('pointerdown', function () {
       gate.destroy();
+
+      // this was getting openQuiz to run, but scene did not switch correctly
+      // gate.setInteractive({ useHandCursor: true });
+      // gate.on('pointerdown', () => this.openQuiz());
     });
+  }
+
+  // intention is for scene to switch to quizScene when gate is clicked -- right now
+  // openQuiz is running when gate is clicked but scene isn't switching
+  openQuiz() {
+    this.scene.switch("quizScene");
+    console.log("clickgate")
   }
 
   onSpawn() { //spawns baby into game
