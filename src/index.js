@@ -6,7 +6,7 @@ import GameScene from "./phaser/GameScene.js";
 import TitleScene from "./phaser/TitleScene.js";
 import ResourceScene from "./phaser/ResourceScene.js";
 import InstructScene from "./phaser/InstructScene.js";
-import QuizScene from "./phaser/QuizScene";
+import QuizScene from "./phaser/QuizScene.js";
 // import QuizQuestions from "./phaser/QuizQuestions";
 
 import PreloadScene from "./phaser/PreloadScene.js";

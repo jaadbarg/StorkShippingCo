@@ -6,7 +6,7 @@ import {
   questionsBaby,
   questionsFurniture,
   questionsBed,
-} from "QuizQuestions";
+} from "./QuizQuestions";
 
 // in progress
 
