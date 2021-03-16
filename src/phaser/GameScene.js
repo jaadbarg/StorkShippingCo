@@ -4,7 +4,6 @@ import baby2 from "../assets/babies/baby2.png";
 import baby3 from "../assets/babies/baby3.png";
 import baby4 from "../assets/babies/baby4.png";
 import baby5 from "../assets/babies/baby5.png";
-import house from "../assets/house.png";
 import gate1 from "../assets/gate.png";
 import map from "../assets/map.png";
 import boundary from "../assets/boundary.png";
@@ -32,7 +31,6 @@ class gameScene extends Phaser.Scene {
     this.load.image("baby4", baby4);
     this.load.image("baby5", baby5);
     this.load.image("map", map);
-    this.load.image("house", house);
     this.load.image("gate1", gate1);
     this.load.image("boundary", boundary);
   }
@@ -42,7 +40,6 @@ class gameScene extends Phaser.Scene {
 
     this.add.image(400, 300, "map").setScale(1.3); //adds map
     this.createBoundary();
-    this.add.image(420, 90, "house").setScale(0.1); //adds StorkBuilding
     this.createGates(); //adds gates that sit next to hazards
 
     this.onSpawn(); //spawn toddler?
@@ -113,10 +110,10 @@ class gameScene extends Phaser.Scene {
     gate.on("pointerdown", function () {
       gate.destroy();
 
-      // this was getting openQuiz to run, but scene did not switch correctly
       // gate.setInteractive({ useHandCursor: true });
-      // gate.on('pointerdown', () => this.openQuiz());
+
     });
+    gate.on('pointerdown', () => this.openQuiz());
   }
 
   // intention is for scene to switch to quizScene when gate is clicked -- right now
