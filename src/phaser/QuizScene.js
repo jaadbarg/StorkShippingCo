@@ -54,7 +54,9 @@ class QuizScene extends Phaser.Scene {
     }
 
     create() {
-        
+
+        let cam = this.cameras.add(0, 0, 800, 600);
+        cam.setBackgroundColor(0x7AD7F0);
         const fontFam = {
             fontSize: 30,
             color: "#000000",
@@ -64,12 +66,29 @@ class QuizScene extends Phaser.Scene {
         let bg = this.add.sprite(0, 0, "background");
         bg.setOrigin(400, 300);
 
-        let title = this.add.text(100, 100, "Instructions");
+        let title = this.add.text(100, 100, "Test Your Knowledge!", { ...fontFam });
 
-        this.add.text(350, 500, `${questionsExample[0].questionText}`, { ...fontFam });
+        this.add.text(200, 200, `${questionsExample[0].questionText}`, { ...fontFam });
         for(let i = 0; i < 4; i++) {
-            this.add.text(350, 400 - 50 * i, questionsExample[0].responses[i], {...fontFam,})
+            let choice;
+            if(i == questionsExample[0].correct) {
+                choice = this.add.text(200, 250 + 50 * i, questionsExample[0].responses[i], {...fontFam,})
+                choice.setInteractive();
+                choice.on('pointerdown', () =>
+                    this.correctResponse()
+                );
+            } else {
+                choice = this.add.text(200, 250 + 50 * i, questionsExample[0].responses[i], {...fontFam,})
+                choice.setInteractive();
+                choice.on('pointerdown', function() {
+                    alert("Try again! [incorrect rationale]");
+                });
+            }
         }
+    }
+    correctResponse() {
+        alert("Correct choice, Good job! [correct rationale]");
+        this.scene.switch("gameScene")
     }
 }
 

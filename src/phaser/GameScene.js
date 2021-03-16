@@ -109,9 +109,6 @@ class gameScene extends Phaser.Scene {
     //makes gate clickable/breakable
     gate.on("pointerdown", function () {
       gate.destroy();
-
-      // gate.setInteractive({ useHandCursor: true });
-
     });
     gate.on('pointerdown', () => this.openQuiz());
   }
