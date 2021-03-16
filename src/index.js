@@ -6,6 +6,8 @@ import GameScene from "./phaser/GameScene.js";
 import TitleScene from "./phaser/TitleScene.js";
 import ResourceScene from "./phaser/ResourceScene.js";
 import InstructScene from "./phaser/InstructScene.js";
+import QuizScene from "./phaser/QuizScene";
+// import QuizQuestions from "./phaser/QuizQuestions";
 
 import PreloadScene from "./phaser/PreloadScene.js";
 
@@ -16,6 +18,8 @@ let titleScene = new TitleScene();
 
 let resourceScene = new ResourceScene();
 let instructScene = new InstructScene();
+let quizScene = new QuizScene();
+// let quizQuestions = new QuizQuestions();
 
 //set up phaser config
 export const config = {
@@ -26,9 +30,9 @@ export const config = {
     default: "arcade",
     arcade: {
       gravity: { y: 0 },
-      debug: false
-    }
-  }
+      debug: false,
+    },
+  },
 };
 let game = new Phaser.Game(config);
 
@@ -39,6 +43,9 @@ game.scene.add("gameScene", gameScene);
 
 game.scene.add("resourceScene", resourceScene);
 game.scene.add("instructScene", instructScene);
+
+game.scene.add("quizScene", quizScene);
+// game.scene.add("quizQuestions", quizQuestions);
 
 // start the title scene
 game.scene.start("preloadScene");

@@ -7,7 +7,7 @@ import baby5 from "../assets/babies/baby5.png";
 import house from "../assets/house.png";
 import gate1 from "../assets/gate.png";
 import map from "../assets/map.png";
-import boundary from "../assets/boundary.png"
+import boundary from "../assets/boundary.png";
 
 let gateGroup;
 let spawnEvent;
@@ -19,29 +19,30 @@ let velocityConstant = 50;
 let accelerationConstant = 40;
 
 class gameScene extends Phaser.Scene {
-
   constructor() {
     super("gameScene");
     console.log("gameScene");
   }
 
-  preload() { //preloads assets that will be used in the game
+  preload() {
+    //preloads assets that will be used in the game
     this.load.image("baby1", baby1);
     this.load.image("baby2", baby2);
     this.load.image("baby3", baby3);
     this.load.image("baby4", baby4);
     this.load.image("baby5", baby5);
     this.load.image("map", map);
-    this.load.image('house', house);
+    this.load.image("house", house);
     this.load.image("gate1", gate1);
-    this.load.image("boundary", boundary)
+    this.load.image("boundary", boundary);
   }
 
-  create() { //initially places assets into game
+  create() {
+    //initially places assets into game
 
-    this.add.image(400, 300, 'map').setScale(1.3); //adds map
+    this.add.image(400, 300, "map").setScale(1.3); //adds map
     this.createBoundary();
-    this.add.image(420, 90, 'house').setScale(0.1); //adds StorkBuilding
+    this.add.image(420, 90, "house").setScale(0.1); //adds StorkBuilding
     this.createGates(); //adds gates that sit next to hazards
 
     this.onSpawn(); //spawn toddler?
@@ -51,14 +52,14 @@ class gameScene extends Phaser.Scene {
       callbackScope: this,
       repeat: 10,
     });
-
   }
 
   update() {
     // max of 10 children on the track
   }
 
-  createBoundary() { //mass insert boundaries to keep babies on the screen
+  createBoundary() {
+    //mass insert boundaries to keep babies on the screen
     this.addBoundary(505, 45, "down");
     this.addBoundary(545, 321, "right");
     this.addBoundary(775, 281, "down");
@@ -73,33 +74,43 @@ class gameScene extends Phaser.Scene {
     this.addBoundary(422, 60, "void");
   }
 
-  addBoundary(x, y, direction) { //add boundary to game
-    let boundary = this.physics.add.image(x, y, "boundary").setScale(0.02).setVisible(false);
+  addBoundary(x, y, direction) {
+    //add boundary to game
+    let boundary = this.physics.add
+      .image(x, y, "boundary")
+      .setScale(0.02)
+      .setVisible(false);
     boundary.setPushable(false);
     boundaryList.push(boundary);
     directionList.push(direction);
   }
 
-  createGates() { //inserts all gates into game
+  createGates() {
+    //inserts all gates into game
     gateGroup = this.physics.add.group();
-    this.addGate(550, 190, 'gate1', 0.05, 0); //openwater
-    this.addGate(750, 440, 'gate1', 0.05, 0); //stairs
-    this.addGate(525, 550, 'gate1', 0.05, 270); //windows
-    this.addGate(50, 120, 'gate1', 0.05, 0); //baby walkers
-    this.addGate(290, 250, 'gate1', 0.05, 0); //baby equipment
-    this.addGate(275, 465, 'gate1', 0.05, 270); //furniture
+    this.addGate(550, 190, "gate1", 0.05, 0); //openwater
+    this.addGate(750, 440, "gate1", 0.05, 0); //stairs
+    this.addGate(525, 550, "gate1", 0.05, 270); //windows
+    this.addGate(50, 120, "gate1", 0.05, 0); //baby walkers
+    this.addGate(290, 250, "gate1", 0.05, 0); //baby equipment
+    this.addGate(275, 465, "gate1", 0.05, 270); //furniture
   }
 
-  addGate(x, y, type, scale, angle) { //adds gate to game
-    let gate = this.physics.add.image(x, y, type).setScale(scale).setInteractive();
+  addGate(x, y, type, scale, angle) {
+    //adds gate to game
+    let gate = this.physics.add
+      .image(x, y, type)
+      .setScale(scale)
+      .setInteractive();
     gate.setAngle(angle);
     this.toggleGate(gate);
     gate.setPushable(false);
     gateGroup.add(gate);
   }
 
-  toggleGate(gate) { //makes gate clickable/breakable
-    gate.on('pointerdown', function () {
+  toggleGate(gate) {
+    //makes gate clickable/breakable
+    gate.on("pointerdown", function () {
       gate.destroy();
 
       // this was getting openQuiz to run, but scene did not switch correctly
@@ -112,10 +123,11 @@ class gameScene extends Phaser.Scene {
   // openQuiz is running when gate is clicked but scene isn't switching
   openQuiz() {
     this.scene.switch("quizScene");
-    console.log("clickgate")
+    console.log("clickgate");
   }
 
-  onSpawn() { //spawns baby into game
+  onSpawn() {
+    //spawns baby into game
     let toddler;
     let index = Math.floor(Math.random() * 5); // there are currently 5 baby designs
     let babies = ["baby1", "baby2", "baby3", "baby4", "baby5"];
@@ -127,45 +139,44 @@ class gameScene extends Phaser.Scene {
     toddlerList.push(toddler);
   }
 
-  setUp(toddler) { //gives baby physics
+  setUp(toddler) {
+    //gives baby physics
     toddler.setVelocityX(velocityConstant * -1);
     toddler.setAcceleration(accelerationConstant * -1, 0);
     toddler.setPushable(false);
     toddler.setFlipX(true);
     this.physics.add.collider(gateGroup, toddler);
     for (let i = 0; i < boundaryList.length; i++) {
-      this.physics.add.collider(toddler, boundaryList[i],
-        function () {
-          toddler.setVelocityX(0);
-          toddler.setVelocityY(0);
-          if (directionList[i] == "left") {
-            toddler.setVelocityX(velocityConstant * -1);
-            toddler.setAcceleration(accelerationConstant * -1, 0)
-          } else if (directionList[i] == "right") {
-            toddler.setVelocityX(velocityConstant);
-            toddler.setAcceleration(accelerationConstant, 0);
-          } else if (directionList[i] == "up") {
-            toddler.setVelocityY(velocityConstant * -1);
-            toddler.setAcceleration(0, accelerationConstant * -1);
-          } else if (directionList[i] == "down") {
-            toddler.setVelocityY(velocityConstant);
-            toddler.setAcceleration(0, accelerationConstant)
-          } else {
-            toddler.setVisible(false);
-            toddler.body.setEnable(false);
-            toddler.setAcceleration(0, 0);
-          }
-        });
+      this.physics.add.collider(toddler, boundaryList[i], function () {
+        toddler.setVelocityX(0);
+        toddler.setVelocityY(0);
+        if (directionList[i] == "left") {
+          toddler.setVelocityX(velocityConstant * -1);
+          toddler.setAcceleration(accelerationConstant * -1, 0);
+        } else if (directionList[i] == "right") {
+          toddler.setVelocityX(velocityConstant);
+          toddler.setAcceleration(accelerationConstant, 0);
+        } else if (directionList[i] == "up") {
+          toddler.setVelocityY(velocityConstant * -1);
+          toddler.setAcceleration(0, accelerationConstant * -1);
+        } else if (directionList[i] == "down") {
+          toddler.setVelocityY(velocityConstant);
+          toddler.setAcceleration(0, accelerationConstant);
+        } else {
+          toddler.setVisible(false);
+          toddler.body.setEnable(false);
+          toddler.setAcceleration(0, 0);
+        }
+      });
     }
   }
 
-  collisionBetween(toddler) { 
+  collisionBetween(toddler) {
     let l = toddlerList.length;
     if (l != 0) {
       this.physics.add.collider(toddler, toddlerList[l - 1]);
     }
   }
 }
-
 
 export default gameScene;
