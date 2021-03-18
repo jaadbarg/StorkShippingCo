@@ -16,6 +16,7 @@ let directionList = [];
 
 let velocityConstant = 50;
 let accelerationConstant = 40;
+let maxBabyCounter = 1;
 
 class gameScene extends Phaser.Scene {
   constructor() {
@@ -47,12 +48,12 @@ class gameScene extends Phaser.Scene {
       delay: 4000,
       callback: this.onSpawn,
       callbackScope: this,
-      repeat: 10,
+      loop: true,
     });
   }
 
   update() {
-    // max of 10 children on the track
+    // leave blank for now
   }
 
   createBoundary() {
@@ -110,7 +111,7 @@ class gameScene extends Phaser.Scene {
     gate.on("pointerdown", function () {
       gate.destroy();
     });
-    gate.on('pointerdown', () => this.openQuiz());
+    //gate.on('pointerdown', () => this.openQuiz());
   }
 
   // intention is for scene to switch to quizScene when gate is clicked -- right now
@@ -121,16 +122,20 @@ class gameScene extends Phaser.Scene {
   }
 
   onSpawn() {
-    //spawns baby into game
-    let toddler;
-    let index = Math.floor(Math.random() * 5); // there are currently 5 baby designs
-    let babies = ["baby1", "baby2", "baby3", "baby4", "baby5"];
-    toddler = this.physics.add.image(800, 40, babies[index]).setScale(0.15);
+    if (maxBabyCounter < 15) {
+      //spawns baby into game
+      let toddler;
+      let index = Math.floor(Math.random() * 5); // there are currently 5 baby designs
+      let babies = ["baby1", "baby2", "baby3", "baby4", "baby5"];
+      toddler = this.physics.add.image(800, 40, babies[index]).setScale(0.15);
 
-    this.setUp(toddler);
-    this.collisionBetween(toddler);
+      this.setUp(toddler);
+      this.collisionBetween(toddler);
 
-    toddlerList.push(toddler);
+      toddlerList.push(toddler);
+
+      maxBabyCounter++;
+    }
   }
 
   setUp(toddler) {
@@ -160,6 +165,7 @@ class gameScene extends Phaser.Scene {
           toddler.setVisible(false);
           toddler.body.setEnable(false);
           toddler.setAcceleration(0, 0);
+          maxBabyCounter--;
         }
       });
     }
