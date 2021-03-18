@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "build": "webpack --config webpack/prod.js ",
-    "postinstall": "echo y | npm install -g webpack",
+    "postinstall": "RUN echo y | npm install -g webpack",
     "start": "webpack serve --config webpack/base.js --open Chrome.exe"
   },
   "devDependencies": {
