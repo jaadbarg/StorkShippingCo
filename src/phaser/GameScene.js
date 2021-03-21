@@ -86,39 +86,38 @@ class gameScene extends Phaser.Scene {
   createGates() {
     //inserts all gates into game
     gateGroup = this.physics.add.group();
-    this.addGate(550, 190, "gate1", 0.05, 0); //openwater
-    this.addGate(750, 440, "gate1", 0.05, 0); //stairs
-    this.addGate(525, 550, "gate1", 0.05, 270); //windows
-    this.addGate(50, 120, "gate1", 0.05, 0); //baby walkers
-    this.addGate(290, 250, "gate1", 0.05, 0); //baby equipment
-    this.addGate(275, 465, "gate1", 0.05, 270); //furniture
+    this.addGate(550, 190, "gate1", 0.05, 0, 2); //openwater
+    this.addGate(750, 440, "gate1", 0.05, 0, 0); //stairs
+    this.addGate(525, 550, "gate1", 0.05, 270, 1); //windows
+    this.addGate(50, 120, "gate1", 0.05, 0, 6); //baby walkers
+    this.addGate(290, 250, "gate1", 0.05, 0, 4); //baby equipment
+    this.addGate(275, 465, "gate1", 0.05, 270, 5); //furniture
   }
 
-  addGate(x, y, type, scale, angle) {
+  addGate(x, y, type, scale, angle, gateID) {
     //adds gate to game
     let gate = this.physics.add
       .image(x, y, type)
       .setScale(scale)
-      .setInteractive();
+      .setInteractive();  
     gate.setAngle(angle);
-    this.toggleGate(gate);
+    this.toggleGate(gate, gateID);
     gate.setPushable(false);
     gateGroup.add(gate);
   }
 
-  toggleGate(gate) {
+  toggleGate(gate, gateID) {
     //makes gate clickable/breakable
     gate.on("pointerdown", function () {
       gate.destroy();
     });
-    gate.on('pointerdown', () => this.openQuiz());
+    gate.on('pointerdown', () => this.openQuiz(gateID));
   }
 
   // intention is for scene to switch to quizScene when gate is clicked -- right now
   // openQuiz is running when gate is clicked but scene isn't switching
-  openQuiz() {
-    this.scene.switch("quizScene");
-    console.log("clickgate");
+  openQuiz(gateID) {
+    this.scene.switch("quizScene", {id: gateID});
   }
 
   onSpawn() {

@@ -1,6 +1,10 @@
 import Phaser from "phaser";
-import {
-} from "./QuizQuestions";
+import questionsStairs  from "./QuizQuestions";
+import questionsWindow  from "./QuizQuestions";
+import questionsWater  from "./QuizQuestions";
+import questionsBaby  from "./QuizQuestions";
+import questionsFurniture  from "./QuizQuestions";
+import questionsBed  from "./QuizQuestions";
 
 // in progress
 let questionsExample1 = {
@@ -22,31 +26,17 @@ let questionsExample = [
     questionsExample2
 ];
 
+// keeps track of which questions you're on for each category to avoid repeats
+let counter = [0,0,0,0,0,0]
+
 class QuizScene extends Phaser.Scene {
     constructor() {
         super({ key: "quizScene" });
-        console.log("quizScene");
-        //pass in an int indicating which hazard was selected
-        // switch(hazard) {
-        //     case 1:
-        //         this.question = questionsStairs[Math.floor(Math.random() * questionsStairs.length)];
-        //         break;
-        //     case 2:
-        //         this.question = questionsWindow[Math.floor(Math.random() * questionsWindow.length)]
-        //         break;
-        //     case 3:
-        //         this.question = questionsWater[Math.floor(Math.random() * questionsWater.length)]
-        //         break;
-        //     case 4:
-        //         this.question = questionsBaby[Math.floor(Math.random() * questionsBaby.length)]
-        //         break;
-        //     case 5:
-        //         this.question = questionsFurniture[Math.floor(Math.random() * questionsFurniture.length)]
-        //         break;
-        //     case 6:
-        //         this.question = questionsBed[Math.floor(Math.random() * questionsBed.length)]
-        //         break;
-        // }
+    }
+
+    init(data) {
+        console.log("init "+ data.id)
+        this.gateID = data.id
     }
 
     preload() {
@@ -54,6 +44,36 @@ class QuizScene extends Phaser.Scene {
     }
 
     create() {
+        //including an example q for now until data can be passed between scenes
+        let question = questionsWindow[1];
+
+        //pass in an int indicating which hazard was selected
+        switch(this.gateID) {
+            case 0:
+                question = questionsStairs[counter[0]];
+                counter[0]++;
+                break;
+            case 1:
+                question = questionsWindow[counter[1]];
+                counter[1]++;
+                break;
+            case 2:
+                question = questionsWater[counter[2]];
+                counter[2]++;
+                break;
+            case 3:
+                question = questionsBaby[counter[3]];
+                counter[3]++;
+                break;
+            case 4:
+                question = questionsFurniture[counter[4]];
+                counter[4]++;
+                break;
+            case 5:
+                question = questionsBed[counter[5]];
+                counter[5]++;
+                break;
+        }
 
         let cam = this.cameras.add(0, 0, 800, 600);
         cam.setBackgroundColor(0x7AD7F0);
@@ -66,28 +86,30 @@ class QuizScene extends Phaser.Scene {
         let bg = this.add.sprite(0, 0, "background");
         bg.setOrigin(400, 300);
 
-        let title = this.add.text(100, 100, "Test Your Knowledge!", { ...fontFam });
-
-        this.add.text(200, 200, `${questionsExample[0].questionText}`, { ...fontFam });
-        for(let i = 0; i < 4; i++) {
+        let title = this.add.text(0, 0, `${question.questionText}`,
+         { ...fontFam, wordWrap: {width: 820} });
+        
+        for(let i = 0; i < question.responses.length; i++) {
             let choice;
-            if(i == questionsExample[0].correct) {
-                choice = this.add.text(200, 250 + 50 * i, questionsExample[0].responses[i], {...fontFam,})
+            if(i == question.correct) {
+                choice = this.add.text(0, 150 + 100 * i, question.responses[i],
+                     {...fontFam, wordWrap: {width: 820}})
                 choice.setInteractive();
                 choice.on('pointerdown', () =>
-                    this.correctResponse()
+                    this.correctResponse(question)
                 );
             } else {
-                choice = this.add.text(200, 250 + 50 * i, questionsExample[0].responses[i], {...fontFam,})
+                choice = this.add.text(0, 150 + 100 * i, question.responses[i], {...fontFam, wordWrap: {width: 820}})
                 choice.setInteractive();
                 choice.on('pointerdown', function() {
-                    alert("Try again! [incorrect rationale]");
+                    alert(`Try again! ${question.rationaleIncorrect}`);
                 });
             }
         }
     }
-    correctResponse() {
-        alert("Correct choice, Good job! [correct rationale]");
+
+    correctResponse(question) {
+        alert(`Correct choice, Good job! ${question.rationaleCorrect}`);
         this.scene.switch("gameScene")
     }
 }
