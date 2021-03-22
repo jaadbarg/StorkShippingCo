@@ -78,7 +78,7 @@ class QuizScene extends Phaser.Scene {
         let cam = this.cameras.add(0, 0, 800, 600);
         cam.setBackgroundColor(0x7AD7F0);
         const fontFam = {
-            fontSize: 30,
+            fontSize: 20,
             color: "#000000",
             backgroundColor: "#FFFFFF",
         };
