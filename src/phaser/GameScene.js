@@ -14,8 +14,8 @@ let toddlerList = [];
 let boundaryList = [];
 let directionList = [];
 
-let velocityConstant = 50;
-let accelerationConstant = 40;
+let velocityConstant = 40;
+let accelerationConstant = 15;
 let maxBabyCounter = 1;
 
 class gameScene extends Phaser.Scene {
