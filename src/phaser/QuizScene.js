@@ -44,6 +44,7 @@ class QuizScene extends Phaser.Scene {
     }
 
     create() {
+        console.log(this.gateID)
         //including an example q for now until data can be passed between scenes
         let question = questionsWindow[1];
 
@@ -109,7 +110,7 @@ class QuizScene extends Phaser.Scene {
     }
 
     correctResponse(question) {
-        alert(`Correct choice, Good job! ${question.rationaleCorrect}`);
+        //alert(`Correct choice, Good job! ${question.rationaleCorrect}`);
         this.scene.switch("gameScene")
     }
 }

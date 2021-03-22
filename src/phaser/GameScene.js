@@ -117,7 +117,9 @@ class gameScene extends Phaser.Scene {
   // intention is for scene to switch to quizScene when gate is clicked -- right now
   // openQuiz is running when gate is clicked but scene isn't switching
   openQuiz(gateID) {
-    this.scene.switch("quizScene", {id: gateID});
+    this.scene.stop("quizScene")
+    this.scene.sleep("gameScene")
+    this.scene.run("quizScene", {id: gateID});
   }
 
   onSpawn() {
