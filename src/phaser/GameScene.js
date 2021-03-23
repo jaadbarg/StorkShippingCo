@@ -21,6 +21,7 @@ let accelerationConstant = 15;
 let maxBabyCounter = 1;
 let totalScore = 0;
 let timeLeft = 300;
+let MAXIMUMBABIES = 5
 let fontFam = {
   fontSize: 17,
   color: "#000000",
@@ -172,7 +173,7 @@ class gameScene extends Phaser.Scene {
   }
 
   onSpawn() {
-    if (maxBabyCounter < 15) {
+    if (maxBabyCounter <= MAXIMUMBABIES) {
       //spawns baby into game
       let toddler;
       let index = Math.floor(Math.random() * 5); // there are currently 5 baby designs
@@ -205,6 +206,7 @@ class gameScene extends Phaser.Scene {
         } else if (directionList[i] == "right") {
           toddler.setVelocityX(velocityConstant);
           toddler.setAcceleration(accelerationConstant, 0);
+          MAXIMUMBABIES = 10;
         } else if (directionList[i] == "up") {
           toddler.setVelocityY(velocityConstant * -1);
           toddler.setAcceleration(0, accelerationConstant * -1);

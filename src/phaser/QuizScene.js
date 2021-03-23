@@ -7,38 +7,20 @@ import questionBank from "./QuizQuestions"
 // import questionsFurniture  from "./QuizQuestions";
 // import questionsBed  from "./QuizQuestions";
 
-// in progress
-let questionsExample1 = {
-    questionText: `What is 2+2?`,
-    responses: [`1`, `2`, `3`, `4`],
-    correct: 3,
-    rationaleCorrect: `Two plus two is four.`,
-    rationaleIncorrect: `Incorrect`
-}
-let questionsExample2 = {
-    questionText: `What is 1x1?`,
-    responses: [`1`, `4`, `9`, `16`],
-    correct: 0,
-    rationaleCorrect: `One times one is one.`,
-    rationaleIncorrect: `Incorrect`
-}
-let questionsExample = [
-    questionsExample1,
-    questionsExample2
-];
-
 // keeps track of which questions you're on for each category to avoid repeats
 let counter = [0,0,0,0,0,0]
+let feedbackText;
+let backBtn;
 
 const fontFam = {
-    fontSize: 20,
+    fontSize: 18,
     color: "#000000",
     backgroundColor: "#FFFFFF",
 };
 
 const fontFamBack = {
     fontSize: 30,
-    color: "#000000",
+    color: "#ffa500",
     backgroundColor: "#FFFFFF",
 };
 
@@ -61,6 +43,9 @@ class QuizScene extends Phaser.Scene {
         //including an example q for now until data can be passed between scenes
         let question
         console.log(question)
+
+        feedbackText = this.add.text(0, 550, "", {...fontFam, wordWrap: {width: 820}});
+        backBtn = this.add.text(530, 550, "", {...fontFamBack});
 
         //pass in an int indicating which hazard was selected
         switch(this.gateID) {
@@ -109,32 +94,60 @@ class QuizScene extends Phaser.Scene {
         for(let i = 0; i < question.responses.length; i++) {
             let choice;
             if(i == question.correct) {
-                choice = this.add.text(0, 150 + 100 * i, question.responses[i],
+                choice = this.add.text(0, 180 + 90 * i, this.convertI(i) + question.responses[i],
                      {...fontFam, wordWrap: {width: 820}})
                 choice.setInteractive();
                 choice.on('pointerdown', () =>
                     this.correctResponse(question, question.responses.length)
                 );
             } else {
-                choice = this.add.text(0, 150 + 100 * i, question.responses[i], {...fontFam, wordWrap: {width: 820}})
+                choice = this.add.text(0, 180 + 90 * i, this.convertI(i) + question.responses[i], {...fontFam, wordWrap: {width: 820}})
                 choice.setInteractive();
-                choice.on('pointerdown', function() {
-                    alert(`Try again! ${question.rationaleIncorrect}`);
-                });
+                choice.on('pointerdown', () =>
+                    this.incorrectResponse(question, question.responses.length)
+                );
             }
         }
     }
 
+    convertI(i) {
+        if(i == 0) {
+            return "A. "
+        }
+        if(i == 1) {
+            return "B. "
+        }
+        if(i == 2) {
+            return "C. "
+        }
+        if(i == 3) {
+            return "D. "
+        }
+        return "error"
+    }
+
     correctResponse(question, length) {
-        this.add.text(0, 150 + 100 * (length), question.rationaleCorrect, {...fontFam, wordWrap: {width: 820}});
-        let backBtn = this.add.text(400, 550, "RETURN TO GAME", {...fontFamBack});
+        feedbackText.setText(question.rationaleCorrect);
+        backBtn.setText("Return to game");
         backBtn.setInteractive({ useHandCursor: true });
         backBtn.on("pointerdown", () => this.goBack());
     }
 
+    incorrectResponse(question, length) {
+        feedbackText.setText(question.rationaleIncorrect);
+        backBtn.setText("Try again!")
+        //backBtn.setInteractive({ useHandCursor: true });
+        //backBtn.on("pointerdown", () => this.clearFeedback(backBtn));
+    }
+
+    clearFeedback(backBtn) {
+        backBtn.setText("");
+        feedbackText.setText("");
+    }
+
     goBack() {
         this.scene.switch("gameScene");
-      }
+    }
 }
 
 export default QuizScene;

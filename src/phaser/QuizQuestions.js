@@ -147,7 +147,8 @@ let questionsBaby = [
     a table or countertop.`,
     [`True`, `False`],
     1,
-    `False: Placing an infant or small child in their car seat carrier on a table top, 
+    `False: Placing an infant or small child 
+    in their car seat carrier on a table top, 
     counter, or any other high surface is a falls hazard. A squirming or moving child can cause the entire 
     carrier to fall over, which could cause serious injuries.`,
     `RATIONALEINCORRECT`
