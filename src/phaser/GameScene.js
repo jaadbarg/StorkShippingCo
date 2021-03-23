@@ -160,7 +160,7 @@ class gameScene extends Phaser.Scene {
     gate.on("pointerdown", function () {
       gate.destroy();
     });
-    //gate.on('pointerdown', () => this.openQuiz(gateID));
+    gate.on('pointerdown', () => this.openQuiz(gateID));
   }
 
   // intention is for scene to switch to quizScene when gate is clicked -- right now
