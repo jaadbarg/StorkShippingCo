@@ -31,6 +31,7 @@ const getGeneratorSchemaMap = {
 const getParserSchema = memoize(() => getSchema("AssetParserOptions"));
 const getAssetGenerator = memoize(() => require("./AssetGenerator"));
 const getAssetParser = memoize(() => require("./AssetParser"));
+const getAssetSourceParser = memoize(() => require("./AssetSourceParser"));
 const getAssetSourceGenerator = memoize(() =>
 	require("./AssetSourceGenerator")
 );
@@ -89,9 +90,9 @@ class AssetModulesPlugin {
 				normalModuleFactory.hooks.createParser
 					.for("asset/source")
 					.tap(plugin, parserOptions => {
-						const AssetParser = getAssetParser();
+						const AssetSourceParser = getAssetSourceParser();
 
-						return new AssetParser(false);
+						return new AssetSourceParser();
 					});
 
 				for (const type of ["asset", "asset/inline", "asset/resource"]) {
@@ -123,7 +124,11 @@ class AssetModulesPlugin {
 
 							const AssetGenerator = getAssetGenerator();
 
-							return new AssetGenerator(compilation, dataUrl, filename);
+							return new AssetGenerator(
+								dataUrl,
+								filename,
+								generatorOptions.emit !== false
+							);
 						});
 				}
 				normalModuleFactory.hooks.createGenerator

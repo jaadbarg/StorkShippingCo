@@ -29,15 +29,15 @@ const JS_AND_ASSET_TYPES = new Set(["javascript", "asset"]);
 
 class AssetGenerator extends Generator {
 	/**
-	 * @param {Compilation} compilation the compilation
 	 * @param {AssetGeneratorOptions["dataUrl"]=} dataUrlOptions the options for the data url
 	 * @param {string=} filename override for output.assetModuleFilename
+	 * @param {boolean=} emit generate output asset
 	 */
-	constructor(compilation, dataUrlOptions, filename) {
+	constructor(dataUrlOptions, filename, emit) {
 		super();
-		this.compilation = compilation;
 		this.dataUrlOptions = dataUrlOptions;
 		this.filename = filename;
+		this.emit = emit;
 	}
 
 	/**
@@ -127,20 +127,23 @@ class AssetGenerator extends Generator {
 					);
 					module.buildInfo.fullContentHash = fullHash;
 					const sourceFilename = makePathsRelative(
-						this.compilation.compiler.context,
+						runtimeTemplate.compilation.compiler.context,
 						module.matchResource || module.resource,
-						this.compilation.compiler.root
+						runtimeTemplate.compilation.compiler.root
 					).replace(/^\.\//, "");
 					const {
 						path: filename,
 						info
-					} = this.compilation.getAssetPathWithInfo(assetModuleFilename, {
-						module,
-						runtime,
-						filename: sourceFilename,
-						chunkGraph,
-						contentHash
-					});
+					} = runtimeTemplate.compilation.getAssetPathWithInfo(
+						assetModuleFilename,
+						{
+							module,
+							runtime,
+							filename: sourceFilename,
+							chunkGraph,
+							contentHash
+						}
+					);
 					module.buildInfo.filename = filename;
 					module.buildInfo.assetInfo = {
 						sourceFilename,
@@ -173,7 +176,7 @@ class AssetGenerator extends Generator {
 	 * @returns {Set<string>} available types (do not mutate)
 	 */
 	getTypes(module) {
-		if (module.buildInfo.dataUrl) {
+		if (module.buildInfo.dataUrl || this.emit === false) {
 			return JS_TYPES;
 		} else {
 			return JS_AND_ASSET_TYPES;
