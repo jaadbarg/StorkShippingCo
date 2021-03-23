@@ -30,13 +30,13 @@ class ResultsScene extends Phaser.Scene {
     //instructions
     let copy1 = this.add.text(100, 150, `${instructCopy1}`);
     let copy2 = this.add.text(100, 180, `${instructCopy2}`);
-    let copy3 = this.add.text(100, 210, `${instructCopy3}`);
-    let copy4 = this.add.text(100, 240, `${instructCopy4}`);
-    let copy5 = this.add.text(100, 270, `${instructCopy5}`);
-    let copy6 = this.add.text(100, 300, `${instructCopy6}`);
-    let copy7 = this.add.text(100, 330, `${instructCopy7}`);
+    let copy3 = this.add.text(100, 240, `${instructCopy3}`);
+    let copy4 = this.add.text(100, 300, `${instructCopy4}`);
+    let copy5 = this.add.text(100, 330, `${instructCopy5}`);
+    let copy6 = this.add.text(100, 360, `${instructCopy6}`);
+    let copy7 = this.add.text(100, 420, `${instructCopy7}`);
 
-    let backBtn = this.add.text(100, 450, "Back");
+    let backBtn = this.add.text(100, 480, "Back");
 
     //button resources
     backBtn.setInteractive({ useHandCursor: true });

@@ -13,10 +13,19 @@ let spawnEvent;
 let toddlerList = [];
 let boundaryList = [];
 let directionList = [];
+let scoreBoard;
+let timeBoard;
 
 let velocityConstant = 40;
 let accelerationConstant = 15;
 let maxBabyCounter = 1;
+let totalScore = 0;
+let timeLeft = 300;
+let fontFam = {
+  fontSize: 17,
+  color: "#000000",
+  backgroundColor: "#FFFFFF",
+};
 
 class gameScene extends Phaser.Scene {
   constructor() {
@@ -42,6 +51,8 @@ class gameScene extends Phaser.Scene {
     this.add.image(400, 300, "map").setScale(1.3); //adds map
     this.createBoundary();
     this.createGates(); //adds gates that sit next to hazards
+    this.createScoreBoard();
+    this.createTimer();
 
     this.onSpawn(); //spawn toddler?
     spawnEvent = this.time.addEvent({
@@ -53,7 +64,45 @@ class gameScene extends Phaser.Scene {
   }
 
   update() {
-    // leave blank for now
+    scoreBoard.setText(totalScore);
+    let standardTime = this.convertTime(timeLeft);
+    timeBoard.setText(standardTime);
+
+    if(timeLeft == 0) {
+      this.scene.start("resultsScene");
+    }
+  }
+
+  createScoreBoard() {
+    this.add.text(450, 180, "Score:", fontFam)
+    scoreBoard = this.add.text(450, 210, totalScore, fontFam)
+  }
+
+  createTimer() {
+    spawnEvent = this.time.addEvent({
+      delay: 1000,
+      callback: this.increaseTime,
+      callbackScope: this,
+      loop: true,
+    });
+    this.add.text(330, 180, "Time:", fontFam)
+    timeBoard = this.add.text(330, 210, timeLeft, fontFam)
+  }
+
+  increaseTime() {
+    timeLeft--;
+  }
+
+  convertTime(x) {
+    let min = Math.floor(x/60)
+    let sec = x%60
+    if(sec == 0) {
+      return min + ":" + sec + "0"
+    }
+    if(sec < 10) {
+      return min + ":" + "0" + sec
+    }
+    return min + ":" + sec
   }
 
   createBoundary() {
@@ -111,7 +160,7 @@ class gameScene extends Phaser.Scene {
     gate.on("pointerdown", function () {
       gate.destroy();
     });
-    gate.on('pointerdown', () => this.openQuiz(gateID));
+    //gate.on('pointerdown', () => this.openQuiz(gateID));
   }
 
   // intention is for scene to switch to quizScene when gate is clicked -- right now
@@ -167,6 +216,7 @@ class gameScene extends Phaser.Scene {
           toddler.body.setEnable(false);
           toddler.setAcceleration(0, 0);
           maxBabyCounter--;
+          totalScore+=200;
         }
       });
     }
