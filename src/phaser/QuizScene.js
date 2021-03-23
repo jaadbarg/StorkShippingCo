@@ -1,10 +1,11 @@
 import Phaser from "phaser";
-import questionsStairs  from "./QuizQuestions";
-import questionsWindow  from "./QuizQuestions";
-import questionsWater  from "./QuizQuestions";
-import questionsBaby  from "./QuizQuestions";
-import questionsFurniture  from "./QuizQuestions";
-import questionsBed  from "./QuizQuestions";
+import questionBank from "./QuizQuestions"
+// import questionsStairs  from "./QuizQuestions";
+// import questionsWindow  from "./QuizQuestions";
+// import questionsWater  from "./QuizQuestions";
+// import questionsBaby  from "./QuizQuestions";
+// import questionsFurniture  from "./QuizQuestions";
+// import questionsBed  from "./QuizQuestions";
 
 // in progress
 let questionsExample1 = {
@@ -46,32 +47,39 @@ class QuizScene extends Phaser.Scene {
     create() {
         console.log(this.gateID)
         //including an example q for now until data can be passed between scenes
-        let question = questionsWindow[1];
+        let question
+        console.log(question)
 
         //pass in an int indicating which hazard was selected
         switch(this.gateID) {
             case 0:
-                question = questionsStairs[counter[0]];
+                question = questionBank[0][counter[0]];
                 counter[0]++;
+                console.log(0.01)
+                console.log(question)
                 break;
             case 1:
-                question = questionsWindow[counter[1]];
+                question = questionBank[1][counter[1]];
                 counter[1]++;
+                console.log(11)
                 break;
             case 2:
-                question = questionsWater[counter[2]];
+                question = questionBank[2][counter[2]];
                 counter[2]++;
+                console.log(22)
+                console.log(question)
                 break;
             case 3:
-                question = questionsBaby[counter[3]];
+                question = questionBank[3][counter[3]];
                 counter[3]++;
+                console.log(33)
                 break;
             case 4:
-                question = questionsFurniture[counter[4]];
+                question = questionBank[4][counter[4]];
                 counter[4]++;
                 break;
             case 5:
-                question = questionsBed[counter[5]];
+                question = questionBank[5][counter[5]];
                 counter[5]++;
                 break;
         }
@@ -87,6 +95,7 @@ class QuizScene extends Phaser.Scene {
         let bg = this.add.sprite(0, 0, "background");
         bg.setOrigin(400, 300);
 
+        console.log(question)
         let title = this.add.text(0, 0, `${question.questionText}`,
          { ...fontFam, wordWrap: {width: 820} });
         
