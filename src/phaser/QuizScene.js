@@ -45,7 +45,7 @@ class QuizScene extends Phaser.Scene {
         console.log(question)
 
         feedbackText = this.add.text(0, 550, "", {...fontFam, wordWrap: {width: 820}});
-        backBtn = this.add.text(530, 550, "", {...fontFamBack});
+        backBtn = this.add.text(530, 460, "", {...fontFamBack});
 
         //pass in an int indicating which hazard was selected
         switch(this.gateID) {
