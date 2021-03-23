@@ -30,6 +30,18 @@ let questionsExample = [
 // keeps track of which questions you're on for each category to avoid repeats
 let counter = [0,0,0,0,0,0]
 
+const fontFam = {
+    fontSize: 20,
+    color: "#000000",
+    backgroundColor: "#FFFFFF",
+};
+
+const fontFamBack = {
+    fontSize: 30,
+    color: "#000000",
+    backgroundColor: "#FFFFFF",
+};
+
 class QuizScene extends Phaser.Scene {
     constructor() {
         super({ key: "quizScene" });
@@ -86,11 +98,6 @@ class QuizScene extends Phaser.Scene {
 
         let cam = this.cameras.add(0, 0, 800, 600);
         cam.setBackgroundColor(0x7AD7F0);
-        const fontFam = {
-            fontSize: 20,
-            color: "#000000",
-            backgroundColor: "#FFFFFF",
-        };
 
         let bg = this.add.sprite(0, 0, "background");
         bg.setOrigin(400, 300);
@@ -106,7 +113,7 @@ class QuizScene extends Phaser.Scene {
                      {...fontFam, wordWrap: {width: 820}})
                 choice.setInteractive();
                 choice.on('pointerdown', () =>
-                    this.correctResponse(question)
+                    this.correctResponse(question, question.responses.length)
                 );
             } else {
                 choice = this.add.text(0, 150 + 100 * i, question.responses[i], {...fontFam, wordWrap: {width: 820}})
@@ -118,10 +125,16 @@ class QuizScene extends Phaser.Scene {
         }
     }
 
-    correctResponse(question) {
-        //alert(`Correct choice, Good job! ${question.rationaleCorrect}`);
-        this.scene.switch("gameScene")
+    correctResponse(question, length) {
+        this.add.text(0, 150 + 100 * (length), question.rationaleCorrect, {...fontFam, wordWrap: {width: 820}});
+        let backBtn = this.add.text(400, 550, "RETURN TO GAME", {...fontFamBack});
+        backBtn.setInteractive({ useHandCursor: true });
+        backBtn.on("pointerdown", () => this.goBack());
     }
+
+    goBack() {
+        this.scene.switch("gameScene");
+      }
 }
 
 export default QuizScene;
