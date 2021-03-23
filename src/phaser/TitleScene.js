@@ -29,6 +29,12 @@ class TitleScene extends Phaser.Scene {
     let instructBtn = this.add.text(50, 550, "Instructions", { ...fontFam });
     let resourceBtn = this.add.text(550, 550, "Resources", { ...fontFam });
 
+    // just to access results screen now; remove this whole block later $
+    let resultsBtn = this.add.text(290, 550, "Results(test)", {...fontFam})
+    resultsBtn.setInteractive({ useHandCursor: true });
+    resultsBtn.on("pointerdown", () => this.startResults());
+    // $
+
     // let muteBtn = this.add.text(700, 100, "Mute", { ...fontFam });
     // muteBtn.setInteractive({ useHandCursor: true });
     // muteBtn.on(
@@ -56,6 +62,9 @@ class TitleScene extends Phaser.Scene {
   startResource() {
     this.scene.switch("resourceScene");
   }
+
+  // delete this later
+  startResults() {this.scene.switch("resultsScene")}
 }
 
 export default TitleScene;

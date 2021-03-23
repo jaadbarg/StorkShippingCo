@@ -57,7 +57,7 @@ let questionsStairs = [
     to walk. You should also put door knob covers on doors that lead to rooms where there are stairs.`,
       ` Don’t do anything, falling is just something that happens to kids. It can’t cause a serious injury.`,
     ],
-    3,
+    2,
     `RATIONALECORRECT`,
     `RATIONALEINCORRECT`
   ),
@@ -224,4 +224,5 @@ let questionsBed = [
   ),
 ];
 
-export default questionsStairs;
+export default [questionsStairs, questionsWindow, questionsWater, 
+  questionsBaby, questionsFurniture, questionsBed];
