@@ -6,6 +6,7 @@ import GameScene from "./phaser/GameScene.js";
 import TitleScene from "./phaser/TitleScene.js";
 import ResourceScene from "./phaser/ResourceScene.js";
 import InstructScene from "./phaser/InstructScene.js";
+import ResultsScene from "./phaser/ResultsScene.js"
 import QuizScene from "./phaser/QuizScene.js";
 // import QuizQuestions from "./phaser/QuizQuestions";
 
@@ -18,6 +19,7 @@ let titleScene = new TitleScene();
 
 let resourceScene = new ResourceScene();
 let instructScene = new InstructScene();
+let resultsScene = new ResultsScene();
 let quizScene = new QuizScene();
 // let quizQuestions = new QuizQuestions();
 
@@ -43,6 +45,7 @@ game.scene.add("gameScene", gameScene);
 
 game.scene.add("resourceScene", resourceScene);
 game.scene.add("instructScene", instructScene);
+game.scene.add("resultsScene", resultsScene)
 
 game.scene.add("quizScene", quizScene);
 // game.scene.add("quizQuestions", quizQuestions);
