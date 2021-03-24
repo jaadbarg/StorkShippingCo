@@ -6,15 +6,22 @@ class ResultsScene extends Phaser.Scene {
     console.log("resultsScene");
   }
 
+  init(data) {
+    this.totalScore = data.score;
+  }
+
   preload() {
     this.load.image("background", "../assets/menu.jpg");
   }
 
   create() {
+
+    let rankTitle = this.getTitle(this.totalScore);
+
     //setting copy for us
-    const instructCopy1 = "You helped X babies reach the goal in Y minutes!";
+    const instructCopy1 = "You helped " + this.totalScore/200 + " babies reach the goal in 5 minutes!";
     const instructCopy2 = "This earns you the rank of...";
-    const instructCopy3 = "CHILDPROOFING CHAMPION! / SAFETY SAVANT!";
+    const instructCopy3 = rankTitle;
     const instructCopy4 = "We hope you've learned more about how to keep your little ones";
     const instructCopy5 = "safe around the home. To learn more about fall prevention,";
     const instructCopy6 = "take a look at the Resources tab or play another round!";
@@ -42,9 +49,29 @@ class ResultsScene extends Phaser.Scene {
     backBtn.setInteractive({ useHandCursor: true });
     backBtn.on("pointerdown", () => this.goBack());
   }
+
   // button method
   goBack() {
     this.scene.switch("titleScene");
+  }
+
+  getTitle(score) {
+    if(score < 1000) {
+      return "Novice Inspector"
+    }
+    if(score < 2000) {
+      return "Adept Inspector"
+    }
+    if(score < 3000) {
+      return "Magnus Inspector"
+    }
+    if(score < 4000) {
+      return "Grandmaster Inspector"
+    }
+    if(score < 5000) {
+      return "Legendary Inspector"
+    }
+    return "Visionary Inspector"
   }
 }
 

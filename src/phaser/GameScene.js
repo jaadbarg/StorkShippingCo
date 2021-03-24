@@ -15,6 +15,7 @@ let boundaryList = [];
 let directionList = [];
 let scoreBoard;
 let timeBoard;
+let gateTracker = [true, true, true, true, true, true];
 
 let velocityConstant = 40;
 let accelerationConstant = 15;
@@ -70,7 +71,7 @@ class gameScene extends Phaser.Scene {
     timeBoard.setText(standardTime);
 
     if(timeLeft == 0) {
-      this.scene.start("resultsScene");
+      this.scene.start("resultsScene", {score: totalScore});
     }
   }
 
@@ -160,6 +161,7 @@ class gameScene extends Phaser.Scene {
     //makes gate clickable/breakable
     gate.on("pointerdown", function () {
       gate.destroy();
+      gateTracker[gateID] = false;
     });
     gate.on('pointerdown', () => this.openQuiz(gateID));
   }
@@ -185,8 +187,46 @@ class gameScene extends Phaser.Scene {
 
       toddlerList.push(toddler);
 
+      if(Math.random() * 100 < 40) {
+        this.respawnGate();
+      }
+
       maxBabyCounter++;
     }
+  }
+
+  respawnGate() {
+    let respawnPool = []
+    console.log(gateTracker)
+    for(let i = 0; i < gateTracker.length; i++) {
+      if(!gateTracker[i]) {
+        respawnPool.push(i)
+      }
+    }
+    if(respawnPool.length == 0) {
+      return;
+    }
+    let respawnNumber = respawnPool[Math.floor(Math.random() * respawnPool.length)];
+    console.log(respawnPool)
+    this.readdGate(respawnNumber);
+  }
+
+  readdGate(x) {
+    if(x == 0) {
+      this.addGate(750, 440, "gate1", 0.05, 0, 0); //stairs
+    } else if (x == 1) {
+      this.addGate(525, 550, "gate1", 0.05, 270, 1); //windows
+    } else if(x == 2) {
+      this.addGate(550, 190, "gate1", 0.05, 0, 2); //openwater
+    } else if (x == 3) {
+      this.addGate(290, 250, "gate1", 0.05, 0, 3); //baby equipment
+    } else if (x == 4) {
+      this.addGate(275, 465, "gate1", 0.05, 270, 4);
+    } else if (x == 5) {
+      this.addGate(50, 120, "gate1", 0.05, 0, 5);
+    }
+    console.log("gate respawned: " + x)
+    gateTracker[x] = true;
   }
 
   setUp(toddler) {
