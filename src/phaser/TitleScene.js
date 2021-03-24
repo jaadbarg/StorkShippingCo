@@ -28,9 +28,10 @@ class TitleScene extends Phaser.Scene {
     let startBtn = this.add.text(350, 500, "Start", { ...fontFam });
     let instructBtn = this.add.text(50, 550, "Instructions", { ...fontFam });
     let resourceBtn = this.add.text(550, 550, "Resources", { ...fontFam });
+    let minigameBtn = this.add.text(290, 550, "Minigames", {...fontFam})
 
     // just to access results screen now; remove this whole block later $
-    let resultsBtn = this.add.text(290, 550, "Results(test)", {...fontFam})
+    let resultsBtn = this.add.text(550, 450, "Results(test)", {...fontFam})
     resultsBtn.setInteractive({ useHandCursor: true });
     resultsBtn.on("pointerdown", () => this.startResults());
     // $
@@ -51,6 +52,9 @@ class TitleScene extends Phaser.Scene {
 
     resourceBtn.setInteractive({ useHandCursor: true });
     resourceBtn.on("pointerdown", () => this.startResource());
+
+    minigameBtn.setInteractive({ useHandCursor: true });
+    minigameBtn.on("pointerdown", () => this.startMinigame());
   }
 
   startGame() {
@@ -61,6 +65,9 @@ class TitleScene extends Phaser.Scene {
   }
   startResource() {
     this.scene.switch("resourceScene");
+  }
+  startMinigame() {
+    this.scene.switch("minigameScene");
   }
 
   // delete this later

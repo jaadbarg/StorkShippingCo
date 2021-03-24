@@ -12,6 +12,7 @@ import QuizScene from "./phaser/QuizScene.js";
 import Stairs1Scene from "./phaser/Stairs1Scene";
 
 import PreloadScene from "./phaser/PreloadScene.js";
+import MinigameScene from "./phaser/MinigameScene.js";
 
 // Initializing game scenes
 let preloadScene = new PreloadScene();
@@ -23,6 +24,7 @@ let instructScene = new InstructScene();
 let resultsScene = new ResultsScene();
 let quizScene = new QuizScene();
 // let quizQuestions = new QuizQuestions();
+let minigameScene = new MinigameScene();
 let stairs1Scene = new Stairs1Scene();
 
 //set up phaser config
@@ -51,7 +53,8 @@ game.scene.add("resultsScene", resultsScene)
 
 game.scene.add("quizScene", quizScene);
 // game.scene.add("quizQuestions", quizQuestions);
-game.scene.add("stairs1scene", stairs1Scene);
+game.scene.add("minigameScene", minigameScene);
+game.scene.add("stairs1Scene", stairs1Scene);
 
 // start the title scene
 game.scene.start("preloadScene");
