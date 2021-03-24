@@ -197,7 +197,6 @@ class gameScene extends Phaser.Scene {
 
   respawnGate() {
     let respawnPool = []
-    console.log(gateTracker)
     for(let i = 0; i < gateTracker.length; i++) {
       if(!gateTracker[i]) {
         respawnPool.push(i)
@@ -207,7 +206,6 @@ class gameScene extends Phaser.Scene {
       return;
     }
     let respawnNumber = respawnPool[Math.floor(Math.random() * respawnPool.length)];
-    console.log(respawnPool)
     this.readdGate(respawnNumber);
   }
 
@@ -225,7 +223,6 @@ class gameScene extends Phaser.Scene {
     } else if (x == 5) {
       this.addGate(50, 120, "gate1", 0.05, 0, 5);
     }
-    console.log("gate respawned: " + x)
     gateTracker[x] = true;
   }
 
