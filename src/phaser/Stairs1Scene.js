@@ -1,43 +1,109 @@
 import Phaser from "phaser";
-import baby from "../assets/babies/baby1.png";
+import stairs from "../assets/minigames/stairs1/stairs.png";
+import box from "../assets/minigames/stairs1/box.png";
+import blocks from "../assets/minigames/stairs1/blocks.png";
 
 class stairs1Scene extends Phaser.Scene {
     constructor() {
       super("stairs1Scene");
       console.log("stairs1Scene");
+      var counter = 0;
     }
 
-    preload(){
-        this.load.image('baby', baby);
+    preload (){
+        this.load.image("stairs", stairs);
+        this.load.image("box", box);
+        this.load.image("blocks", blocks);
     }
     
-    create(){
+    create (){
 
-        var image = this.add.sprite(200, 300, 'baby').setInteractive();
+        //add background
+        this.add.image(400,300,"stairs");
+
+        //place collection box image
+        this.add.image(700, 500, "box").setScale(0.12);
+
+        //add minigame title text
+        const fontFam = {
+            fontSize: 50,
+            color: "#000000",
+            backgroundColor: "#FFFFFF",
+          };
+        this.add.text(250, 50, "CLEAR THE STAIRS!", { ...fontFam });
     
-        this.input.setDraggable(image);
+        //place all 3 clutter blocks
+        var blocks1 = this.add.image(100, 175, "blocks").setScale(0.1);
+        blocks1.setInteractive();
+        this.input.setDraggable(blocks1);
+
+        var blocks2 = this.add.image(250, 515, "blocks").setScale(0.1);
+        blocks2.setInteractive();
+        this.input.setDraggable(blocks2);
+
+        var blocks3 = this.add.image(450, 300, "blocks").setScale(0.1);
+        blocks3.setInteractive();
+        this.input.setDraggable(blocks3);
+
+        //place drop zone
+        var zone = this.add.zone(700, 500, 100, 100).setRectangleDropZone(150, 150);
     
-        //  The pointer has to move 16 pixels before it's considered as a drag
-        this.input.dragDistanceThreshold = 16;
-    
+        //  Just a visual display of the drop zone
+        var graphics = this.add.graphics();
+        graphics.lineStyle(2, 0xffff00);
+        graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+        
+        //moves dragged object to front
         this.input.on('dragstart', function (pointer, gameObject) {
-    
-            gameObject.setTint(0xff0000);
-    
-        });
-    
+            this.children.bringToTop(gameObject);
+        }, this);
+   
+        //moves object
         this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
-    
             gameObject.x = dragX;
             gameObject.y = dragY;
-    
         });
     
-        this.input.on('dragend', function (pointer, gameObject) {
-    
-            gameObject.clearTint();
-    
+        //when dragged object touches dropzones
+        this.input.on('dragenter', function (pointer, gameObject, dropZone) {
+            graphics.clear();
+            graphics.lineStyle(2, 0x00ffff);
+            graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
         });
+    
+        //when dragged object leaves dropzone
+        this.input.on('dragleave', function (pointer, gameObject, dropZone) {
+            graphics.clear();
+            graphics.lineStyle(2, 0xffff00);
+            graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+        });
+    
+        //when object dropped into dropzone, increment counter
+        this.input.on('drop', function (pointer, gameObject, dropZone) {
+            gameObject.x = dropZone.x;
+            gameObject.y = dropZone.y;
+            gameObject.input.enabled = false;
+            updateCounter();
+        });
+    
+        //when drag ends and object is not in the dropzone
+        this.input.on('dragend', function (pointer, gameObject, dropped) {
+            if (!dropped){
+                gameObject.x = gameObject.input.dragStartX;
+                gameObject.y = gameObject.input.dragStartY;
+            }
+            graphics.clear();
+            graphics.lineStyle(2, 0xffff00);
+            graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+        });
+    }
+    
+    //increments counter, at 3 it ends games
+    updateCounter(){
+        counter++;
+        if(counter == 3){
+            this.scene.switch("minigameScene")
+        }
     }
 }
 
