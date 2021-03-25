@@ -7,6 +7,7 @@ import baby5 from "../assets/babies/baby5.png";
 import gate1 from "../assets/gate.png";
 import map from "../assets/map.png";
 import boundary from "../assets/boundary.png";
+import eventsCenter from "./EventsCenter"
 
 let gateGroup;
 let spawnEvent;
@@ -28,6 +29,7 @@ let fontFam = {
   color: "#000000",
   backgroundColor: "#FFFFFF",
 };
+let timeAdjustment;
 
 class gameScene extends Phaser.Scene {
   constructor() {
@@ -49,12 +51,14 @@ class gameScene extends Phaser.Scene {
 
   create() {
     //initially places assets into game
-
     this.add.image(400, 300, "map").setScale(1.3); //adds map
     this.createBoundary();
     this.createGates(); //adds gates that sit next to hazards
     this.createScoreBoard();
     this.createTimer();
+
+    eventsCenter.on("timePassedData", this.substractTime, this);
+    timeAdjustment = 0;
 
     this.onSpawn(); //spawn toddler?
     spawnEvent = this.time.addEvent({
@@ -70,7 +74,7 @@ class gameScene extends Phaser.Scene {
     let standardTime = this.convertTime(timeLeft);
     timeBoard.setText(standardTime);
 
-    if(timeLeft == 0) {
+    if(timeLeft <= 0) {
       this.scene.start("resultsScene", {score: totalScore});
     }
   }
@@ -93,6 +97,14 @@ class gameScene extends Phaser.Scene {
 
   increaseTime() {
     timeLeft--;
+  }
+
+  substractTime(timePassed) {
+    let placeHolder = timePassed;
+    timePassed -= timeAdjustment;
+    console.log("timepassed is equal ===" + timePassed)
+    timeLeft -= timePassed;
+    timeAdjustment = placeHolder;
   }
 
   convertTime(x) {

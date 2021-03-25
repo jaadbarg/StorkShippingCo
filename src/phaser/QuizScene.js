@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import questionBank from "./QuizQuestions"
+import eventsCenter from "./EventsCenter"
 // import questionsStairs  from "./QuizQuestions";
 // import questionsWindow  from "./QuizQuestions";
 // import questionsWater  from "./QuizQuestions";
@@ -8,9 +9,11 @@ import questionBank from "./QuizQuestions"
 // import questionsBed  from "./QuizQuestions";
 
 // keeps track of which questions you're on for each category to avoid repeats
-let counter = [0,0,0,0,0,0]
+let counter = [0, 0, 0, 0, 0, 0]
 let feedbackText;
 let backBtn;
+let timePassed = 0;
+let spawnEvent;
 
 const fontFam = {
     fontSize: 18,
@@ -30,7 +33,6 @@ class QuizScene extends Phaser.Scene {
     }
 
     init(data) {
-        console.log("init "+ data.id)
         this.gateID = data.id
     }
 
@@ -39,37 +41,30 @@ class QuizScene extends Phaser.Scene {
     }
 
     create() {
-        console.log(this.gateID)
-        //including an example q for now until data can be passed between scenes
         let question
-        console.log(question)
 
-        feedbackText = this.add.text(0, 550, "", {...fontFam, wordWrap: {width: 820}});
-        backBtn = this.add.text(530, 550, "", {...fontFamBack});
+        feedbackText = this.add.text(0, 550, "", { ...fontFam, wordWrap: { width: 820 } });
+        backBtn = this.add.text(530, 550, "", { ...fontFamBack });
+
+        this.trackTime();
 
         //pass in an int indicating which hazard was selected
-        switch(this.gateID) {
+        switch (this.gateID) {
             case 0:
                 question = questionBank[0][counter[0]];
                 counter[0]++;
-                console.log(0.01)
-                console.log(question)
                 break;
             case 1:
                 question = questionBank[1][counter[1]];
                 counter[1]++;
-                console.log(11)
                 break;
             case 2:
                 question = questionBank[2][counter[2]];
                 counter[2]++;
-                console.log(22)
-                console.log(question)
                 break;
             case 3:
                 question = questionBank[3][counter[3]];
                 counter[3]++;
-                console.log(33)
                 break;
             case 4:
                 question = questionBank[4][counter[4]];
@@ -87,21 +82,20 @@ class QuizScene extends Phaser.Scene {
         let bg = this.add.sprite(0, 0, "background");
         bg.setOrigin(400, 300);
 
-        console.log(question)
         let title = this.add.text(0, 0, `${question.questionText}`,
-         { ...fontFam, wordWrap: {width: 820} });
-        
-        for(let i = 0; i < question.responses.length; i++) {
+            { ...fontFam, wordWrap: { width: 820 } });
+
+        for (let i = 0; i < question.responses.length; i++) {
             let choice;
-            if(i == question.correct) {
+            if (i == question.correct) {
                 choice = this.add.text(0, 180 + 90 * i, this.convertI(i) + question.responses[i],
-                     {...fontFam, wordWrap: {width: 820}})
+                    { ...fontFam, wordWrap: { width: 820 } })
                 choice.setInteractive();
                 choice.on('pointerdown', () =>
                     this.correctResponse(question, question.responses.length)
                 );
             } else {
-                choice = this.add.text(0, 180 + 90 * i, this.convertI(i) + question.responses[i], {...fontFam, wordWrap: {width: 820}})
+                choice = this.add.text(0, 180 + 90 * i, this.convertI(i) + question.responses[i], { ...fontFam, wordWrap: { width: 820 } })
                 choice.setInteractive();
                 choice.on('pointerdown', () =>
                     this.incorrectResponse(question, question.responses.length)
@@ -110,17 +104,30 @@ class QuizScene extends Phaser.Scene {
         }
     }
 
+    trackTime() {
+        spawnEvent = this.time.addEvent({
+            delay: 1000,
+            callback: this.increaseTime,
+            callbackScope: this,
+            loop: true,
+        });
+    }
+
+    increaseTime() {
+        timePassed++;
+    }
+
     convertI(i) {
-        if(i == 0) {
+        if (i == 0) {
             return "A. "
         }
-        if(i == 1) {
+        if (i == 1) {
             return "B. "
         }
-        if(i == 2) {
+        if (i == 2) {
             return "C. "
         }
-        if(i == 3) {
+        if (i == 3) {
             return "D. "
         }
         return "error"
@@ -146,7 +153,8 @@ class QuizScene extends Phaser.Scene {
     }
 
     goBack() {
-        this.scene.switch("gameScene");
+        eventsCenter.emit('timePassedData', timePassed)
+        this.scene.switch("gameScene")
     }
 }
 
