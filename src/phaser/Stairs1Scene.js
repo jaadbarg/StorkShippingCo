@@ -3,35 +3,37 @@ import stairs from "../assets/minigames/stairs1/stairs.png";
 import box from "../assets/minigames/stairs1/box.png";
 import blocks from "../assets/minigames/stairs1/blocks.png";
 
+let counter = 0;
+let backButton;
+let fontFam = {
+    fontSize: 50,
+    color: "#000000",
+    backgroundColor: "#FFFFFF",
+};
+
 class stairs1Scene extends Phaser.Scene {
     constructor() {
-      super("stairs1Scene");
-      console.log("stairs1Scene");
-      var counter = 0;
+        super("stairs1Scene");
+        console.log("stairs1Scene");
     }
 
-    preload (){
+    preload() {
         this.load.image("stairs", stairs);
         this.load.image("box", box);
         this.load.image("blocks", blocks);
     }
-    
-    create (){
+
+    create() {
 
         //add background
-        this.add.image(400,300,"stairs");
+        this.add.image(400, 300, "stairs");
 
         //place collection box image
         this.add.image(700, 500, "box").setScale(0.12);
 
         //add minigame title text
-        const fontFam = {
-            fontSize: 50,
-            color: "#000000",
-            backgroundColor: "#FFFFFF",
-          };
         this.add.text(250, 50, "CLEAR THE STAIRS!", { ...fontFam });
-    
+
         //place all 3 clutter blocks
         var blocks1 = this.add.image(100, 175, "blocks").setScale(0.1);
         blocks1.setInteractive();
@@ -47,48 +49,48 @@ class stairs1Scene extends Phaser.Scene {
 
         //place drop zone
         var zone = this.add.zone(700, 500, 100, 100).setRectangleDropZone(150, 150);
-    
+
         //  Just a visual display of the drop zone
         var graphics = this.add.graphics();
         graphics.lineStyle(2, 0xffff00);
         graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
-        
+
         //moves dragged object to front
         this.input.on('dragstart', function (pointer, gameObject) {
             this.children.bringToTop(gameObject);
         }, this);
-   
+
         //moves object
         this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
             gameObject.x = dragX;
             gameObject.y = dragY;
         });
-    
+
         //when dragged object touches dropzones
         this.input.on('dragenter', function (pointer, gameObject, dropZone) {
             graphics.clear();
             graphics.lineStyle(2, 0x00ffff);
             graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
         });
-    
+
         //when dragged object leaves dropzone
         this.input.on('dragleave', function (pointer, gameObject, dropZone) {
             graphics.clear();
             graphics.lineStyle(2, 0xffff00);
             graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
         });
-    
+
         //when object dropped into dropzone, increment counter
         this.input.on('drop', function (pointer, gameObject, dropZone) {
             gameObject.x = dropZone.x;
             gameObject.y = dropZone.y;
             gameObject.input.enabled = false;
-            updateCounter();
+            counter++;
         });
-    
+
         //when drag ends and object is not in the dropzone
         this.input.on('dragend', function (pointer, gameObject, dropped) {
-            if (!dropped){
+            if (!dropped) {
                 gameObject.x = gameObject.input.dragStartX;
                 gameObject.y = gameObject.input.dragStartY;
             }
@@ -97,13 +99,21 @@ class stairs1Scene extends Phaser.Scene {
             graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
         });
     }
-    
+
     //increments counter, at 3 it ends games
-    updateCounter(){
-        counter++;
-        if(counter == 3){
-            this.scene.switch("minigameScene")
+    update() {
+        if (counter >= 3) {
+            counter = 0;
+            this.returnToMini();
         }
+    }
+
+    returnToMini() {
+        backButton = this.add.text(250, 100, "Good Job! Return", {... fontFam})
+        backButton.setInteractive();
+        backButton.on('pointerdown', () =>
+            this.scene.start("minigameScene")
+        );
     }
 }
 

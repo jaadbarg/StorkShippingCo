@@ -16,7 +16,7 @@ class MinigameScene extends Phaser.Scene {
     const fontFam = {
       fontSize: 30,
       color: "#000000",
-      backgroundColor: "#0000FF",
+      backgroundColor: "#FFFFFF",
     };
 
     this.add.image(400, 300, "logo");
