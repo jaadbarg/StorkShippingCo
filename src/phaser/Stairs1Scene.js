@@ -86,6 +86,7 @@ class stairs1Scene extends Phaser.Scene {
             gameObject.y = dropZone.y;
             gameObject.input.enabled = false;
             counter++;
+            gameObject.destroy();
         });
 
         //when drag ends and object is not in the dropzone

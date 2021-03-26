@@ -21,14 +21,13 @@ class MinigameScene extends Phaser.Scene {
 
     this.add.image(400, 300, "logo");
 
+    let backBtn = this.add.text(25, 550, "<-- Back", { ...fontFam });
+    backBtn.setInteractive({ useHandCursor: true });
+    backBtn.on("pointerdown", () => this.scene.switch("titleScene"));
+
     let stairs1Btn = this.add.text(50, 150, "Clear the Stairs!", { ...fontFam });
-
     stairs1Btn.setInteractive({ useHandCursor: true });
-    stairs1Btn.on("pointerdown", () => this.startStairs1());
-  }
-
-  startStairs1() {
-    this.scene.switch("stairs1Scene");
+    stairs1Btn.on("pointerdown", () => this.scene.switch("stairs1Scene"));
   }
 }
 

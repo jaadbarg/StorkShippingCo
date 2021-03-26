@@ -4,7 +4,7 @@ import baby2 from "../assets/babies/baby2.png";
 import baby3 from "../assets/babies/baby3.png";
 import baby4 from "../assets/babies/baby4.png";
 import baby5 from "../assets/babies/baby5.png";
-import gate1 from "../assets/gate.png";
+import gate1 from "../assets/stop.png";
 import map from "../assets/map.png";
 import boundary from "../assets/boundary.png";
 import eventsCenter from "./EventsCenter"
