@@ -49,6 +49,7 @@ class ResourceScene extends Phaser.Scene {
 
     resource1Btn.setInteractive({ useHandCursor: true });
     resource1Btn.on("pointerdown", () => this.openInNewTab(safetyUrl1));
+
   }
   // button method
   goBack() {

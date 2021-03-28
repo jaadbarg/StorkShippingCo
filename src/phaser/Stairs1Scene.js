@@ -87,6 +87,9 @@ class stairs1Scene extends Phaser.Scene {
             gameObject.input.enabled = false;
             counter++;
             gameObject.destroy();
+            graphics.clear();
+            graphics.lineStyle(2, 0xffff00);
+            graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
         });
 
         //when drag ends and object is not in the dropzone

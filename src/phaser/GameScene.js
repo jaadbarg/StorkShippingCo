@@ -151,10 +151,10 @@ class gameScene extends Phaser.Scene {
     gateGroup = this.physics.add.group();
     this.addGate(550, 190, "gate1", 0.05, 0, 2); //openwater
     this.addGate(750, 440, "gate1", 0.05, 0, 0); //stairs
-    this.addGate(525, 550, "gate1", 0.05, 270, 1); //windows
+    this.addGate(525, 550, "gate1", 0.05, 0, 1); //windows
     this.addGate(50, 120, "gate1", 0.05, 0, 5); //baby walkers
     this.addGate(290, 250, "gate1", 0.05, 0, 3); //baby equipment
-    this.addGate(275, 465, "gate1", 0.05, 270, 4); //furniture
+    this.addGate(275, 465, "gate1", 0.05, 0, 4); //furniture
   }
 
   addGate(x, y, type, scale, angle, gateID) {

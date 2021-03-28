@@ -12,6 +12,7 @@ import eventsCenter from "./EventsCenter"
 let counter = [0, 0, 0, 0, 0, 0]
 let feedbackText;
 let backBtn;
+let titleText;
 let timePassed = 0;
 let spawnEvent;
 
@@ -23,7 +24,8 @@ const fontFam = {
 
 const fontFamBack = {
     fontSize: 30,
-    color: "#ffa500",
+    color: "#000000",
+    fontStyle: "bold",
     backgroundColor: "#FFFFFF",
 };
 
@@ -41,10 +43,7 @@ class QuizScene extends Phaser.Scene {
     }
 
     create() {
-        let question
-
-        feedbackText = this.add.text(0, 550, "", { ...fontFam, wordWrap: { width: 820 } });
-        backBtn = this.add.text(530, 550, "", { ...fontFamBack });
+        let question;
 
         this.trackTime();
 
@@ -134,6 +133,13 @@ class QuizScene extends Phaser.Scene {
     }
 
     correctResponse(question, length) {
+        let modal = this.add.rectangle(400, 300, 600, 420, 0xffffff);
+        modal.setStrokeStyle(10, 0x00bb00);
+
+        titleText = this.add.text(328, 130, "Good Job!", {... fontFamBack});
+        feedbackText = this.add.text(150, 200, "", { ...fontFam, wordWrap: { width: 515 } });
+        backBtn = this.add.text(277, 450, "", { ...fontFamBack });
+
         feedbackText.setText(question.rationaleCorrect);
         backBtn.setText("Return to game");
         backBtn.setInteractive({ useHandCursor: true });
@@ -141,15 +147,24 @@ class QuizScene extends Phaser.Scene {
     }
 
     incorrectResponse(question, length) {
-        feedbackText.setText(question.rationaleIncorrect);
-        backBtn.setText("Try again!")
-        //backBtn.setInteractive({ useHandCursor: true });
-        //backBtn.on("pointerdown", () => this.clearFeedback(backBtn));
+        let modal = this.add.rectangle(400, 300, 600, 420, 0xffffff);
+        modal.setStrokeStyle(10, 0xe90000);
+
+        titleText = this.add.text(328, 130, "Try Again!", {... fontFamBack});
+        feedbackText = this.add.text(150, 200, "", { ...fontFam, wordWrap: { width: 515 } });
+        backBtn = this.add.text(277, 450, "", { ...fontFamBack });
+
+        feedbackText.setText(question.rationaleCorrect);
+        backBtn.setText("Back To Question");
+        backBtn.setInteractive({ useHandCursor: true });
+        backBtn.on("pointerdown", () => this.clearFeedback(backBtn, modal));
     }
 
-    clearFeedback(backBtn) {
+    clearFeedback(backBtn, modal) {
+        titleText.setText('');
         backBtn.setText("");
         feedbackText.setText("");
+        modal.destroy();
     }
 
     goBack() {

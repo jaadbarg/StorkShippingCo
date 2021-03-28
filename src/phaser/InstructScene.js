@@ -43,6 +43,7 @@ class InstructScene extends Phaser.Scene {
     //button resources
     backBtn.setInteractive({ useHandCursor: true });
     backBtn.on("pointerdown", () => this.goBack());
+
   }
   // button method
   goBack() {
