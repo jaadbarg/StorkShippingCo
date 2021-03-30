@@ -63,7 +63,7 @@ class ResultsScene extends Phaser.Scene {
 
     //instructions
     let copy1 = this.add.text(100, 150, `${instructCopy1}`, { ...fontFam, wordWrap:{width:600} });
-    let copy3 = this.add.text(230, 240, `${rankTitle}`, { ...rankFontFam });
+    let copy3 = this.add.text(215, 240, `${rankTitle}`, { ...rankFontFam });
     let copy4 = this.add.text(100, 305, `${instructCopy4}`, { ...fontFam, wordWrap:{width:600} });
     let copy7 = this.add.text(100, 400, `${instructCopy7}`, { ...fontFam, wordWrap:{width:600} });
 
