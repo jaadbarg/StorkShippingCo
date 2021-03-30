@@ -140,7 +140,7 @@ class stairs1Scene extends Phaser.Scene {
     returnToMini() {
         eventsCenter.emit('timePassedMini', timePassed)
         console.log('TIMETIME === ' + timePassed)
-        this.scene.restart("stairs1Scene")
+        //this.scene.restart("stairs1Scene")
         this.scene.switch("gameScene")
     }
 }

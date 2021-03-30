@@ -78,8 +78,8 @@ class gameScene extends Phaser.Scene {
     let standardTime = this.convertTime(timeLeft);
     timeBoard.setText(standardTime);
 
-    if(timeLeft <= 0) {
-      this.scene.start("resultsScene", {score: totalScore});
+    if (timeLeft <= 0) {
+      this.scene.start("resultsScene", { score: totalScore });
     }
   }
 
@@ -120,12 +120,12 @@ class gameScene extends Phaser.Scene {
   }
 
   convertTime(x) {
-    let min = Math.floor(x/60)
-    let sec = x%60
-    if(sec == 0) {
+    let min = Math.floor(x / 60)
+    let sec = x % 60
+    if (sec == 0) {
       return min + ":" + sec + "0"
     }
-    if(sec < 10) {
+    if (sec < 10) {
       return min + ":" + "0" + sec
     }
     return min + ":" + sec
@@ -174,7 +174,7 @@ class gameScene extends Phaser.Scene {
     let gate = this.physics.add
       .image(x, y, type)
       .setScale(scale)
-      .setInteractive();  
+      .setInteractive();
     gate.setAngle(angle);
     this.toggleGate(gate, gateID);
     gate.setPushable(false);
@@ -183,22 +183,14 @@ class gameScene extends Phaser.Scene {
 
   toggleGate(gate, gateID) {
     //makes gate clickable/breakable
-    let coin = 100;
-    if(gateID == 0) {
-      coin = Math.random() * 100;
-    }
     gate.on("pointerdown", function () {
       gate.destroy();
       gateTracker[gateID] = false;
     });
-    if(coin <= 50) {
-      gate.on('pointerdown', () => this.openMiniGame());
-    } else {
-      gate.on('pointerdown', () => this.openQuiz(gateID));
-    }
+    gate.on('pointerdown', () => this.openQuiz(gateID));
   }
 
-  openMiniGame() {
+  openMiniGame(gateID) {
     this.scene.stop("quizScene")
     this.scene.sleep("gameScene")
     this.scene.run("stairs1Scene");
@@ -207,9 +199,20 @@ class gameScene extends Phaser.Scene {
   // intention is for scene to switch to quizScene when gate is clicked -- right now
   // openQuiz is running when gate is clicked but scene isn't switching
   openQuiz(gateID) {
-    this.scene.stop("quizScene")
-    this.scene.sleep("gameScene")
-    this.scene.run("quizScene", {id: gateID});
+    let coin = 100;
+    if(gateID == 0) {
+      coin = Math.random() * 100;
+    }
+    console.log(coin)
+    if(coin <= 50) {
+      this.scene.stop("stairs1Scene")
+      this.scene.sleep("gameScene")
+      this.scene.run("stairs1Scene");
+    } else {
+      this.scene.stop("quizScene")
+      this.scene.sleep("gameScene")
+      this.scene.run("quizScene", { id: gateID });
+    }
   }
 
   onSpawn() {
@@ -225,7 +228,7 @@ class gameScene extends Phaser.Scene {
 
       toddlerList.push(toddler);
 
-      if(Math.random() * 100 < 40) {
+      if (Math.random() * 100 < 40) {
         this.respawnGate();
       }
 
@@ -235,12 +238,12 @@ class gameScene extends Phaser.Scene {
 
   respawnGate() {
     let respawnPool = []
-    for(let i = 0; i < gateTracker.length; i++) {
-      if(!gateTracker[i]) {
+    for (let i = 0; i < gateTracker.length; i++) {
+      if (!gateTracker[i]) {
         respawnPool.push(i)
       }
     }
-    if(respawnPool.length == 0) {
+    if (respawnPool.length == 0) {
       return;
     }
     let respawnNumber = respawnPool[Math.floor(Math.random() * respawnPool.length)];
@@ -248,11 +251,11 @@ class gameScene extends Phaser.Scene {
   }
 
   readdGate(x) {
-    if(x == 0) {
+    if (x == 0) {
       this.addGate(750, 440, "gate1", 0.04, 0, 0); //stairs
     } else if (x == 1) {
       this.addGate(525, 550, "gate1", 0.04, 0, 1); //windows
-    } else if(x == 2) {
+    } else if (x == 2) {
       this.addGate(550, 190, "gate1", 0.04, 0, 2); //openwater
     } else if (x == 3) {
       this.addGate(290, 250, "gate1", 0.04, 0, 3); //baby equipment
@@ -293,7 +296,7 @@ class gameScene extends Phaser.Scene {
           toddler.body.setEnable(false);
           toddler.setAcceleration(0, 0);
           maxBabyCounter--;
-          totalScore+=200;
+          totalScore += 200;
         }
       });
     }
