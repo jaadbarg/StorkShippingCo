@@ -7,7 +7,7 @@ import eventsCenter from "./EventsCenter"
 let counter = 0;
 let backButton;
 let fontFam = {
-    fontFamily: "cursive",
+    // fontFamily: "cursive",
     fontSize: 50,
     color: "#000000",
     backgroundColor: "#FFFFFF",

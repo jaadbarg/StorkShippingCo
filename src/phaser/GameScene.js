@@ -25,7 +25,7 @@ let totalScore = 0;
 let timeLeft = 300;
 let MAXIMUMBABIES = 5
 let fontFam = {
-  fontFamily: "cursive",
+  // fontFamily: "cursive",
   fontSize: 17,
   color: "#000000",
   backgroundColor: "#FFFFFF",
