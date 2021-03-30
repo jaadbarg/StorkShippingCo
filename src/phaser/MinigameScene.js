@@ -1,5 +1,4 @@
 import Phaser from "phaser";
-import logo from "../assets/logo.png";
 import blueBackground from "../assets/blueBackground.png";
 
 class MinigameScene extends Phaser.Scene {
