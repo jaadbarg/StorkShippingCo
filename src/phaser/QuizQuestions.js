@@ -24,7 +24,7 @@ class Question {
 
 let questionsStairs = [
   new Question(
-    `Jenna is a new mom and is so excited that her baby is now big enough to crawl and even pull herself up to standing. She hasn’t put up a baby gate yet because she figures if the child can’t event walk there is no need to put up the gate. What would be the best advice you could give Jenna?`,
+    `Jenna is a new mom and is so excited that her baby is now big enough to crawl and even pull herself up to standing. She hasn’t put up a baby gate yet because she figures if the child can’t even walk there is no need to put up the gate. What would be the best advice you could give Jenna?`,
     [
       `No need to worry about putting up a gate until your baby is actually walking around`,
       `Even small children who are crawling could possibly pull themselves up on the steps and fall. Put a baby gate up now just in case and it will also help you start the habit once your child is able to walk.`,
