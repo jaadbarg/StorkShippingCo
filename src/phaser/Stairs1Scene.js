@@ -2,14 +2,18 @@ import Phaser from "phaser";
 import stairs from "../assets/minigames/stairs1/stairs.png";
 import box from "../assets/minigames/stairs1/box.png";
 import blocks from "../assets/minigames/stairs1/blocks.png";
+import eventsCenter from "./EventsCenter"
 
 let counter = 0;
 let backButton;
 let fontFam = {
+    fontFamily: "cursive",
     fontSize: 50,
     color: "#000000",
     backgroundColor: "#FFFFFF",
 };
+let timePassed = 0;
+let spawnEvent;
 
 class stairs1Scene extends Phaser.Scene {
     constructor() {
@@ -24,6 +28,8 @@ class stairs1Scene extends Phaser.Scene {
     }
 
     create() {
+
+        this.trackTime();
 
         //add background
         this.add.image(400, 300, "stairs");
@@ -108,16 +114,34 @@ class stairs1Scene extends Phaser.Scene {
     update() {
         if (counter >= 3) {
             counter = 0;
-            this.returnToMini();
+            backButton = this.add.text(250, 150, "Good Job! Return", { ...fontFam })
+            backButton.setInteractive();
+            let homeBtn = this.add.text(25, 550, "<-- Back");
+            homeBtn.setInteractive({ useHandCursor: true });
+            homeBtn.on("pointerdown", () => this.scene.start("minigameScene"));
+            backButton.on('pointerdown', () =>
+                this.returnToMini());
         }
     }
 
+    trackTime() {
+        spawnEvent = this.time.addEvent({
+            delay: 1000,
+            callback: this.increaseTime,
+            callbackScope: this,
+            loop: true,
+        });
+    }
+
+    increaseTime() {
+        timePassed++;
+    }
+
     returnToMini() {
-        backButton = this.add.text(250, 100, "Good Job! Return", {... fontFam})
-        backButton.setInteractive();
-        backButton.on('pointerdown', () =>
-            this.scene.start("minigameScene")
-        );
+        eventsCenter.emit('timePassedMini', timePassed)
+        console.log('TIMETIME === ' + timePassed)
+        this.scene.restart("stairs1Scene")
+        this.scene.switch("gameScene")
     }
 }
 

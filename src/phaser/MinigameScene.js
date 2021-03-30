@@ -14,6 +14,7 @@ class MinigameScene extends Phaser.Scene {
   create() {
     //font style object
     const fontFam = {
+      fontFamily: "cursive",
       fontSize: 30,
       color: "#000000",
       backgroundColor: "#FFFFFF",

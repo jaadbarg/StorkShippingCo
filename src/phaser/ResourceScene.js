@@ -13,6 +13,7 @@ class ResourceScene extends Phaser.Scene {
 
   create() {
     const fontFam = {
+      fontFamily: 'cursive',
       color: "#000000",
       backgroundColor: "#FFFFFF",
     };

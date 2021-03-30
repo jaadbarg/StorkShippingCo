@@ -18,12 +18,14 @@ let spawnEvent;
 
 const fontFam = {
     fontSize: 18,
+    fontFamily: "cursive",
     color: "#000000",
-    backgroundColor: "#FFFFFF",
+    //backgroundColor: "#FFFFFF",
 };
 
 const fontFamBack = {
     fontSize: 30,
+    fontFamily: "cursive",
     color: "#000000",
     fontStyle: "bold",
     backgroundColor: "#FFFFFF",
@@ -47,31 +49,51 @@ class QuizScene extends Phaser.Scene {
 
         this.trackTime();
 
+        this.createSectionColors();
+
         //pass in an int indicating which hazard was selected
         switch (this.gateID) {
             case 0:
                 question = questionBank[0][counter[0]];
                 counter[0]++;
+                if(counter[0] >= 2) {
+                    counter[0] = 0;
+                }
                 break;
             case 1:
                 question = questionBank[1][counter[1]];
                 counter[1]++;
+                if(counter[1] >= 3) {
+                    counter[1] = 0;
+                }
                 break;
             case 2:
                 question = questionBank[2][counter[2]];
                 counter[2]++;
+                if(counter[2] >= 2) {
+                    counter[2] = 0;
+                }
                 break;
             case 3:
                 question = questionBank[3][counter[3]];
                 counter[3]++;
+                if(counter[3] >= 3) {
+                    counter[3] = 0;
+                }
                 break;
             case 4:
                 question = questionBank[4][counter[4]];
                 counter[4]++;
+                if(counter[4] >= 2) {
+                    counter[4] = 0;
+                }
                 break;
             case 5:
                 question = questionBank[5][counter[5]];
                 counter[5]++;
+                if(counter[5] >= 2) {
+                    counter[5] = 0;
+                }
                 break;
         }
 
@@ -81,26 +103,30 @@ class QuizScene extends Phaser.Scene {
         let bg = this.add.sprite(0, 0, "background");
         bg.setOrigin(400, 300);
 
-        let title = this.add.text(0, 0, `${question.questionText}`,
-            { ...fontFam, wordWrap: { width: 820 } });
+        let title = this.add.text(50, 50, `${question.questionText}`,
+            { ...fontFam, wordWrap: { width: 700 } });
 
         for (let i = 0; i < question.responses.length; i++) {
             let choice;
             if (i == question.correct) {
-                choice = this.add.text(0, 180 + 90 * i, this.convertI(i) + question.responses[i],
-                    { ...fontFam, wordWrap: { width: 820 } })
+                choice = this.add.text(50, 210 + 90 * i, this.convertI(i) + question.responses[i],
+                    { ...fontFam, wordWrap: { width: 700 } })
                 choice.setInteractive();
                 choice.on('pointerdown', () =>
                     this.correctResponse(question, question.responses.length)
                 );
             } else {
-                choice = this.add.text(0, 180 + 90 * i, this.convertI(i) + question.responses[i], { ...fontFam, wordWrap: { width: 820 } })
+                choice = this.add.text(50, 210 + 90 * i, this.convertI(i) + question.responses[i], { ...fontFam, wordWrap: { width: 700 } })
                 choice.setInteractive();
                 choice.on('pointerdown', () =>
                     this.incorrectResponse(question, question.responses.length)
                 );
             }
         }
+    }
+
+    createSectionColors() {
+        this.add.rectangle(400, 100, 730, 140, 0xFFFFFF);
     }
 
     trackTime() {
@@ -138,7 +164,7 @@ class QuizScene extends Phaser.Scene {
 
         titleText = this.add.text(328, 130, "Good Job!", {... fontFamBack});
         feedbackText = this.add.text(150, 200, "", { ...fontFam, wordWrap: { width: 515 } });
-        backBtn = this.add.text(277, 450, "", { ...fontFamBack });
+        backBtn = this.add.text(280, 450, "", { ...fontFamBack });
 
         feedbackText.setText(question.rationaleCorrect);
         backBtn.setText("Return to game");
@@ -154,7 +180,7 @@ class QuizScene extends Phaser.Scene {
         feedbackText = this.add.text(150, 200, "", { ...fontFam, wordWrap: { width: 515 } });
         backBtn = this.add.text(277, 450, "", { ...fontFamBack });
 
-        feedbackText.setText(question.rationaleCorrect);
+        feedbackText.setText(question.rationaleIncorrect);
         backBtn.setText("Back To Question");
         backBtn.setInteractive({ useHandCursor: true });
         backBtn.on("pointerdown", () => this.clearFeedback(backBtn, modal));

@@ -25,11 +25,13 @@ let totalScore = 0;
 let timeLeft = 300;
 let MAXIMUMBABIES = 5
 let fontFam = {
+  fontFamily: "cursive",
   fontSize: 17,
   color: "#000000",
   backgroundColor: "#FFFFFF",
 };
 let timeAdjustment;
+let timeAdjustMini;
 
 class gameScene extends Phaser.Scene {
   constructor() {
@@ -58,7 +60,9 @@ class gameScene extends Phaser.Scene {
     this.createTimer();
 
     eventsCenter.on("timePassedData", this.substractTime, this);
+    eventsCenter.on("timePassedMini", this.substractTimeMini, this);
     timeAdjustment = 0;
+    timeAdjustMini = 0;
 
     this.onSpawn(); //spawn toddler?
     spawnEvent = this.time.addEvent({
@@ -105,6 +109,14 @@ class gameScene extends Phaser.Scene {
     console.log("timepassed is equal ===" + timePassed)
     timeLeft -= timePassed;
     timeAdjustment = placeHolder;
+  }
+
+  substractTimeMini(timePassed) {
+    let placeHolder = timePassed;
+    timePassed -= timeAdjustMini;
+    console.log("timepassedMINI  === " + timePassed)
+    timeLeft -= timePassed;
+    timeAdjustMini = placeHolder;
   }
 
   convertTime(x) {
@@ -171,11 +183,25 @@ class gameScene extends Phaser.Scene {
 
   toggleGate(gate, gateID) {
     //makes gate clickable/breakable
+    let coin = 100;
+    if(gateID == 0) {
+      coin = Math.random() * 100;
+    }
     gate.on("pointerdown", function () {
       gate.destroy();
       gateTracker[gateID] = false;
     });
-    gate.on('pointerdown', () => this.openQuiz(gateID));
+    if(coin <= 50) {
+      gate.on('pointerdown', () => this.openMiniGame());
+    } else {
+      gate.on('pointerdown', () => this.openQuiz(gateID));
+    }
+  }
+
+  openMiniGame() {
+    this.scene.stop("quizScene")
+    this.scene.sleep("gameScene")
+    this.scene.run("stairs1Scene");
   }
 
   // intention is for scene to switch to quizScene when gate is clicked -- right now
@@ -225,13 +251,13 @@ class gameScene extends Phaser.Scene {
     if(x == 0) {
       this.addGate(750, 440, "gate1", 0.05, 0, 0); //stairs
     } else if (x == 1) {
-      this.addGate(525, 550, "gate1", 0.05, 270, 1); //windows
+      this.addGate(525, 550, "gate1", 0.05, 0, 1); //windows
     } else if(x == 2) {
       this.addGate(550, 190, "gate1", 0.05, 0, 2); //openwater
     } else if (x == 3) {
       this.addGate(290, 250, "gate1", 0.05, 0, 3); //baby equipment
     } else if (x == 4) {
-      this.addGate(275, 465, "gate1", 0.05, 270, 4);
+      this.addGate(275, 465, "gate1", 0.05, 0, 4);
     } else if (x == 5) {
       this.addGate(50, 120, "gate1", 0.05, 0, 5);
     }
@@ -252,10 +278,10 @@ class gameScene extends Phaser.Scene {
         if (directionList[i] == "left") {
           toddler.setVelocityX(velocityConstant * -1);
           toddler.setAcceleration(accelerationConstant * -1, 0);
+          MAXIMUMBABIES = 10;
         } else if (directionList[i] == "right") {
           toddler.setVelocityX(velocityConstant);
           toddler.setAcceleration(accelerationConstant, 0);
-          MAXIMUMBABIES = 10;
         } else if (directionList[i] == "up") {
           toddler.setVelocityY(velocityConstant * -1);
           toddler.setAcceleration(0, accelerationConstant * -1);
