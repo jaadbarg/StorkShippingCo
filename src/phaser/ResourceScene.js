@@ -1,5 +1,7 @@
 import Phaser from "phaser";
 import blueBackground from "../assets/blueBackground.png";
+import baby4 from "../assets/babies/baby4.png";
+import baby5 from "../assets/babies/baby5.png";
 
 class ResourceScene extends Phaser.Scene {
   constructor() {
@@ -9,6 +11,8 @@ class ResourceScene extends Phaser.Scene {
 
   preload() {
     this.load.image("blueBackground", blueBackground);
+    this.load.image("baby4", baby4);
+    this.load.image("baby5", baby5);
   }
 
   create() {
@@ -34,30 +38,26 @@ class ResourceScene extends Phaser.Scene {
 
     const safetyUrl1 =
       "https://healthychildcare.unc.edu/cchc-competencies-health-and-safety-topics/environmental-health/";
-    const resourceCopy1 = "The average home can present more falling ";
-    const resourceCopy2 = "hazards to children than you'd think.";
-    const resourceCopy3 = "Click these links to learn more about ";
-    const resourceCopy4 = "removing Hazards from your own home: ";
+    const resourceCopy1 = "The average home can present more falling hazards to children than you'd think. Click these links to learn more about removing Hazards from your own home: ";
 
     this.background = this.add.image(400, 300, "blueBackground");
     this.background.displayWidth = this.sys.canvas.width;
     this.background.displayHeight = this.sys.canvas.height;
 
+    this.createBackground();
+
     let title = this.add.text(50, 100, "Resources", { ...titleFontFam });
 
-    let copy1 = this.add.text(50, 180, `${resourceCopy1}`, { ...fontFam });
-    let copy2 = this.add.text(50, 210, `${resourceCopy2}`, { ...fontFam });
-    let copy3 = this.add.text(50, 270, `${resourceCopy3}`, { ...fontFam });
-    let copy4 = this.add.text(50, 300, `${resourceCopy4}`, { ...fontFam });
+    let copy1 = this.add.text(70, 210, `${resourceCopy1}`, { ...fontFam, wordWrap:{width:700} });
 
     let resource1Btn = this.add.text(
-      50,
-      350,
+      120,
+      290,
       "North Carolina Child Care Health and Safety Resource Center",
-      { ...linkFontFam }
+      { ...linkFontFam, wordWrap:{width:600} }
     );
 
-    let backBtn = this.add.text(50, 450, "Back", { ...titleFontFam });
+    let backBtn = this.add.text(590, 450, "Back", { ...titleFontFam });
 
     // backbtn resources
     backBtn.setInteractive({ useHandCursor: true });
@@ -69,6 +69,12 @@ class ResourceScene extends Phaser.Scene {
   // button method
   goBack() {
     this.scene.switch("titleScene");
+  }
+
+  createBackground() {
+    this.add.rectangle(400, 270, 700, 200, 0xFFFFFF)
+    this.add.image(150, 470, "baby4").setScale(0.36);
+    this.add.image(350, 470, "baby5").setScale(0.36);
   }
 
   openInNewTab(url) {

@@ -1,5 +1,7 @@
 import Phaser from "phaser";
 import blueBackground from "../assets/blueBackground.png";
+import baby4 from "../assets/babies/baby4.png";
+import baby5 from "../assets/babies/baby5.png";
 
 class InstructScene extends Phaser.Scene {
   constructor() {
@@ -9,6 +11,8 @@ class InstructScene extends Phaser.Scene {
 
   preload() {
     this.load.image("blueBackground", blueBackground);
+    this.load.image("baby4", baby4);
+    this.load.image("baby5", baby5);
   }
 
   create() {
@@ -16,7 +20,7 @@ class InstructScene extends Phaser.Scene {
       //fontFamily: 'cursive',
       fontSize: 20,
       color: "#000000",
-      backgroundColor: "#FFFFFF",
+      //backgroundColor: "#FFFFFF",
     };
 
     const titleFontFam = {
@@ -27,39 +31,33 @@ class InstructScene extends Phaser.Scene {
     };
 
     //setting copy for us
-    const instructCopy1 = "Tap on Hazards as they appear on the track.";
-    const instructCopy2 = "When you tap a Hazard, you'll have to";
-    const instructCopy3 = "solve a Challenge to deactivate the Hazard and make";
-    const instructCopy4 =
-      "the home safer. The babies won't be able to move past a Hazard";
-    const instructCopy5 = "until you deactivate it. ";
-    const instructCopy6 =
-      "Get as many babies to the Safe Zone at the end of the track";
-    const instructCopy7 = "by deactivating Hazards as quickly as possible!";
+    const instructCopy1 = "Tap on Hazards as they appear on the track. When you tap a Hazard, you'll have to solve a Challenge to deactivate the Hazard and make the home safer. The babies won't be able to move past a Hazard until you deactivate it. Get as many babies to the Safe Zone at the end of the track by deactivating Hazards as quickly as possible!";
 
     //setting background
     this.background = this.add.image(400, 300, "blueBackground");
     this.background.displayWidth = this.sys.canvas.width;
     this.background.displayHeight = this.sys.canvas.height;
 
+    this.createBackground();
+
     //title
-    let title = this.add.text(50, 50, "Instructions", { ...titleFontFam });
+    let title = this.add.text(55, 70, "Instructions", { ...titleFontFam });
 
     //instructions
-    let copy1 = this.add.text(50, 150, `${instructCopy1}`, { ...fontFam });
-    let copy2 = this.add.text(50, 180, `${instructCopy2}`, { ...fontFam });
-    let copy3 = this.add.text(50, 210, `${instructCopy3}`, { ...fontFam });
-    let copy4 = this.add.text(50, 240, `${instructCopy4}`, { ...fontFam });
-    let copy5 = this.add.text(50, 270, `${instructCopy5}`, { ...fontFam });
-    let copy6 = this.add.text(50, 350, `${instructCopy6}`, { ...fontFam });
-    let copy7 = this.add.text(50, 380, `${instructCopy7}`, { ...fontFam });
+    let copy1 = this.add.text(60, 200, `${instructCopy1}`, { ...fontFam, wordWrap: { width: 680 } });
 
-    let backBtn = this.add.text(50, 450, "Back", { ...titleFontFam });
+    let backBtn = this.add.text(620, 450, "Back", { ...titleFontFam });
 
     //button resources
     backBtn.setInteractive({ useHandCursor: true });
 
     backBtn.on("pointerdown", () => this.goBack());
+  }
+
+  createBackground() {
+    this.add.rectangle(400, 270, 700, 200, 0xFFFFFF)
+    this.add.image(150, 470, "baby4").setScale(0.36);
+    this.add.image(350, 470, "baby5").setScale(0.36);
   }
 
   // button method
