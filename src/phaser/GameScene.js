@@ -20,10 +20,10 @@ let gateTracker = [true, true, true, true, true, true];
 
 let velocityConstant = 40;
 let accelerationConstant = 15;
-let maxBabyCounter = 1;
-let totalScore = 0;
-let timeLeft = 300;
-let MAXIMUMBABIES = 5
+let maxBabyCounter;
+let totalScore;
+let timeLeft;
+let MAXIMUMBABIES;
 let fontFam = {
   // fontFamily: "cursive",
   fontSize: 17,
@@ -52,6 +52,12 @@ class gameScene extends Phaser.Scene {
   }
 
   create() {
+    //initialize constants
+    maxBabyCounter = 1;
+    totalScore = 0;
+    timeLeft = 300;
+    MAXIMUMBABIES = 5
+
     //initially places assets into game
     this.add.image(400, 300, "map").setScale(1.3); //adds map
     this.createBoundary();
@@ -66,7 +72,7 @@ class gameScene extends Phaser.Scene {
 
     this.onSpawn(); //spawn toddler?
     spawnEvent = this.time.addEvent({
-      delay: 4000,
+      delay: 6000,
       callback: this.onSpawn,
       callbackScope: this,
       loop: true,
@@ -187,7 +193,7 @@ class gameScene extends Phaser.Scene {
       gate.destroy();
       gateTracker[gateID] = false;
     });
-    gate.on('pointerdown', () => this.openQuiz(gateID));
+    gate.on('pointerdown', () => this.openGate(gateID));
   }
 
   openMiniGame(gateID) {
@@ -196,15 +202,13 @@ class gameScene extends Phaser.Scene {
     this.scene.run("stairs1Scene");
   }
 
-  // intention is for scene to switch to quizScene when gate is clicked -- right now
-  // openQuiz is running when gate is clicked but scene isn't switching
-  openQuiz(gateID) {
+  openGate(gateID) {
     let coin = 100;
     if(gateID == 0) {
       coin = Math.random() * 100;
     }
-    console.log(coin)
     if(coin <= 50) {
+      //run minigame
       this.scene.stop("stairs1Scene")
       this.scene.sleep("gameScene")
       this.scene.run("stairs1Scene");
@@ -228,7 +232,7 @@ class gameScene extends Phaser.Scene {
 
       toddlerList.push(toddler);
 
-      if (Math.random() * 100 < 40) {
+      if (Math.random() * 100 < 70) {
         this.respawnGate();
       }
 

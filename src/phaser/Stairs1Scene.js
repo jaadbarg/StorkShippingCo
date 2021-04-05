@@ -114,7 +114,7 @@ class stairs1Scene extends Phaser.Scene {
     update() {
         if (counter >= 3) {
             counter = 0;
-            backButton = this.add.text(250, 150, "Good Job! Return", { ...fontFam })
+            backButton = this.add.text(250, 150, "Return to game", { ...fontFam })
             backButton.setInteractive();
             let homeBtn = this.add.text(25, 550, "<-- Back");
             homeBtn.setInteractive({ useHandCursor: true });
