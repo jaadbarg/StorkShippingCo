@@ -9,11 +9,11 @@ import eventsCenter from "./EventsCenter"
 // import questionsBed  from "./QuizQuestions";
 
 // keeps track of which questions you're on for each category to avoid repeats
-let counter = [0, 0, 0, 0, 0, 0]
+let counter = [0, 0, 0, 0, 0, 0];
 let feedbackText;
 let backBtn;
 let titleText;
-let timePassed = 0;
+let timePassed;
 let spawnEvent;
 
 const fontFam = {
@@ -46,6 +46,8 @@ class QuizScene extends Phaser.Scene {
 
     create() {
         let question;
+
+        timePassed = 0;
 
         this.trackTime();
 

@@ -16,7 +16,7 @@ let boundaryList = [];
 let directionList = [];
 let scoreBoard;
 let timeBoard;
-let gateTracker = [true, true, true, true, true, true];
+let gateTracker;
 
 let velocityConstant = 40;
 let accelerationConstant = 15;
@@ -57,6 +57,7 @@ class gameScene extends Phaser.Scene {
     totalScore = 0;
     timeLeft = 300;
     MAXIMUMBABIES = 5
+    gateTracker = [true, true, true, true, true, true];
 
     //initially places assets into game
     this.add.image(400, 300, "map").setScale(1.3); //adds map
@@ -66,7 +67,7 @@ class gameScene extends Phaser.Scene {
     this.createTimer();
 
     eventsCenter.on("timePassedData", this.substractTime, this);
-    eventsCenter.on("timePassedMini", this.substractTimeMini, this);
+    eventsCenter.on("timePassedMini", this.substractTime, this);
     timeAdjustment = 0;
     timeAdjustMini = 0;
 
@@ -110,19 +111,7 @@ class gameScene extends Phaser.Scene {
   }
 
   substractTime(timePassed) {
-    let placeHolder = timePassed;
-    timePassed -= timeAdjustment;
-    console.log("timepassed is equal ===" + timePassed)
     timeLeft -= timePassed;
-    timeAdjustment = placeHolder;
-  }
-
-  substractTimeMini(timePassed) {
-    let placeHolder = timePassed;
-    timePassed -= timeAdjustMini;
-    console.log("timepassedMINI  === " + timePassed)
-    timeLeft -= timePassed;
-    timeAdjustMini = placeHolder;
   }
 
   convertTime(x) {
@@ -170,7 +159,7 @@ class gameScene extends Phaser.Scene {
     this.addGate(550, 190, "gate1", 0.04, 0, 2); //openwater
     this.addGate(750, 440, "gate1", 0.04, 0, 0); //stairs
     this.addGate(525, 550, "gate1", 0.04, 0, 1); //windows
-    this.addGate(50, 120, "gate1", 0.04, 0, 5); //baby walkers
+    this.addGate(50, 120, "gate1", 0.04, 0, 5); //bed
     this.addGate(290, 250, "gate1", 0.04, 0, 3); //baby equipment
     this.addGate(275, 465, "gate1", 0.04, 0, 4); //furniture
   }

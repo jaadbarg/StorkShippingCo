@@ -12,7 +12,7 @@ let fontFam = {
     color: "#000000",
     backgroundColor: "#FFFFFF",
 };
-let timePassed = 0;
+let timePassed;
 let spawnEvent;
 
 class stairs1Scene extends Phaser.Scene {
@@ -30,6 +30,8 @@ class stairs1Scene extends Phaser.Scene {
     create() {
 
         this.trackTime();
+
+        timePassed = 0;
 
         //add background
         this.add.image(400, 300, "stairs");
