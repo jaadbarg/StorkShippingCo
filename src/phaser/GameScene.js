@@ -27,11 +27,16 @@ let MAXIMUMBABIES;
 let fontFam = {
   // fontFamily: "cursive",
   fontSize: 17,
-  color: "#000000",
-  backgroundColor: "#FFFFFF",
+  color: "#00008b",
+  //backgroundColor: "#6e82d4",
+  fontStyle: "bold"
 };
 let timeAdjustment;
 let timeAdjustMini;
+let clearedBoard;
+let togoBoard;
+let hazardsCleared;
+let hazardsToGo;
 
 class gameScene extends Phaser.Scene {
   constructor() {
@@ -58,6 +63,8 @@ class gameScene extends Phaser.Scene {
     timeLeft = 300;
     MAXIMUMBABIES = 5
     gateTracker = [true, true, true, true, true, true];
+    hazardsCleared = 0;
+    hazardsToGo = 6;
 
     //initially places assets into game
     this.add.image(400, 300, "map").setScale(1.3); //adds map
@@ -65,6 +72,7 @@ class gameScene extends Phaser.Scene {
     this.createGates(); //adds gates that sit next to hazards
     this.createScoreBoard();
     this.createTimer();
+    this.createHazardBoard();
 
     eventsCenter.on("timePassedData", this.substractTime, this);
     eventsCenter.on("timePassedMini", this.substractTime, this);
@@ -85,14 +93,19 @@ class gameScene extends Phaser.Scene {
     let standardTime = this.convertTime(timeLeft);
     timeBoard.setText(standardTime);
 
+    clearedBoard.setText(hazardsCleared)
+    togoBoard.setText(hazardsToGo)
+
     if (timeLeft <= 0) {
       this.scene.start("resultsScene", { score: totalScore });
     }
   }
 
   createScoreBoard() {
-    this.add.text(450, 180, "Score:", fontFam)
-    scoreBoard = this.add.text(450, 210, totalScore, fontFam)
+    //let scoreBox = this.add.rectangle(360, 218, 65, 90, 0x6e82d4)
+
+    this.add.text(330, 220, "Score:", fontFam)
+    scoreBoard = this.add.text(330, 240, totalScore, fontFam)
   }
 
   createTimer() {
@@ -103,7 +116,14 @@ class gameScene extends Phaser.Scene {
       loop: true,
     });
     this.add.text(330, 180, "Time:", fontFam)
-    timeBoard = this.add.text(330, 210, timeLeft, fontFam)
+    timeBoard = this.add.text(330, 200, timeLeft, fontFam)
+  }
+
+  createHazardBoard() {
+    this.add.text(445, 180, "Cleared:", {... fontFam, wordWrap:{width:100}})
+    clearedBoard = this.add.text(450, 200, hazardsCleared, fontFam)
+    this.add.text(450, 220, "To Go:", fontFam)
+    togoBoard = this.add.text(450, 240, hazardsToGo, fontFam)
   }
 
   increaseTime() {
@@ -181,6 +201,8 @@ class gameScene extends Phaser.Scene {
     gate.on("pointerdown", function () {
       gate.destroy();
       gateTracker[gateID] = false;
+      hazardsCleared++;
+      hazardsToGo--;
     });
     gate.on('pointerdown', () => this.openGate(gateID));
   }
@@ -241,6 +263,7 @@ class gameScene extends Phaser.Scene {
     }
     let respawnNumber = respawnPool[Math.floor(Math.random() * respawnPool.length)];
     this.readdGate(respawnNumber);
+    hazardsToGo++;
   }
 
   readdGate(x) {
