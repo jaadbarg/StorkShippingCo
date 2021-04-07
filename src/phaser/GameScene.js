@@ -11,6 +11,7 @@ import eventsCenter from "./EventsCenter"
 
 let gateGroup;
 let spawnEvent;
+let gateSpawnEvent;
 let toddlerList = [];
 let boundaryList = [];
 let directionList = [];
@@ -81,11 +82,18 @@ class gameScene extends Phaser.Scene {
 
     this.onSpawn(); //spawn toddler?
     spawnEvent = this.time.addEvent({
-      delay: 6000,
+      delay: 8000,
       callback: this.onSpawn,
       callbackScope: this,
       loop: true,
     });
+
+    gateSpawnEvent = this.time.addEvent({
+      delay: 10000,
+      callback: this.respawnGate,
+      callbackScope: this,
+      loop: true,
+    })
   }
 
   update() {
@@ -176,7 +184,7 @@ class gameScene extends Phaser.Scene {
   createGates() {
     //inserts all gates into game
     gateGroup = this.physics.add.group();
-    this.addGate(550, 190, "gate1", 0.04, 0, 2); //openwater
+    this.addGate(550, 220, "gate1", 0.04, 0, 2); //openwater
     this.addGate(750, 440, "gate1", 0.04, 0, 0); //stairs
     this.addGate(525, 550, "gate1", 0.04, 0, 1); //windows
     this.addGate(50, 120, "gate1", 0.04, 0, 5); //bed
@@ -203,6 +211,7 @@ class gameScene extends Phaser.Scene {
       gateTracker[gateID] = false;
       hazardsCleared++;
       hazardsToGo--;
+      totalScore += 75;
     });
     gate.on('pointerdown', () => this.openGate(gateID));
   }
@@ -236,16 +245,12 @@ class gameScene extends Phaser.Scene {
       let toddler;
       let index = Math.floor(Math.random() * 5); // there are currently 5 baby designs
       let babies = ["baby1", "baby2", "baby3", "baby4", "baby5"];
-      toddler = this.physics.add.image(800, 40, babies[index]).setScale(0.14);
+      toddler = this.physics.add.image(1000, 40, babies[index]).setScale(0.14);
 
       this.setUp(toddler);
       this.collisionBetween(toddler);
 
       toddlerList.push(toddler);
-
-      if (Math.random() * 100 < 70) {
-        this.respawnGate();
-      }
 
       maxBabyCounter++;
     }
@@ -272,7 +277,7 @@ class gameScene extends Phaser.Scene {
     } else if (x == 1) {
       this.addGate(525, 550, "gate1", 0.04, 0, 1); //windows
     } else if (x == 2) {
-      this.addGate(550, 190, "gate1", 0.04, 0, 2); //openwater
+      this.addGate(550, 220, "gate1", 0.04, 0, 2); //openwater
     } else if (x == 3) {
       this.addGate(290, 250, "gate1", 0.04, 0, 3); //baby equipment
     } else if (x == 4) {
