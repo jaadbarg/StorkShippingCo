@@ -38,6 +38,7 @@ let clearedBoard;
 let togoBoard;
 let hazardsCleared;
 let hazardsToGo;
+let emitterCount = 0;
 
 class gameScene extends Phaser.Scene {
   constructor() {
@@ -61,11 +62,12 @@ class gameScene extends Phaser.Scene {
     //initialize constants
     maxBabyCounter = 1;
     totalScore = 0;
-    timeLeft = 300;
+    timeLeft = 60;
     MAXIMUMBABIES = 5
     gateTracker = [true, true, true, true, true, true];
     hazardsCleared = 0;
     hazardsToGo = 6;
+    emitterCount++;
 
     //initially places assets into game
     this.add.image(400, 300, "map").setScale(1.3); //adds map
@@ -75,8 +77,8 @@ class gameScene extends Phaser.Scene {
     this.createTimer();
     this.createHazardBoard();
 
-    eventsCenter.on("timePassedData", this.substractTime, this);
-    eventsCenter.on("timePassedMini", this.substractTime, this);
+    eventsCenter.on("timePassedData", this.subtractTime, this);
+    eventsCenter.on("timePassedMini", this.subtractTime, this);
     timeAdjustment = 0;
     timeAdjustMini = 0;
 
@@ -89,7 +91,7 @@ class gameScene extends Phaser.Scene {
     });
 
     gateSpawnEvent = this.time.addEvent({
-      delay: 10000,
+      delay: 14000,
       callback: this.respawnGate,
       callbackScope: this,
       loop: true,
@@ -105,7 +107,12 @@ class gameScene extends Phaser.Scene {
     togoBoard.setText(hazardsToGo)
 
     if (timeLeft <= 0) {
-      this.scene.start("resultsScene", { score: totalScore });
+      this.scene.start("resultsScene", { score: totalScore - (75 * hazardsCleared) });
+      /*
+      Remember to clean up the minigame data when the first game ends --> reset timer
+      */
+     this.scene.stop('quizScene');
+     this.scene.stop('stairs1Scene');
     }
   }
 
@@ -138,8 +145,10 @@ class gameScene extends Phaser.Scene {
     timeLeft--;
   }
 
-  substractTime(timePassed) {
-    timeLeft -= timePassed;
+  subtractTime(timePassed) {
+    console.log("timePassed === " + timePassed)
+    timePassed /= emitterCount;
+    timeLeft -= Math.round(timePassed);
   }
 
   convertTime(x) {
