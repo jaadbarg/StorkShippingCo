@@ -34,9 +34,6 @@ class windows2Scene extends Phaser.Scene {
         //add background
         this.add.image(400, 300, "background");
 
-        //place collection box image
-        this.add.image(700, 500, "box").setScale(0.12);
-
         //add minigame title text
         this.add.text(250, 50, "SEPARATE THE FURNITURE FROM THE WINDOW!", { ...fontFam });
 
@@ -84,7 +81,6 @@ class windows2Scene extends Phaser.Scene {
             gameObject.y = dropZone.y;
             gameObject.input.enabled = false;
             counter++;
-            gameObject.destroy();
             graphics.clear();
             graphics.lineStyle(2, 0xffff00);
             graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
