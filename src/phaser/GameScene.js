@@ -18,6 +18,8 @@ let directionList = [];
 let scoreBoard;
 let timeBoard;
 let gateTracker;
+let inactiveModal;
+let inactiveTip;
 
 let velocityConstant = 40;
 let accelerationConstant = 15;
@@ -28,7 +30,7 @@ let MAXIMUMBABIES;
 let fontFam = {
   // fontFamily: "cursive",
   fontSize: 17,
-  color: "#00008b",
+  color: "#9f5919",
   //backgroundColor: "#6e82d4",
   fontStyle: "bold"
 };
@@ -38,6 +40,7 @@ let clearedBoard;
 let togoBoard;
 let hazardsCleared;
 let hazardsToGo;
+let inactiveTimer;
 let emitterCount = 0;
 
 class gameScene extends Phaser.Scene {
@@ -62,12 +65,13 @@ class gameScene extends Phaser.Scene {
     //initialize constants
     maxBabyCounter = 1;
     totalScore = 0;
-    timeLeft = 60;
+    timeLeft = 300;
     MAXIMUMBABIES = 5
     gateTracker = [true, true, true, true, true, true];
     hazardsCleared = 0;
     hazardsToGo = 6;
     emitterCount++;
+    inactiveTimer = 0;
 
     //initially places assets into game
     this.add.image(400, 300, "map").setScale(1.3); //adds map
@@ -76,6 +80,8 @@ class gameScene extends Phaser.Scene {
     this.createScoreBoard();
     this.createTimer();
     this.createHazardBoard();
+
+    this.createInactiveTip();
 
     eventsCenter.on("timePassedData", this.subtractTime, this);
     eventsCenter.on("timePassedMini", this.subtractTime, this);
@@ -91,7 +97,7 @@ class gameScene extends Phaser.Scene {
     });
 
     gateSpawnEvent = this.time.addEvent({
-      delay: 14000,
+      delay: 12500,
       callback: this.respawnGate,
       callbackScope: this,
       loop: true,
@@ -117,7 +123,7 @@ class gameScene extends Phaser.Scene {
   }
 
   createScoreBoard() {
-    //let scoreBox = this.add.rectangle(360, 218, 65, 90, 0x6e82d4)
+    let scoreBox = this.add.rectangle(360, 218, 65, 90, 0xffffff)
 
     this.add.text(330, 220, "Score:", fontFam)
     scoreBoard = this.add.text(330, 240, totalScore, fontFam)
@@ -135,6 +141,8 @@ class gameScene extends Phaser.Scene {
   }
 
   createHazardBoard() {
+    let hazardBox = this.add.rectangle(483, 218, 77, 90, 0xffffff)
+
     this.add.text(445, 180, "Cleared:", {... fontFam, wordWrap:{width:100}})
     clearedBoard = this.add.text(450, 200, hazardsCleared, fontFam)
     this.add.text(450, 220, "To Go:", fontFam)
@@ -143,12 +151,19 @@ class gameScene extends Phaser.Scene {
 
   increaseTime() {
     timeLeft--;
+    inactiveTimer++;
+    if(inactiveTimer >= 15) {
+      inactiveTimer = 0;
+      inactiveModal.setVisible(true);
+      inactiveTip.setVisible(true);
+    }
   }
 
   subtractTime(timePassed) {
     console.log("timePassed === " + timePassed)
     timePassed /= emitterCount;
-    timeLeft -= Math.round(timePassed);
+    timeLeft -= timePassed;
+    timeLeft = Math.round(timeLeft)
   }
 
   convertTime(x) {
@@ -218,11 +233,27 @@ class gameScene extends Phaser.Scene {
     gate.on("pointerdown", function () {
       gate.destroy();
       gateTracker[gateID] = false;
+      
       hazardsCleared++;
       hazardsToGo--;
       totalScore += 75;
+
+      inactiveModal.setVisible(false);
+      inactiveTip.setVisible(false);
+
+      inactiveTimer = 0;
     });
     gate.on('pointerdown', () => this.openGate(gateID));
+  }
+
+  createInactiveTip() {
+    inactiveModal = this.add.rectangle(550, 420, 280, 120, 0xffffff);
+    inactiveModal.setStrokeStyle(10, 0xe90000);
+
+    inactiveTip = this.add.text(445, 400, "Click on a stop sign to clear a hazard!", {...fontFam, wordWrap:{width:240}})
+
+    inactiveModal.setVisible(false);
+    inactiveTip.setVisible(false);
   }
 
   openMiniGame(gateID) {
