@@ -267,7 +267,7 @@ class gameScene extends Phaser.Scene {
     if(gateID == 0) {
       coin = Math.random() * 100;
     }
-    if(coin <= 100) {
+    if(coin <= 50) {
       //run minigame
       this.scene.stop("minigameDatabaseScene", {id: gateID })
       this.scene.sleep("gameScene")
