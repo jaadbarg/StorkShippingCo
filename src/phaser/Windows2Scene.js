@@ -7,11 +7,10 @@ let counter = 0;
 let backButton;
 let fontFam = {
     // fontFamily: "cursive",
-    fontSize: 50,
+    fontSize: 45,
     color: "#000000",
     backgroundColor: "#FFFFFF",
 };
-let timePassed;
 let spawnEvent;
 
 class windows2Scene extends Phaser.Scene {
@@ -27,16 +26,11 @@ class windows2Scene extends Phaser.Scene {
 
     create() {
 
-        this.trackTime();
-
-        timePassed = 0;
-
         //add background
         this.add.image(400, 300, "room").setScale(0.55);
 
         //add minigame title text
-        this.add.text(50, 50, "SEPARATE THE FURNITURE", { ...fontFam });
-        this.add.text(50, 100, "FROM THE WINDOW!", { ...fontFam }); //to the wall
+        this.add.text(90, 50, "SEPARATE THE FURNITURE FROM THE WINDOW!", { ...fontFam, wordWrap:{width:650} });
 
         //place chair
         var chair = this.add.image(400, 400, "chair").setScale(0.15);
@@ -115,23 +109,9 @@ class windows2Scene extends Phaser.Scene {
         }
     }
 
-    trackTime() {
-        spawnEvent = this.time.addEvent({
-            delay: 1000,
-            callback: this.increaseTime,
-            callbackScope: this,
-            loop: true,
-        });
-    }
-
-    increaseTime() {
-        timePassed++;
-    }
-
     returnToMini() {
-        eventsCenter.emit('timePassedMini', timePassed)
-        console.log('TIMETIME === ' + timePassed)
         //this.scene.restart("windows2Scene")
+        this.scene.stop('windows2Scene')
         this.scene.switch("gameScene")
     }
 }

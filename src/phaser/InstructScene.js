@@ -31,7 +31,7 @@ class InstructScene extends Phaser.Scene {
     };
 
     //setting copy for us
-    const instructCopy1 = "Tap on Hazards as they appear on the track. When you tap a Hazard, you'll have to solve a Challenge to deactivate the Hazard and make the home safer. The babies won't be able to move past a Hazard until you deactivate it. Get as many babies to the Safe Zone at the end of the track by deactivating Hazards as quickly as possible!";
+    const instructCopy1 = "Tap on Hazards as they appear on the track. When you tap a Hazard, you'll have to solve a Challenge to deactivate the Hazard and make the home safer. The babies won't be able to move past a Hazard until you deactivate it. Get as many babies to the Safe Zone at the end of the track and deactivate as many hazards as possible!";
 
     //setting background
     this.background = this.add.image(400, 300, "blueBackground");

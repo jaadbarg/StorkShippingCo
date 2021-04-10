@@ -2,7 +2,6 @@ import Phaser from "phaser";
 import stairs from "../assets/minigames/stairs1/stairs.png";
 import box from "../assets/minigames/stairs1/box.png";
 import blocks from "../assets/minigames/stairs1/blocks.png";
-import eventsCenter from "./EventsCenter"
 
 let counter = 0;
 let backButton;
@@ -12,7 +11,6 @@ let fontFam = {
     color: "#000000",
     backgroundColor: "#FFFFFF",
 };
-let timePassed;
 let spawnEvent;
 
 class stairs1Scene extends Phaser.Scene {
@@ -28,10 +26,6 @@ class stairs1Scene extends Phaser.Scene {
     }
 
     create() {
-
-        this.trackTime();
-
-        timePassed = 0;
 
         //add background
         this.add.image(400, 300, "stairs");
@@ -126,24 +120,9 @@ class stairs1Scene extends Phaser.Scene {
         }
     }
 
-    trackTime() {
-        spawnEvent = this.time.addEvent({
-            delay: 1000,
-            callback: this.increaseTime,
-            callbackScope: this,
-            loop: true,
-        });
-    }
-
-    increaseTime() {
-        timePassed++;
-    }
-
     returnToMini() {
-        eventsCenter.emit('timePassedMini', timePassed)
-        console.log('TIMETIME === ' + timePassed)
-        //this.scene.restart("stairs1Scene")
-        this.scene.switch("gameScene")
+        this.scene.stop('stairs1Scene')
+        this.scene.run("gameScene")
     }
 }
 

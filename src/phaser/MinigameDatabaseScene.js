@@ -1,4 +1,10 @@
 import Phaser from "phaser";
+import eventsCenter from "./EventsCenter"
+
+let timePassed;
+let spawnEvent;
+let key;
+let coin;
 
 class minigameDatabaseScene extends Phaser.Scene {
     constructor() {
@@ -23,6 +29,10 @@ class minigameDatabaseScene extends Phaser.Scene {
     }
 
     create() {
+        timePassed = 0;
+        coin = false;
+        this.trackTime();
+
         this.transition();
     }
 
@@ -46,12 +56,14 @@ class minigameDatabaseScene extends Phaser.Scene {
 
     stairsGame() {
         this.scene.stop("stairs1Scene")
-        this.scene.sleep("gameScene")
         this.scene.run("stairs1Scene");
+        key = 'stairs1Scene'
     }
 
     windowsGame() {
-
+        this.scene.stop("windows2Scene")
+        this.scene.run("windows2Scene");
+        key = 'windows2Scene'
     }
 
     openwaterGame() {
@@ -71,6 +83,28 @@ class minigameDatabaseScene extends Phaser.Scene {
     }
 
     update() {
+        if(this.scene.isVisible(key)){
+            coin = true;
+        }
+
+        if(!this.scene.isVisible(key) && coin) {
+            eventsCenter.emit('timePassedMini', timePassed);
+            coin = false;
+            this.scene.stop('minigameDatabaseScene');
+        }
+    }
+
+    trackTime() {
+        spawnEvent = this.time.addEvent({
+            delay: 1000,
+            callback: this.increaseTime,
+            callbackScope: this,
+            loop: true,
+        });
+    }
+
+    increaseTime() {
+        timePassed++;
     }
 }
 

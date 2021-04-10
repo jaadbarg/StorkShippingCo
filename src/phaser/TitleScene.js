@@ -30,7 +30,6 @@ class TitleScene extends Phaser.Scene {
     let instructBtn = this.add.text(50, 550, "Instructions", { ...fontFam });
     let resourceBtn = this.add.text(550, 550, "Resources", { ...fontFam });
     let minigameBtn = this.add.text(317, 550, "Minigames", {...fontFam})
-    let testBtn = this.add.text(100, 100, "Test", {...fontFam})
 
 
     // let muteBtn = this.add.text(700, 100, "Mute", { ...fontFam });
@@ -53,9 +52,6 @@ class TitleScene extends Phaser.Scene {
     minigameBtn.setInteractive({ useHandCursor: true });
     minigameBtn.on("pointerdown", () => this.startMinigame());
 
-    //testing button
-    testBtn.setInteractive({ useHandCursor: true });
-    testBtn.on("pointerdown", () => this.scene.switch("windows2Scene"));
   }
 
   startGame() {
