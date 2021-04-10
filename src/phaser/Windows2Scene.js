@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import background from "../assets/minigames/windows2/background.png";
+import room from "../assets/minigames/windows2/background.png";
 import chair from "../assets/minigames/windows2/chair.png";
 import eventsCenter from "./EventsCenter"
 
@@ -21,7 +21,7 @@ class windows2Scene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image("background", background);
+        this.load.image("room", room);
         this.load.image("chair", chair);
     }
 
@@ -32,23 +32,26 @@ class windows2Scene extends Phaser.Scene {
         timePassed = 0;
 
         //add background
-        this.add.image(400, 300, "background");
+        this.add.image(400, 300, "room").setScale(0.55);
 
         //add minigame title text
-        this.add.text(250, 50, "SEPARATE THE FURNITURE FROM THE WINDOW!", { ...fontFam });
+        this.add.text(50, 50, "SEPARATE THE FURNITURE", { ...fontFam });
+        this.add.text(50, 100, "FROM THE WINDOW!", { ...fontFam }); //to the wall
 
         //place chair
-        var chair = this.add.image(100, 175, "chair").setScale(0.5);
+        var chair = this.add.image(400, 400, "chair").setScale(0.15);
         chair.setInteractive();
         this.input.setDraggable(chair);
 
-        //place drop zone
-        var zone = this.add.zone(700, 500, 100, 100).setRectangleDropZone(150, 150);
+        //place drop zones
+        var zone = this.add.zone(650, 400, 150, 250).setRectangleDropZone(150, 250);
+        var zone2 = this.add.zone(150, 400, 150, 250).setRectangleDropZone(150, 250);
 
-        //  Just a visual display of the drop zone
+        /*  Just a visual display of the drop zone
         var graphics = this.add.graphics();
         graphics.lineStyle(2, 0xffff00);
         graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+        */
 
         //moves dragged object to front
         this.input.on('dragstart', function (pointer, gameObject) {
@@ -63,16 +66,16 @@ class windows2Scene extends Phaser.Scene {
 
         //when dragged object touches dropzones
         this.input.on('dragenter', function (pointer, gameObject, dropZone) {
-            graphics.clear();
-            graphics.lineStyle(2, 0x00ffff);
-            graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+            //graphics.clear();
+            //graphics.lineStyle(2, 0x00ffff);
+            //graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
         });
 
         //when dragged object leaves dropzone
         this.input.on('dragleave', function (pointer, gameObject, dropZone) {
-            graphics.clear();
-            graphics.lineStyle(2, 0xffff00);
-            graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+            //graphics.clear();
+            //graphics.lineStyle(2, 0xffff00);
+            //graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
         });
 
         //when object dropped into dropzone, increment counter
@@ -81,9 +84,9 @@ class windows2Scene extends Phaser.Scene {
             gameObject.y = dropZone.y;
             gameObject.input.enabled = false;
             counter++;
-            graphics.clear();
-            graphics.lineStyle(2, 0xffff00);
-            graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+            //graphics.clear();
+            //graphics.lineStyle(2, 0xffff00);
+            //graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
         });
 
         //when drag ends and object is not in the dropzone
@@ -92,9 +95,9 @@ class windows2Scene extends Phaser.Scene {
                 gameObject.x = gameObject.input.dragStartX;
                 gameObject.y = gameObject.input.dragStartY;
             }
-            graphics.clear();
-            graphics.lineStyle(2, 0xffff00);
-            graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+            //graphics.clear();
+            //graphics.lineStyle(2, 0xffff00);
+            //graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
         });
     }
 
