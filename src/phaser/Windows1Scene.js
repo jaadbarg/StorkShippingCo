@@ -8,7 +8,6 @@ import eventsCenter from "./EventsCenter"
 let counter;
 let backButton;
 let fontFam = {
-    // fontFamily: "cursive",
     fontSize: 45,
     color: "#000000",
     backgroundColor: "#FFFFFF",
@@ -18,6 +17,7 @@ let openLock1;
 let openLock2;
 let closedLock1;
 let closedLock2;
+let instructionText;
 
 
 class windows1Scene extends Phaser.Scene {
@@ -47,7 +47,7 @@ class windows1Scene extends Phaser.Scene {
         this.input.setDraggable(windowDraggable);
 
         // add title
-        this.add.text(90, 50, "SHUT THE WINDOW!", { ...fontFam, wordWrap:{width:650} });
+        instructionText = this.add.text(90, 50, "Shut the window!", { ...fontFam, wordWrap:{width:650} });
 
         // acceptable end state of window
         var zone = this.add.zone(400, 600, 500, 400).setRectangleDropZone(500, 400);
@@ -122,6 +122,7 @@ class windows1Scene extends Phaser.Scene {
         openLock1.setVisible(true);
         openLock2.setVisible(true);
         openLock1.setInteractive();
+        instructionText.setText("Lock the window!")
         openLock1.on("pointerdown", function () {
             openLock1.setVisible(false);
             closedLock1.setVisible(true)
@@ -144,7 +145,7 @@ class windows1Scene extends Phaser.Scene {
         }
         if (counter >= 4) {
             counter = 0;
-            backButton = this.add.text(250, 150, "Return to game", { ...fontFam })
+            backButton = this.add.text(90, 150, "Return to game", { ...fontFam })
             backButton.setInteractive();
             let homeBtn = this.add.text(25, 550, "<-- Back");
             homeBtn.setInteractive({ useHandCursor: true });

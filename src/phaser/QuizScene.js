@@ -18,14 +18,14 @@ let spawnEvent;
 
 const fontFam = {
     fontSize: 18,
-    fontFamily: "cursive",
+    fontFamily: "Sans-serif",
     color: "#000000",
     //backgroundColor: "#FFFFFF",
 };
 
 const fontFamBack = {
     fontSize: 30,
-    fontFamily: "cursive",
+    fontFamily: "Sans-serif",
     color: "#000000",
     fontStyle: "bold",
     backgroundColor: "#FFFFFF",

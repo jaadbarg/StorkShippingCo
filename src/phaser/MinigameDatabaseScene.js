@@ -5,6 +5,7 @@ let timePassed;
 let spawnEvent;
 let key;
 let coin;
+let indexCounter = [0, 0, 0, 0, 0, 0]
 
 class minigameDatabaseScene extends Phaser.Scene {
     constructor() {
@@ -61,9 +62,19 @@ class minigameDatabaseScene extends Phaser.Scene {
     }
 
     windowsGame() {
-        this.scene.stop("windows2Scene")
-        this.scene.run("windows2Scene");
-        key = 'windows2Scene'
+        if(indexCounter[1] == 0) {
+            this.scene.stop("windows1Scene")
+            this.scene.run("windows1Scene");
+            key = 'windows1Scene'
+        } else {
+            this.scene.stop("windows2Scene")
+            this.scene.run("windows2Scene");
+            key = 'windows2Scene'
+        }
+        indexCounter[1]++;
+        if(indexCounter[1] >= 2) {
+            indexCounter[1] = 0
+        }
     }
 
     openwaterGame() {

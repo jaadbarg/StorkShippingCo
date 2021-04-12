@@ -101,7 +101,7 @@ class windows2Scene extends Phaser.Scene {
     update() {
         if (counter >= 1) {
             counter = 0;
-            backButton = this.add.text(250, 150, "Return to game", { ...fontFam })
+            backButton = this.add.text(90, 150, "Return to game", { ...fontFam })
             backButton.setInteractive();
             let homeBtn = this.add.text(25, 550, "<-- Back");
             homeBtn.setInteractive({ useHandCursor: true });
