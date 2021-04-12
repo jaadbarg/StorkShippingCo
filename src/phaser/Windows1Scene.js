@@ -108,10 +108,10 @@ class windows1Scene extends Phaser.Scene {
     }
 
     createLocks() {
-        openLock1 = this.add.image(200, 300, "openLock").setScale(0.15);
-        openLock2 = this.add.image(600, 300, "openLock").setScale(0.15);
-        closedLock1 = this.add.image(200, 300, "closedLock").setScale(0.15);
-        closedLock2 = this.add.image(600, 300, "closedLock").setScale(0.15);
+        openLock1 = this.add.image(200, 300, "openLock").setScale(0.275);
+        openLock2 = this.add.image(600, 300, "openLock").setScale(0.275);
+        closedLock1 = this.add.image(200, 300, "closedLock").setScale(0.275);
+        closedLock2 = this.add.image(600, 300, "closedLock").setScale(0.275);
         openLock1.setVisible(false);
         openLock2.setVisible(false);
         closedLock1.setVisible(false);
