@@ -97,7 +97,7 @@ class gameScene extends Phaser.Scene {
     });
 
     gateSpawnEvent = this.time.addEvent({
-      delay: 8500,
+      delay: 6000,
       callback: this.respawnGate,
       callbackScope: this,
       loop: true,
