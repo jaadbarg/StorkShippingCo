@@ -3,7 +3,7 @@ import stairs from "../assets/minigames/stairs1/stairs.png";
 import box from "../assets/minigames/stairs1/box.png";
 import blocks from "../assets/minigames/stairs1/blocks.png";
 
-let counter = 0;
+let counter;
 let backButton;
 let fontFam = {
     // fontFamily: "cursive",
@@ -26,6 +26,8 @@ class stairs1Scene extends Phaser.Scene {
     }
 
     create() {
+
+        counter = 0;
 
         //add background
         this.add.image(400, 300, "stairs");

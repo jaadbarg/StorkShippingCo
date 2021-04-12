@@ -3,7 +3,7 @@ import room from "../assets/minigames/windows2/background.png";
 import chair from "../assets/minigames/windows2/chair.png";
 import eventsCenter from "./EventsCenter"
 
-let counter = 0;
+let counter;
 let backButton;
 let fontFam = {
     // fontFamily: "cursive",
@@ -25,6 +25,8 @@ class windows2Scene extends Phaser.Scene {
     }
 
     create() {
+
+        counter = 0;
 
         //add background
         this.add.image(400, 300, "room").setScale(0.55);

@@ -1,9 +1,11 @@
 import Phaser from "phaser";
 import outside from "../assets/minigames/windows1/background.png";
 import window from "../assets/minigames/windows1/window.png";
+import openLock from "../assets/minigames/windows1/openLock.png";
+import closedLock from "../assets/minigames/windows1/closedLock.png";
 import eventsCenter from "./EventsCenter"
 
-let counter = 0;
+let counter;
 let backButton;
 let fontFam = {
     // fontFamily: "cursive",
@@ -12,6 +14,11 @@ let fontFam = {
     backgroundColor: "#FFFFFF",
 };
 let spawnEvent;
+let openLock1;
+let openLock2;
+let closedLock1;
+let closedLock2;
+
 
 class windows1Scene extends Phaser.Scene {
     constructor() {
@@ -22,9 +29,13 @@ class windows1Scene extends Phaser.Scene {
     preload() {
         this.load.image("outside", outside);
         this.load.image("window", window);
+        this.load.image("openLock", openLock);
+        this.load.image("closedLock", closedLock)
     }
 
     create() {
+
+        counter = 0;
 
         // add window background
         this.add.image(400, 300, "outside").setScale(1.5);
@@ -39,7 +50,7 @@ class windows1Scene extends Phaser.Scene {
         this.add.text(90, 50, "SHUT THE WINDOW!", { ...fontFam, wordWrap:{width:650} });
 
         // acceptable end state of window
-        var zone = this.add.zone(400, 600, 500, 200).setRectangleDropZone(500, 200);
+        var zone = this.add.zone(400, 600, 500, 400).setRectangleDropZone(500, 400);
 
         /* from windows2scene 
         Just a visual display of the drop zone
@@ -77,7 +88,8 @@ class windows1Scene extends Phaser.Scene {
             gameObject.x = dropZone.x;
             gameObject.y = dropZone.y;
             gameObject.input.enabled = false;
-            counter++;
+
+            counter = 1;
             //graphics.clear();
             //graphics.lineStyle(2, 0xffff00);
             //graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
@@ -95,9 +107,42 @@ class windows1Scene extends Phaser.Scene {
         });
     }
 
+    createLocks() {
+        openLock1 = this.add.image(200, 300, "openLock").setScale(0.15);
+        openLock2 = this.add.image(600, 300, "openLock").setScale(0.15);
+        closedLock1 = this.add.image(200, 300, "closedLock").setScale(0.15);
+        closedLock2 = this.add.image(600, 300, "closedLock").setScale(0.15);
+        openLock1.setVisible(false);
+        openLock2.setVisible(false);
+        closedLock1.setVisible(false);
+        closedLock2.setVisible(false);
+    }
+
+    activateLocks() {
+        openLock1.setVisible(true);
+        openLock2.setVisible(true);
+        openLock1.setInteractive();
+        openLock1.on("pointerdown", function () {
+            openLock1.setVisible(false);
+            closedLock1.setVisible(true)
+            counter++
+        })
+        openLock2.setInteractive();
+        openLock2.on("pointerdown", function () {
+            openLock2.setVisible(false);
+            closedLock2.setVisible(true)
+            counter++
+        })
+    }
+
     // increments counter, at 1 it ends games
     update() {
-        if (counter >= 1) {
+        if(counter == 1) {
+            this.createLocks();
+            this.activateLocks();
+            counter++;
+        }
+        if (counter >= 4) {
             counter = 0;
             backButton = this.add.text(250, 150, "Return to game", { ...fontFam })
             backButton.setInteractive();
