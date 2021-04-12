@@ -38,10 +38,15 @@ class MinigameScene extends Phaser.Scene {
 
     let stairs1Btn = this.add.text(50, 150, "Clear the Stairs!", {...fontFam});
 
-    let windows2Btn = this.add.text(50, 200, "Clear the Windows!", {...fontFam})
+    let windows1Btn = this.add.text(50, 250, "Shut the Window!", {...fontFam})
+    
+    let windows2Btn = this.add.text(50, 350, "Clear the Windows!", {...fontFam})
 
     stairs1Btn.setInteractive({ useHandCursor: true });
     stairs1Btn.on("pointerdown", () => this.scene.switch("stairs1Scene"));
+
+    windows1Btn.setInteractive({ useHandCursor: true });
+    windows1Btn.on("pointerdown", () => this.scene.switch("windows1Scene"));
 
     windows2Btn.setInteractive({ useHandCursor: true });
     windows2Btn.on("pointerdown", () => this.scene.switch("windows2Scene"));
