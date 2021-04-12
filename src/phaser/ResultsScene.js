@@ -80,20 +80,20 @@ class ResultsScene extends Phaser.Scene {
   }
 
   getTitle(score) {
-    if (score < 1000) {
+    if (score < 800) {
       return "Novice Inspector";
       //brown
     }
-    if (score < 2000) {
+    if (score < 1600) {
       return "Adept Inspector";
     }
-    if (score < 3000) {
+    if (score < 2400) {
       return "Magnus Inspector";
     }
-    if (score < 4000) {
+    if (score < 3200) {
       return "Grandmaster Inspector";
     }
-    if (score < 5000) {
+    if (score < 4000) {
       return "Legendary Inspector";
     }
     return "Visionary Inspector";

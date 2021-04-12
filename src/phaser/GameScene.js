@@ -11,12 +11,15 @@ import eventsCenter from "./EventsCenter"
 
 let gateGroup;
 let spawnEvent;
+let gateSpawnEvent;
 let toddlerList = [];
 let boundaryList = [];
 let directionList = [];
 let scoreBoard;
 let timeBoard;
-let gateTracker = [true, true, true, true, true, true];
+let gateTracker;
+let inactiveModal;
+let inactiveTip;
 
 let velocityConstant = 40;
 let accelerationConstant = 15;
@@ -27,11 +30,18 @@ let MAXIMUMBABIES;
 let fontFam = {
   // fontFamily: "cursive",
   fontSize: 17,
-  color: "#000000",
-  backgroundColor: "#FFFFFF",
+  color: "#9f5919",
+  //backgroundColor: "#6e82d4",
+  fontStyle: "bold"
 };
 let timeAdjustment;
 let timeAdjustMini;
+let clearedBoard;
+let togoBoard;
+let hazardsCleared;
+let hazardsToGo;
+let inactiveTimer;
+let emitterCount = 0;
 
 class gameScene extends Phaser.Scene {
   constructor() {
@@ -57,6 +67,11 @@ class gameScene extends Phaser.Scene {
     totalScore = 0;
     timeLeft = 300;
     MAXIMUMBABIES = 5
+    gateTracker = [true, true, true, true, true, true];
+    hazardsCleared = 0;
+    hazardsToGo = 6;
+    emitterCount++;
+    inactiveTimer = 0;
 
     //initially places assets into game
     this.add.image(400, 300, "map").setScale(1.3); //adds map
@@ -64,19 +79,29 @@ class gameScene extends Phaser.Scene {
     this.createGates(); //adds gates that sit next to hazards
     this.createScoreBoard();
     this.createTimer();
+    this.createHazardBoard();
 
-    eventsCenter.on("timePassedData", this.substractTime, this);
-    eventsCenter.on("timePassedMini", this.substractTimeMini, this);
+    this.createInactiveTip();
+
+    eventsCenter.on("timePassedData", this.subtractTime, this);
+    eventsCenter.on("timePassedMini", this.subtractTime, this);
     timeAdjustment = 0;
     timeAdjustMini = 0;
 
     this.onSpawn(); //spawn toddler?
     spawnEvent = this.time.addEvent({
-      delay: 6000,
+      delay: 8000,
       callback: this.onSpawn,
       callbackScope: this,
       loop: true,
     });
+
+    gateSpawnEvent = this.time.addEvent({
+      delay: 10000,
+      callback: this.respawnGate,
+      callbackScope: this,
+      loop: true,
+    })
   }
 
   update() {
@@ -84,14 +109,24 @@ class gameScene extends Phaser.Scene {
     let standardTime = this.convertTime(timeLeft);
     timeBoard.setText(standardTime);
 
+    clearedBoard.setText(hazardsCleared)
+    togoBoard.setText(hazardsToGo)
+
     if (timeLeft <= 0) {
-      this.scene.start("resultsScene", { score: totalScore });
+      this.scene.start("resultsScene", { score: totalScore - (75 * hazardsCleared) });
+      /*
+      Remember to clean up the minigame data when the first game ends --> reset timer
+      */
+     this.scene.stop('quizScene');
+     this.scene.stop('stairs1Scene');
     }
   }
 
   createScoreBoard() {
-    this.add.text(450, 180, "Score:", fontFam)
-    scoreBoard = this.add.text(450, 210, totalScore, fontFam)
+    let scoreBox = this.add.rectangle(360, 218, 65, 90, 0xffffff)
+
+    this.add.text(330, 220, "Score:", fontFam)
+    scoreBoard = this.add.text(330, 240, totalScore, fontFam)
   }
 
   createTimer() {
@@ -102,27 +137,33 @@ class gameScene extends Phaser.Scene {
       loop: true,
     });
     this.add.text(330, 180, "Time:", fontFam)
-    timeBoard = this.add.text(330, 210, timeLeft, fontFam)
+    timeBoard = this.add.text(330, 200, timeLeft, fontFam)
+  }
+
+  createHazardBoard() {
+    let hazardBox = this.add.rectangle(483, 218, 77, 90, 0xffffff)
+
+    this.add.text(445, 180, "Cleared:", {... fontFam, wordWrap:{width:100}})
+    clearedBoard = this.add.text(450, 200, hazardsCleared, fontFam)
+    this.add.text(450, 220, "To Go:", fontFam)
+    togoBoard = this.add.text(450, 240, hazardsToGo, fontFam)
   }
 
   increaseTime() {
     timeLeft--;
+    inactiveTimer++;
+    if(inactiveTimer >= 15) {
+      inactiveTimer = 0;
+      inactiveModal.setVisible(true);
+      inactiveTip.setVisible(true);
+    }
   }
 
-  substractTime(timePassed) {
-    let placeHolder = timePassed;
-    timePassed -= timeAdjustment;
-    console.log("timepassed is equal ===" + timePassed)
+  subtractTime(timePassed) {
+    console.log("timePassed === " + timePassed)
+    timePassed /= emitterCount;
     timeLeft -= timePassed;
-    timeAdjustment = placeHolder;
-  }
-
-  substractTimeMini(timePassed) {
-    let placeHolder = timePassed;
-    timePassed -= timeAdjustMini;
-    console.log("timepassedMINI  === " + timePassed)
-    timeLeft -= timePassed;
-    timeAdjustMini = placeHolder;
+    timeLeft = Math.round(timeLeft)
   }
 
   convertTime(x) {
@@ -167,10 +208,10 @@ class gameScene extends Phaser.Scene {
   createGates() {
     //inserts all gates into game
     gateGroup = this.physics.add.group();
-    this.addGate(550, 190, "gate1", 0.04, 0, 2); //openwater
+    this.addGate(550, 220, "gate1", 0.04, 0, 2); //openwater
     this.addGate(750, 440, "gate1", 0.04, 0, 0); //stairs
     this.addGate(525, 550, "gate1", 0.04, 0, 1); //windows
-    this.addGate(50, 120, "gate1", 0.04, 0, 5); //baby walkers
+    this.addGate(50, 120, "gate1", 0.04, 0, 5); //bed
     this.addGate(290, 250, "gate1", 0.04, 0, 3); //baby equipment
     this.addGate(275, 465, "gate1", 0.04, 0, 4); //furniture
   }
@@ -192,8 +233,27 @@ class gameScene extends Phaser.Scene {
     gate.on("pointerdown", function () {
       gate.destroy();
       gateTracker[gateID] = false;
+      
+      hazardsCleared++;
+      hazardsToGo--;
+      totalScore += 75;
+
+      inactiveModal.setVisible(false);
+      inactiveTip.setVisible(false);
+
+      inactiveTimer = 0;
     });
     gate.on('pointerdown', () => this.openGate(gateID));
+  }
+
+  createInactiveTip() {
+    inactiveModal = this.add.rectangle(550, 420, 280, 120, 0xffffff);
+    inactiveModal.setStrokeStyle(10, 0xe90000);
+
+    inactiveTip = this.add.text(445, 400, "Click on a stop sign to clear a hazard!", {...fontFam, wordWrap:{width:240}})
+
+    inactiveModal.setVisible(false);
+    inactiveTip.setVisible(false);
   }
 
   openMiniGame(gateID) {
@@ -209,9 +269,9 @@ class gameScene extends Phaser.Scene {
     }
     if(coin <= 50) {
       //run minigame
-      this.scene.stop("stairs1Scene")
+      this.scene.stop("minigameDatabaseScene", {id: gateID })
       this.scene.sleep("gameScene")
-      this.scene.run("stairs1Scene");
+      this.scene.run("minigameDatabaseScene", {id: gateID });
     } else {
       this.scene.stop("quizScene")
       this.scene.sleep("gameScene")
@@ -225,16 +285,12 @@ class gameScene extends Phaser.Scene {
       let toddler;
       let index = Math.floor(Math.random() * 5); // there are currently 5 baby designs
       let babies = ["baby1", "baby2", "baby3", "baby4", "baby5"];
-      toddler = this.physics.add.image(800, 40, babies[index]).setScale(0.14);
+      toddler = this.physics.add.image(1000, 40, babies[index]).setScale(0.14);
 
       this.setUp(toddler);
       this.collisionBetween(toddler);
 
       toddlerList.push(toddler);
-
-      if (Math.random() * 100 < 70) {
-        this.respawnGate();
-      }
 
       maxBabyCounter++;
     }
@@ -252,6 +308,7 @@ class gameScene extends Phaser.Scene {
     }
     let respawnNumber = respawnPool[Math.floor(Math.random() * respawnPool.length)];
     this.readdGate(respawnNumber);
+    hazardsToGo++;
   }
 
   readdGate(x) {
@@ -260,7 +317,7 @@ class gameScene extends Phaser.Scene {
     } else if (x == 1) {
       this.addGate(525, 550, "gate1", 0.04, 0, 1); //windows
     } else if (x == 2) {
-      this.addGate(550, 190, "gate1", 0.04, 0, 2); //openwater
+      this.addGate(550, 220, "gate1", 0.04, 0, 2); //openwater
     } else if (x == 3) {
       this.addGate(290, 250, "gate1", 0.04, 0, 3); //baby equipment
     } else if (x == 4) {

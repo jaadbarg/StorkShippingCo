@@ -51,6 +51,7 @@ class TitleScene extends Phaser.Scene {
 
     minigameBtn.setInteractive({ useHandCursor: true });
     minigameBtn.on("pointerdown", () => this.startMinigame());
+
   }
 
   startGame() {
