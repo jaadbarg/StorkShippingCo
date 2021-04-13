@@ -97,7 +97,7 @@ class gameScene extends Phaser.Scene {
     });
 
     gateSpawnEvent = this.time.addEvent({
-      delay: 10000,
+      delay: 6000,
       callback: this.respawnGate,
       callbackScope: this,
       loop: true,
@@ -264,7 +264,7 @@ class gameScene extends Phaser.Scene {
 
   openGate(gateID) {
     let coin = 100;
-    if(gateID == 0) {
+    if(gateID == 0 || gateID == 1) {
       coin = Math.random() * 100;
     }
     if(coin <= 50) {

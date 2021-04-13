@@ -3,7 +3,7 @@ import room from "../assets/minigames/windows2/background.png";
 import chair from "../assets/minigames/windows2/chair.png";
 import eventsCenter from "./EventsCenter"
 
-let counter = 0;
+let counter;
 let backButton;
 let fontFam = {
     // fontFamily: "cursive",
@@ -25,6 +25,8 @@ class windows2Scene extends Phaser.Scene {
     }
 
     create() {
+
+        counter = 0;
 
         //add background
         this.add.image(400, 300, "room").setScale(0.55);
@@ -99,7 +101,7 @@ class windows2Scene extends Phaser.Scene {
     update() {
         if (counter >= 1) {
             counter = 0;
-            backButton = this.add.text(250, 150, "Return to game", { ...fontFam })
+            backButton = this.add.text(90, 150, "Return to game", { ...fontFam })
             backButton.setInteractive();
             let homeBtn = this.add.text(25, 550, "<-- Back");
             homeBtn.setInteractive({ useHandCursor: true });
