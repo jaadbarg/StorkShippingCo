@@ -1,6 +1,9 @@
 import Phaser from "phaser";
 import background from "../assets/logo.png";
+import muteSymbol from "../assets/muteSymbol.png"
 import smoov from "../assets/smoov.mp3";
+
+let muteBar;
 
 class TitleScene extends Phaser.Scene {
   constructor() {
@@ -10,6 +13,7 @@ class TitleScene extends Phaser.Scene {
 
   preload() {
     this.load.image("background", background);
+    this.load.image('mute', muteSymbol);
     this.load.audio("smoov", smoov);
   }
 
@@ -32,7 +36,9 @@ class TitleScene extends Phaser.Scene {
     let resourceBtn = this.add.text(550, 550, "Resources", { ...fontFam });
     let minigameBtn = this.add.text(317, 550, "Minigames", { ...fontFam });
 
-    let muteBtn = this.add.text(700, 100, "Mute", { ...fontFam });
+    let muteBtn = this.add.image(720, 80, "mute").setScale(0.07);
+    muteBar = this.add.rectangle(720, 80, 100, 5, 0x000000).setAngle(45);
+    muteBar.setVisible(false);
     muteBtn.setInteractive({ useHandCursor: true });
 
     muteBtn.on("pointerdown", () => this.toggleMute());
@@ -66,8 +72,10 @@ class TitleScene extends Phaser.Scene {
   toggleMute() {
     if (!this.game.sound.mute) {
       this.game.sound.mute = true;
+      muteBar.setVisible(true);
     } else {
       this.game.sound.mute = false;
+      muteBar.setVisible(false);
     }
   }
 
