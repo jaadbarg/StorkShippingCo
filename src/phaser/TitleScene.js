@@ -23,22 +23,19 @@ class TitleScene extends Phaser.Scene {
     };
 
     let themusic = this.sound.add("smoov", { loop: true });
+    themusic.setVolume(0.1);
     themusic.play();
     this.add.image(400, 300, "background");
 
     let startBtn = this.add.text(350, 500, "Start", { ...fontFam });
     let instructBtn = this.add.text(50, 550, "Instructions", { ...fontFam });
     let resourceBtn = this.add.text(550, 550, "Resources", { ...fontFam });
-    let minigameBtn = this.add.text(317, 550, "Minigames", {...fontFam})
+    let minigameBtn = this.add.text(317, 550, "Minigames", { ...fontFam });
 
+    let muteBtn = this.add.text(700, 100, "Mute", { ...fontFam });
+    muteBtn.setInteractive({ useHandCursor: true });
 
-    // let muteBtn = this.add.text(700, 100, "Mute", { ...fontFam });
-    // muteBtn.setInteractive({ useHandCursor: true });
-    // muteBtn.on(
-    //   "pointerdown",
-    //   () => console.log(themusic.play()),
-    //   themusic.play ? themusic.pause() : themusic.play()
-    // );
+    muteBtn.on("pointerdown", () => this.toggleMute());
 
     startBtn.setInteractive({ useHandCursor: true });
     startBtn.on("pointerdown", () => this.startGame());
@@ -51,7 +48,6 @@ class TitleScene extends Phaser.Scene {
 
     minigameBtn.setInteractive({ useHandCursor: true });
     minigameBtn.on("pointerdown", () => this.startMinigame());
-
   }
 
   startGame() {
@@ -67,8 +63,18 @@ class TitleScene extends Phaser.Scene {
     this.scene.switch("minigameScene");
   }
 
+  toggleMute() {
+    if (!this.game.sound.mute) {
+      this.game.sound.mute = true;
+    } else {
+      this.game.sound.mute = false;
+    }
+  }
+
   // delete this later
-  startResults() {this.scene.switch("resultsScene")}
+  startResults() {
+    this.scene.switch("resultsScene");
+  }
 }
 
 export default TitleScene;
