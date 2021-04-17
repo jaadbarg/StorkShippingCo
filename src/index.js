@@ -12,10 +12,12 @@ import QuizScene from "./phaser/QuizScene.js";
 import Stairs1Scene from "./phaser/Stairs1Scene";
 import Windows1Scene from "./phaser/Windows1Scene.js";
 import Windows2Scene from "./phaser/Windows2Scene";
+import Baby1Scene from "./phaser/Baby1Scene";
 import MinigameDatabaseScene from "./phaser/MinigameDatabaseScene";
 
 import PreloadScene from "./phaser/PreloadScene.js";
 import MinigameScene from "./phaser/MinigameScene.js";
+import baby1Scene from "./phaser/Baby1Scene";
 
 
 // Initializing game scenes
@@ -32,6 +34,7 @@ let minigameScene = new MinigameScene();
 let stairs1Scene = new Stairs1Scene();
 let windows1Scene = new Windows1Scene();
 let windows2Scene = new Windows2Scene();
+let baby1Mini = new Baby1Scene();
 let minigameDatabaseScene = new MinigameDatabaseScene();
 
 //set up phaser config
@@ -68,6 +71,7 @@ game.scene.add("minigameScene", minigameScene);
 game.scene.add("stairs1Scene", stairs1Scene);
 game.scene.add("windows1Scene", windows1Scene)
 game.scene.add("windows2Scene", windows2Scene);
+game.scene.add("baby1Scene", baby1Mini);
 game.scene.add("minigameDatabaseScene", minigameDatabaseScene);
 
 // start the title scene
