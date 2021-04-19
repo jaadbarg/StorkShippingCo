@@ -82,11 +82,15 @@ class minigameDatabaseScene extends Phaser.Scene {
     }
 
     babyEquipmentGame() {
-
+        this.scene.stop("baby1Scene")
+        this.scene.run("baby1Scene");
+        key = 'baby1Scene'
     }
 
     furnitureGame() {
-
+        this.scene.stop("furniture1Scene")
+        this.scene.run("furniture1Scene");
+        key = 'furniture1Scene'
     }
 
     bedGame() {

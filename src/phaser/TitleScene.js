@@ -38,8 +38,7 @@ class TitleScene extends Phaser.Scene {
     let testBtn = this.add.text(100, 100, "TEST", { ...fontFam });
 
     //for testing minigame
-    testBtn.setInteractive({ useHandCursor: true });
-    testBtn.on("pointerdown", () => this.scene.switch("furniture1Scene"));
+    
 
     let muteBtn = this.add.image(720, 80, "mute").setScale(0.07);
     muteBar = this.add.rectangle(720, 80, 100, 5, 0x000000).setAngle(45);

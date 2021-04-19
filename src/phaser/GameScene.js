@@ -278,7 +278,7 @@ class gameScene extends Phaser.Scene {
 
   openGate(gateID) {
     let coin = 100;
-    if (gateID == 0 || gateID == 1) {
+    if (gateID == 0 || gateID == 1 || gateID == 3 || gateID == 4) {
       coin = Math.random() * 100;
     }
     if (coin <= 50) {
