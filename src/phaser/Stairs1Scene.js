@@ -6,12 +6,21 @@ import blocks from "../assets/minigames/stairs1/blocks.png";
 let counter;
 let backButton;
 let fontFam = {
-    // fontFamily: "cursive",
+    fontFamily: "Sans-serif",
     fontSize: 50,
     color: "#000000",
     backgroundColor: "#FFFFFF",
 };
+const fontFamBack = {
+    fontSize: 30,
+    fontFamily: "Sans-serif",
+    color: "#000000",
+    fontStyle: "bold",
+    backgroundColor: "#FFFFFF",
+};
 let spawnEvent;
+let backBtn;
+let titleText;
 
 class stairs1Scene extends Phaser.Scene {
     constructor() {
@@ -112,13 +121,19 @@ class stairs1Scene extends Phaser.Scene {
     update() {
         if (counter >= 3) {
             counter = 0;
-            backButton = this.add.text(250, 150, "Return to game", { ...fontFam })
-            backButton.setInteractive();
+
+            let modal = this.add.rectangle(400, 300, 400, 220, 0xffffff);
+            modal.setStrokeStyle(10, 0x00bb00);
+
+            titleText = this.add.text(328, 213, "Good Job!", { ...fontFamBack });
+            backBtn = this.add.text(282, 330, "", { ...fontFamBack });
+            backBtn.setText("Return to game");
+            backBtn.setInteractive({ useHandCursor: true });
+            backBtn.on("pointerdown", () => this.returnToMini());
+
             let homeBtn = this.add.text(25, 550, "<-- Back");
             homeBtn.setInteractive({ useHandCursor: true });
             homeBtn.on("pointerdown", () => this.scene.start("minigameScene"));
-            backButton.on('pointerdown', () =>
-                this.returnToMini());
         }
     }
 

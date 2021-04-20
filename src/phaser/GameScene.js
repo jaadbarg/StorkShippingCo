@@ -20,6 +20,8 @@ let timeBoard;
 let gateTracker;
 let inactiveModal;
 let inactiveTip;
+let respawnGateCoin;
+let delayRespawn;
 
 let velocityConstant = 40;
 let accelerationConstant = 15;
@@ -72,6 +74,7 @@ class gameScene extends Phaser.Scene {
     hazardsToGo = 6;
     emitterCount++;
     inactiveTimer = 0;
+    respawnGateCoin = false;
 
     //initially places assets into game
     this.add.image(400, 300, "map").setScale(1.3); //adds map
@@ -96,12 +99,12 @@ class gameScene extends Phaser.Scene {
       loop: true,
     });
 
-    gateSpawnEvent = this.time.addEvent({
-      delay: 6000,
-      callback: this.respawnGate,
-      callbackScope: this,
-      loop: true,
-    })
+    // gateSpawnEvent = this.time.addEvent({
+    //   delay: 6000,
+    //   callback: this.respawnGate,
+    //   callbackScope: this,
+    //   loop: true,
+    // })
   }
 
   update() {
@@ -117,8 +120,8 @@ class gameScene extends Phaser.Scene {
       /*
       Remember to clean up the minigame data when the first game ends --> reset timer
       */
-     this.scene.stop('quizScene');
-     this.scene.stop('stairs1Scene');
+      this.scene.stop('quizScene');
+      this.scene.stop('stairs1Scene');
     }
   }
 
@@ -143,7 +146,7 @@ class gameScene extends Phaser.Scene {
   createHazardBoard() {
     let hazardBox = this.add.rectangle(483, 218, 77, 90, 0xffffff)
 
-    this.add.text(445, 180, "Cleared:", {... fontFam, wordWrap:{width:100}})
+    this.add.text(445, 180, "Cleared:", { ...fontFam, wordWrap: { width: 100 } })
     clearedBoard = this.add.text(450, 200, hazardsCleared, fontFam)
     this.add.text(450, 220, "To Go:", fontFam)
     togoBoard = this.add.text(450, 240, hazardsToGo, fontFam)
@@ -152,7 +155,7 @@ class gameScene extends Phaser.Scene {
   increaseTime() {
     timeLeft--;
     inactiveTimer++;
-    if(inactiveTimer >= 15) {
+    if (inactiveTimer >= 15) {
       inactiveTimer = 0;
       inactiveModal.setVisible(true);
       inactiveTip.setVisible(true);
@@ -233,7 +236,7 @@ class gameScene extends Phaser.Scene {
     gate.on("pointerdown", function () {
       gate.destroy();
       gateTracker[gateID] = false;
-      
+
       hazardsCleared++;
       hazardsToGo--;
       totalScore += 75;
@@ -244,13 +247,24 @@ class gameScene extends Phaser.Scene {
       inactiveTimer = 0;
     });
     gate.on('pointerdown', () => this.openGate(gateID));
+    gate.on('pointerdown', () => this.respawnOperation(gateID));
+  }
+
+  respawnOperation(gateID) {
+    delayRespawn = this.time.addEvent({
+      delay: 5200,
+      callback: this.respawnGate,
+      args: [gateID],
+      callbackScope: this,
+      loop: false,
+    });
   }
 
   createInactiveTip() {
     inactiveModal = this.add.rectangle(550, 420, 280, 120, 0xffffff);
     inactiveModal.setStrokeStyle(10, 0xe90000);
 
-    inactiveTip = this.add.text(445, 400, "Click on a stop sign to clear a hazard!", {...fontFam, wordWrap:{width:240}})
+    inactiveTip = this.add.text(445, 400, "Click on a stop sign to clear a hazard!", { ...fontFam, wordWrap: { width: 240 } })
 
     inactiveModal.setVisible(false);
     inactiveTip.setVisible(false);
@@ -264,14 +278,14 @@ class gameScene extends Phaser.Scene {
 
   openGate(gateID) {
     let coin = 100;
-    if(gateID == 0 || gateID == 1) {
+    if (gateID == 0 || gateID == 1 || gateID == 3 || gateID == 4) {
       coin = Math.random() * 100;
     }
-    if(coin <= 50) {
+    if (coin <= 50) {
       //run minigame
-      this.scene.stop("minigameDatabaseScene", {id: gateID })
+      this.scene.stop("minigameDatabaseScene", { id: gateID })
       this.scene.sleep("gameScene")
-      this.scene.run("minigameDatabaseScene", {id: gateID });
+      this.scene.run("minigameDatabaseScene", { id: gateID });
     } else {
       this.scene.stop("quizScene")
       this.scene.sleep("gameScene")
@@ -296,7 +310,8 @@ class gameScene extends Phaser.Scene {
     }
   }
 
-  respawnGate() {
+  respawnGate(gateID) {
+    /*
     let respawnPool = []
     for (let i = 0; i < gateTracker.length; i++) {
       if (!gateTracker[i]) {
@@ -307,7 +322,8 @@ class gameScene extends Phaser.Scene {
       return;
     }
     let respawnNumber = respawnPool[Math.floor(Math.random() * respawnPool.length)];
-    this.readdGate(respawnNumber);
+    */
+    this.readdGate(gateID);
     hazardsToGo++;
   }
 
@@ -367,6 +383,9 @@ class gameScene extends Phaser.Scene {
     let l = toddlerList.length;
     if (l != 0) {
       this.physics.add.collider(toddler, toddlerList[l - 1]);
+    }
+    if (l != 1) {
+      this.physics.add.collider(toddler, toddlerList[l - 2]);
     }
   }
 }
