@@ -2,6 +2,9 @@ import Phaser from "phaser";
 import good_chair from "../assets/minigames/furniture2/good_chair.png";
 import wobbly_chair from "../assets/minigames/furniture2/wobbly_chair.png";
 import tall_chair from "../assets/minigames/furniture2/tall_chair.png"
+import gray from "../assets/minigames/furniture2/gray.jpg"
+import trashcan from "../assets/minigames/furniture2/trashcan.png"
+import basket from "../assets/minigames/furniture2/basket.png"
 import eventsCenter from "./EventsCenter"
 
 let counter;
@@ -32,6 +35,9 @@ class furniture2Scene extends Phaser.Scene {
         this.load.image("good_chair", good_chair);
         this.load.image("wobbly_chair", wobbly_chair);
         this.load.image("tall_chair", tall_chair);
+        this.load.image("gray", gray);
+        this.load.image("basket", basket);
+        this.load.image("trashcan", trashcan);
     }
 
     create() {
@@ -39,43 +45,52 @@ class furniture2Scene extends Phaser.Scene {
         counter = 0;
 
         //add background
-        //this.add.image(400, 300, "room").setScale(0.55);
+        this.add.image(400, 300, "gray").setScale(2);
 
         //add minigame title text
-        this.add.text(90, 50, "BUY THE SAFEST CHAIR!", { ...fontFam, wordWrap:{width:650} });
+        this.add.text(90, 50, "BUY THE SAFEST CHAIR AND DISCARD THE REST!", { ...fontFam, wordWrap:{width:650} });
 
         //shuffle chairs for replayability
         let chairs = ["good_chair", "wobbly_chair", "tall_chair"];
-        chairs = shuffleArray(chairs);
+        for (var i = chairs.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = chairs[i];
+            chairs[i] = chairs[j];
+            chairs[j] = temp;
+        }
 
         //place chairs on screen
+        var good_chair1;
+        var wobbly_chair1;
+        var tall_chair1;
+        
         for (i = 0; i < chairs.length; i++) {
             if(chairs[i] == "good_chair"){
-                var good_chair = this.add.image((i*200)+200, 400, chairs[i]).setScale(0.5);
-                good_chair.setInteractive();
-                this.input.setDraggable(good_chair);
+                good_chair1 = this.add.image((i*200)+200, 300, chairs[i]).setScale(0.5);
+                good_chair1.setInteractive();
+                this.input.setDraggable(good_chair1);
             }
             else if(chairs[i] == "wobbly_chair"){
-                var wobbly_chair = this.add.image((i*200)+200, 400, chairs[i]).setScale(0.5);
-                wobbly_chair.setInteractive();
-                this.input.setDraggable(wobbly_chair);
+                wobbly_chair1 = this.add.image((i*200)+200, 300, chairs[i]).setScale(0.5);
+                wobbly_chair1.setInteractive();
+                this.input.setDraggable(wobbly_chair1);
             }
             else{
-                var tall_chair = this.add.image((i*200)+200, 400, chairs[i]).setScale(0.5);
-                tall_chair.setInteractive();
-                this.input.setDraggable(tall_chair);
+                tall_chair1 = this.add.image((i*200)+200, 300, chairs[i]).setScale(0.5);
+                tall_chair1.setInteractive();
+                this.input.setDraggable(tall_chair1);
             }
         }
         
 
-        //place drop zone
-        var zone = this.add.zone(150, 400, 150, 250).setRectangleDropZone(150, 250);
+        //place drop zones
+        var zone1 = this.add.zone(200, 500, 150, 250).setRectangleDropZone(150, 250);
+        var zone2 = this.add.zone(600, 490, 150, 250).setRectangleDropZone(150, 250);
 
-        //*  Just a visual display of the drop zone
-        var graphics = this.add.graphics();
-        graphics.lineStyle(2, 0xffff00);
-        graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
-        //*/
+        //place trashcan
+        this.add.image(200, 500, "trashcan").setScale(0.1);
+        //place shopping basket
+        this.add.image(600, 490, "basket").setScale(0.1);
 
         //moves dragged object to front
         this.input.on('dragstart', function (pointer, gameObject) {
@@ -90,32 +105,21 @@ class furniture2Scene extends Phaser.Scene {
 
         //when dragged object touches dropzones
         this.input.on('dragenter', function (pointer, gameObject, dropZone) {
-            //graphics.clear();
-            //graphics.lineStyle(2, 0x00ffff);
-            //graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+           //just vibe
         });
 
         //when dragged object leaves dropzone
         this.input.on('dragleave', function (pointer, gameObject, dropZone) {
-            //graphics.clear();
-            //graphics.lineStyle(2, 0xffff00);
-            //graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+            //just vibe
         });
 
-        //when object dropped into dropzone, increment counter
+        //when object dropped into dropzone
         this.input.on('drop', function (pointer, gameObject, dropZone) {
             gameObject.x = dropZone.x;
             gameObject.y = dropZone.y;
             gameObject.input.enabled = false;
-            if(gameObject == good_chair){
-                counter++
-            }
-            else{
-                this.scene.switch("furniture2Scene");
-            };
-            //graphics.clear();
-            //graphics.lineStyle(2, 0xffff00);
-            //graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
+            gameObject.destroy();
+            counter++;
         });
 
         //when drag ends and object is not in the dropzone
@@ -124,15 +128,12 @@ class furniture2Scene extends Phaser.Scene {
                 gameObject.x = gameObject.input.dragStartX;
                 gameObject.y = gameObject.input.dragStartY;
             }
-            //graphics.clear();
-            //graphics.lineStyle(2, 0xffff00);
-            //graphics.strokeRect(zone.x - zone.input.hitArea.width / 2, zone.y - zone.input.hitArea.height / 2, zone.input.hitArea.width, zone.input.hitArea.height);
         });
     }
 
     //increments counter, at 1 it ends games
     update() {
-        if (counter >= 1) {
+        if (counter >= 3) {
             counter = 0;
             
             let modal = this.add.rectangle(400, 300, 400, 220, 0xffffff);
@@ -147,13 +148,6 @@ class furniture2Scene extends Phaser.Scene {
             let homeBtn = this.add.text(25, 550, "<-- Back");
             homeBtn.setInteractive({ useHandCursor: true });
             homeBtn.on("pointerdown", () => this.scene.start("minigameScene"));
-        }
-    }
-
-    shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
         }
     }
 
