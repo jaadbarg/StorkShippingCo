@@ -56,9 +56,19 @@ class minigameDatabaseScene extends Phaser.Scene {
     }
 
     stairsGame() {
-        this.scene.stop("stairs1Scene")
-        this.scene.run("stairs1Scene");
-        key = 'stairs1Scene'
+        if(indexCounter[0] == 0) {
+            this.scene.stop("stairs1Scene")
+            this.scene.run("stairs1Scene");
+            key = 'stairs1Scene'
+        } else {
+            this.scene.stop("stairs2Scene")
+            this.scene.run("stairs2Scene");
+            key = 'stairs2Scene'
+        }
+        indexCounter[0]++;
+        if(indexCounter[0] >= 2) {
+            indexCounter[0] = 0
+        }
     }
 
     windowsGame() {

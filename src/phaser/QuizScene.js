@@ -58,42 +58,42 @@ class QuizScene extends Phaser.Scene {
             case 0:
                 question = questionBank[0][counter[0]];
                 counter[0]++;
-                if(counter[0] >= 2) {
+                if(counter[0] >= 6) {
                     counter[0] = 0;
                 }
                 break;
             case 1:
                 question = questionBank[1][counter[1]];
                 counter[1]++;
-                if(counter[1] >= 3) {
+                if(counter[1] >= 5) {
                     counter[1] = 0;
                 }
                 break;
             case 2:
                 question = questionBank[2][counter[2]];
                 counter[2]++;
-                if(counter[2] >= 2) {
+                if(counter[2] >= 5) {
                     counter[2] = 0;
                 }
                 break;
             case 3:
                 question = questionBank[3][counter[3]];
                 counter[3]++;
-                if(counter[3] >= 3) {
+                if(counter[3] >= 5) {
                     counter[3] = 0;
                 }
                 break;
             case 4:
                 question = questionBank[4][counter[4]];
                 counter[4]++;
-                if(counter[4] >= 2) {
+                if(counter[4] >= 6) {
                     counter[4] = 0;
                 }
                 break;
             case 5:
                 question = questionBank[5][counter[5]];
                 counter[5]++;
-                if(counter[5] >= 2) {
+                if(counter[5] >= 4) {
                     counter[5] = 0;
                 }
                 break;

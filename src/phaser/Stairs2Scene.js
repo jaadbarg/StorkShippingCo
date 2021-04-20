@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import stairs from "../assets/minigames/stairs2/stairs.jpg";
+import stairs2 from "../assets/minigames/stairs2/stairs2.jpg";
 import gate from "../assets/minigames/stairs2/gate.png";
 import circle from "../assets/minigames/stairs2/circle.png";
 import eventsCenter from "./EventsCenter"
@@ -31,7 +31,7 @@ class stairs2Scene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image("stairs", stairs);
+        this.load.image("stairs2", stairs2);
         this.load.image("gate", gate);
         this.load.image("circle", circle)
     }
@@ -41,7 +41,7 @@ class stairs2Scene extends Phaser.Scene {
         counter = 0;
 
         // add window background
-        this.add.image(400, 300, "stairs").setScale(.7);
+        this.add.image(400, 300, "stairs2").setScale(.8);
 
         // add unmoveable and moveable window
         var gate = this.add.image(650, 500, "gate").setScale(0.62,0.5);

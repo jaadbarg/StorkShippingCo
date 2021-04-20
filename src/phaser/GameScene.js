@@ -252,7 +252,7 @@ class gameScene extends Phaser.Scene {
 
   respawnOperation(gateID) {
     delayRespawn = this.time.addEvent({
-      delay: 4200,
+      delay: 5200,
       callback: this.respawnGate,
       args: [gateID],
       callbackScope: this,
