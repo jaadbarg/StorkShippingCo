@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import blueBackground from "../assets/blueBackground.png";
-import baby4 from "../assets/babies/baby4.png";
+import baby7 from "../assets/babies/baby7.png";
 import baby5 from "../assets/babies/baby5.png";
 
 class ResultsScene extends Phaser.Scene {
@@ -15,7 +15,7 @@ class ResultsScene extends Phaser.Scene {
 
   preload() {
     this.load.image("blueBackground", blueBackground);
-    this.load.image("baby4", baby4);
+    this.load.image("baby7", baby7);
     this.load.image("baby5", baby5);
   }
 
@@ -101,8 +101,8 @@ class ResultsScene extends Phaser.Scene {
 
   createBackground() {
     this.add.rectangle(400, 310, 620, 500, 0xFFFFFF)
-    this.add.image(170, 480, "baby4").setScale(0.3);
-    this.add.image(370, 480, "baby5").setScale(0.3);
+    this.add.image(170, 480, "baby4").setScale(0.15);
+    this.add.image(370, 480, "baby5").setScale(0.15);
   }
 }
 

@@ -4,6 +4,11 @@ import baby2 from "../assets/babies/baby2.png";
 import baby3 from "../assets/babies/baby3.png";
 import baby4 from "../assets/babies/baby4.png";
 import baby5 from "../assets/babies/baby5.png";
+import baby6 from "../assets/babies/baby6.png";
+import baby7 from "../assets/babies/baby7.png";
+import baby8 from "../assets/babies/baby8.png";
+import baby9 from "../assets/babies/baby9.png";
+import baby10 from "../assets/babies/baby10.png";
 import gate1 from "../assets/stop.png";
 import map from "../assets/map.png";
 import boundary from "../assets/boundary.png";
@@ -58,6 +63,11 @@ class gameScene extends Phaser.Scene {
     this.load.image("baby3", baby3);
     this.load.image("baby4", baby4);
     this.load.image("baby5", baby5);
+    this.load.image("baby6", baby6);
+    this.load.image("baby7", baby7);
+    this.load.image("baby8", baby8);
+    this.load.image("baby9", baby9);
+    this.load.image("baby10", baby10);
     this.load.image("map", map);
     this.load.image("gate1", gate1);
     this.load.image("boundary", boundary);
@@ -297,9 +307,9 @@ class gameScene extends Phaser.Scene {
     if (maxBabyCounter <= MAXIMUMBABIES) {
       //spawns baby into game
       let toddler;
-      let index = Math.floor(Math.random() * 5); // there are currently 5 baby designs
-      let babies = ["baby1", "baby2", "baby3", "baby4", "baby5"];
-      toddler = this.physics.add.image(1000, 40, babies[index]).setScale(0.14);
+      let index = Math.floor(Math.random() * 10); // there are 10 baby designs
+      let babies = ["baby1", "baby2", "baby3", "baby4", "baby5", "baby6", "baby7", "baby8", "baby9", "baby10"];
+      toddler = this.physics.add.image(1000, 40, babies[index]).setScale(0.035);
 
       this.setUp(toddler);
       this.collisionBetween(toddler);
