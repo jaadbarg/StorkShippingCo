@@ -68,16 +68,19 @@ class furniture2Scene extends Phaser.Scene {
             if(chairs[i] == "good_chair"){
                 good_chair1 = this.add.image((i*200)+200, 300, chairs[i]).setScale(0.5);
                 good_chair1.setInteractive();
+                good_chair1.name = "buy";
                 this.input.setDraggable(good_chair1);
             }
             else if(chairs[i] == "wobbly_chair"){
                 wobbly_chair1 = this.add.image((i*200)+200, 300, chairs[i]).setScale(0.5);
                 wobbly_chair1.setInteractive();
+                wobbly_chair1.name = "discard";
                 this.input.setDraggable(wobbly_chair1);
             }
             else{
                 tall_chair1 = this.add.image((i*200)+200, 300, chairs[i]).setScale(0.5);
                 tall_chair1.setInteractive();
+                tall_chair1.name = "discard";
                 this.input.setDraggable(tall_chair1);
             }
         }
@@ -86,6 +89,8 @@ class furniture2Scene extends Phaser.Scene {
         //place drop zones
         var zone1 = this.add.zone(200, 500, 150, 250).setRectangleDropZone(150, 250);
         var zone2 = this.add.zone(600, 490, 150, 250).setRectangleDropZone(150, 250);
+        zone1.name = "discard";
+        zone2.name = "buy"
 
         //place trashcan
         this.add.image(200, 500, "trashcan").setScale(0.1);
@@ -115,11 +120,24 @@ class furniture2Scene extends Phaser.Scene {
 
         //when object dropped into dropzone
         this.input.on('drop', function (pointer, gameObject, dropZone) {
-            gameObject.x = dropZone.x;
-            gameObject.y = dropZone.y;
-            gameObject.input.enabled = false;
-            gameObject.destroy();
-            counter++;
+            if(gameObject.name == "buy" && dropZone.name == "buy"){
+                gameObject.x = dropZone.x;
+                gameObject.y = dropZone.y;
+                gameObject.input.enabled = false;
+                gameObject.destroy();
+                counter++;
+            }
+            else if(gameObject.name == "discard" && dropZone.name == "discard"){
+                gameObject.x = dropZone.x;
+                gameObject.y = dropZone.y;
+                gameObject.input.enabled = false;
+                gameObject.destroy();
+                counter++;
+            }
+            else{
+                gameObject.x = gameObject.input.dragStartX;
+                gameObject.y = gameObject.input.dragStartY;
+            }
         });
 
         //when drag ends and object is not in the dropzone
