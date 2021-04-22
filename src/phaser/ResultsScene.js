@@ -10,7 +10,8 @@ class ResultsScene extends Phaser.Scene {
   }
 
   init(data) {
-    this.totalScore = data.score;
+    this.totalScore = data.score[0];
+    this.totalHazard = data.score[1];
   }
 
   preload() {
@@ -45,8 +46,8 @@ class ResultsScene extends Phaser.Scene {
     //setting copy for us
     const instructCopy1 =
       "You helped " +
-      this.totalScore / 200 +
-      " babies reach the goal in 5 minutes! This earns you the rank of...";
+      (this.totalScore / 200) +
+      " babies reach the goal and cleared " + this.totalHazard +" hazards in 5 minutes! This earns you the rank of...";
     const instructCopy4 =
       "We hope you've learned more about how to keep your little ones safe around the home. To learn more about fall prevention, take a look at the Resources tab or play another round!";
     const instructCopy7 = "Click below to return to the title screen.";
@@ -80,6 +81,7 @@ class ResultsScene extends Phaser.Scene {
   }
 
   getTitle(score) {
+    score += this.totalHazard * 75
     if (score < 800) {
       return "Novice Inspector";
       //brown
@@ -101,8 +103,8 @@ class ResultsScene extends Phaser.Scene {
 
   createBackground() {
     this.add.rectangle(400, 310, 620, 500, 0xFFFFFF)
-    this.add.image(170, 480, "baby4").setScale(0.15);
-    this.add.image(370, 480, "baby5").setScale(0.15);
+    this.add.image(170, 480, "baby4").setScale(0.07);
+    this.add.image(370, 480, "baby5").setScale(0.07);
   }
 }
 

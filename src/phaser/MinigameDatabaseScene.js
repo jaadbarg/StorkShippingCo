@@ -98,9 +98,19 @@ class minigameDatabaseScene extends Phaser.Scene {
     }
 
     furnitureGame() {
-        this.scene.stop("furniture1Scene")
-        this.scene.run("furniture1Scene");
-        key = 'furniture1Scene'
+        if(indexCounter[4] == 0) {
+            this.scene.stop("furniture1Scene")
+            this.scene.run("furniture1Scene");
+            key = 'furniture1Scene'
+        } else {
+            this.scene.stop("furniture2Scene")
+            this.scene.run("furniture2Scene");
+            key = 'furniture2Scene'
+        }
+        indexCounter[4]++;
+        if(indexCounter[4] >= 2) {
+            indexCounter[4] = 0
+        }
     }
 
     bedGame() {

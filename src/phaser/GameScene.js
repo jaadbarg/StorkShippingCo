@@ -126,7 +126,7 @@ class gameScene extends Phaser.Scene {
     togoBoard.setText(hazardsToGo)
 
     if (timeLeft <= 0) {
-      this.scene.start("resultsScene", { score: totalScore - (75 * hazardsCleared) });
+      this.scene.start("resultsScene", { score: [totalScore - (75 * hazardsCleared), hazardsCleared] });
       /*
       Remember to clean up the minigame data when the first game ends --> reset timer
       */
