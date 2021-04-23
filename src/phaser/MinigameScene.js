@@ -15,7 +15,7 @@ class MinigameScene extends Phaser.Scene {
     //font style object
     const fontFam = {
       // fontFamily: "cursive",
-      fontSize: 30,
+      fontSize: 24,
       color: "#000000",
       backgroundColor: "#FFFFFF",
     };
@@ -48,7 +48,9 @@ class MinigameScene extends Phaser.Scene {
 
     let furniture1Btn = this.add.text(50, 400, "Close the drawers!", {...fontFam})
 
-    let furniture2Btn = this.add.text(200, 150, "Know your furnitures!", {...fontFam})
+    let furniture2Btn = this.add.text(380, 150, "Know your furnitures!", {...fontFam})
+
+    let baby2Btn = this.add.text(380, 200, "Secure the Harness!", {...fontFam})
 
     stairs1Btn.setInteractive({ useHandCursor: true });
     stairs1Btn.on("pointerdown", () => this.scene.switch("stairs1Scene"));
@@ -65,11 +67,15 @@ class MinigameScene extends Phaser.Scene {
     baby1Btn.setInteractive({ useHandCursor: true });
     baby1Btn.on("pointerdown", () => this.scene.switch("baby1Scene"));
 
+    baby2Btn.setInteractive({ useHandCursor: true });
+    baby2Btn.on("pointerdown", () => this.scene.switch("baby2Scene"));
+
     furniture1Btn.setInteractive({ useHandCursor: true });
     furniture1Btn.on("pointerdown", () => this.scene.switch("furniture1Scene"));
 
     furniture2Btn.setInteractive({ useHandCursor: true });
     furniture2Btn.on("pointerdown", () => this.scene.switch("furniture2Scene"));
+
   }
 }
 

@@ -21,6 +21,7 @@ import MinigameDatabaseScene from "./phaser/MinigameDatabaseScene";
 import PreloadScene from "./phaser/PreloadScene.js";
 import MinigameScene from "./phaser/MinigameScene.js";
 import baby1Scene from "./phaser/Baby1Scene";
+import baby2Scene from "./phaser/Baby2Scene";
 
 
 // Initializing game scenes
@@ -41,6 +42,7 @@ let furniture2Scene = new Furniture2Scene();
 let windows1Scene = new Windows1Scene();
 let windows2Scene = new Windows2Scene();
 let baby1Mini = new Baby1Scene();
+let baby2Mini = new baby2Scene();
 let minigameDatabaseScene = new MinigameDatabaseScene();
 
 //set up phaser config
@@ -81,6 +83,7 @@ game.scene.add("furniture1Scene", furniture2Scene);
 game.scene.add("windows1Scene", windows1Scene)
 game.scene.add("windows2Scene", windows2Scene);
 game.scene.add("baby1Scene", baby1Mini);
+game.scene.add("baby2Scene", baby2Mini);
 game.scene.add("minigameDatabaseScene", minigameDatabaseScene);
 
 // start the title scene
