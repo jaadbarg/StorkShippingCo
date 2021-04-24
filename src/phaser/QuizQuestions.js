@@ -269,16 +269,6 @@ let questionsFurniture = [
     `You should select a stand that is designated for a TV and make sure it is made for the TV’s size.`
   ),
 
-  new Question(
-    `True or False: The best way to prevent TV tipover accidents with children is to place your TV high and away from children’s reach.`,
-    [
-      `True`,
-      `False`
-    ],
-    1,
-    'To prevent TV tipovers TVs should be 1) placed on stands that are designated for TVs 2) are placed on TV stands that are made for the TVs size per the manufacturer’s instructions and 3) both the stand and TV should be secured to the wall using a tether.',
-    `Children can cause TV tipovers by attempting to climb up furniture and causing the stand and the TV to tip.`
-  ),
 ];
 
 let questionsBed = [
@@ -325,6 +315,17 @@ let questionsBed = [
     0,
     `When children are able to climb out of their crib on their own it is time to move them to a bed to avoid them climbing and falling. This typically occurs between 18 months to 3 ½ years old.`,
     `When children are able to climb out of their crib on their own it is time to move them to a bed to avoid them climbing and falling.`
+  ),
+
+  new Question(
+    `True or False: The best way to prevent TV tipover accidents with children is to place your TV high and away from children’s reach.`,
+    [
+      `True`,
+      `False`
+    ],
+    1,
+    'To prevent TV tipovers TVs should be 1) placed on stands that are designated for TVs 2) are placed on TV stands that are made for the TVs size per the manufacturer’s instructions and 3) both the stand and TV should be secured to the wall using a tether.',
+    `Children can cause TV tipovers by attempting to climb up furniture and causing the stand and the TV to tip.`
   ),
 ];
 

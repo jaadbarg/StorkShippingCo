@@ -11,6 +11,7 @@ import baby9 from "../assets/babies/baby9.png";
 import baby10 from "../assets/babies/baby10.png";
 import gate1 from "../assets/stop.png";
 import map from "../assets/map.png";
+import lightbulb from "../assets/lightbulb.png";
 import boundary from "../assets/boundary.png";
 import eventsCenter from "./EventsCenter"
 
@@ -48,6 +49,7 @@ let togoBoard;
 let hazardsCleared;
 let hazardsToGo;
 let inactiveTimer;
+let pingCounter;
 let emitterCount = 0;
 
 class gameScene extends Phaser.Scene {
@@ -71,6 +73,7 @@ class gameScene extends Phaser.Scene {
     this.load.image("map", map);
     this.load.image("gate1", gate1);
     this.load.image("boundary", boundary);
+    this.load.image("lightbulb", lightbulb);
   }
 
   create() {
@@ -109,12 +112,7 @@ class gameScene extends Phaser.Scene {
       loop: true,
     });
 
-    // gateSpawnEvent = this.time.addEvent({
-    //   delay: 6000,
-    //   callback: this.respawnGate,
-    //   callbackScope: this,
-    //   loop: true,
-    // })
+    
   }
 
   update() {
@@ -140,6 +138,9 @@ class gameScene extends Phaser.Scene {
 
     this.add.text(330, 220, "Score:", fontFam)
     scoreBoard = this.add.text(330, 240, totalScore, fontFam)
+
+    pingCounter = this.add.image(420, 90, 'lightbulb').setScale(0.1);
+    pingCounter.setVisible(false);
   }
 
   createTimer() {
@@ -384,6 +385,8 @@ class gameScene extends Phaser.Scene {
           toddler.setAcceleration(0, 0);
           maxBabyCounter--;
           totalScore += 200;
+          pingCounter.setVisible(true);
+          setTimeout(function(){ pingCounter.setVisible(false); }, 1050);
         }
       });
     }
