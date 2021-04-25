@@ -52,6 +52,8 @@ class MinigameScene extends Phaser.Scene {
 
     let baby2Btn = this.add.text(380, 200, "Secure the Harness!", {...fontFam})
 
+    let water1Btn = this.add.text(380, 250, "Lock the Toilet!", {...fontFam})
+
     stairs1Btn.setInteractive({ useHandCursor: true });
     stairs1Btn.on("pointerdown", () => this.scene.switch("stairs1Scene"));
 
@@ -75,6 +77,9 @@ class MinigameScene extends Phaser.Scene {
 
     furniture2Btn.setInteractive({ useHandCursor: true });
     furniture2Btn.on("pointerdown", () => this.scene.switch("furniture2Scene"));
+
+    water1Btn.setInteractive({ useHandCursor: true });
+    water1Btn.on("pointerdown", () => this.scene.switch("water1Scene"));
 
   }
 }

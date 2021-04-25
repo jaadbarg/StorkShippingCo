@@ -13,6 +13,7 @@ import Stairs1Scene from "./phaser/Stairs1Scene";
 import Stairs2Scene from "./phaser/Stairs2Scene";
 import Furniture1Scene from "./phaser/Furniture1Scene";
 import Furniture2Scene from "./phaser/Furniture2Scene";
+import Water1Scene from "./phaser/Water1Scene"
 import Windows1Scene from "./phaser/Windows1Scene.js";
 import Windows2Scene from "./phaser/Windows2Scene";
 import Baby1Scene from "./phaser/Baby1Scene";
@@ -39,6 +40,7 @@ let stairs1Scene = new Stairs1Scene();
 let stairs2Scene = new Stairs2Scene();
 let furniture1Scene = new Furniture1Scene();
 let furniture2Scene = new Furniture2Scene();
+let water1Scene = new Water1Scene();
 let windows1Scene = new Windows1Scene();
 let windows2Scene = new Windows2Scene();
 let baby1Mini = new Baby1Scene();
@@ -80,6 +82,7 @@ game.scene.add("stairs1Scene", stairs1Scene);
 game.scene.add("stairs2Scene", stairs2Scene);
 game.scene.add("furniture1Scene", furniture1Scene);
 game.scene.add("furniture1Scene", furniture2Scene);
+game.scene.add("water1Scene", water1Scene)
 game.scene.add("windows1Scene", windows1Scene)
 game.scene.add("windows2Scene", windows2Scene);
 game.scene.add("baby1Scene", baby1Mini);
