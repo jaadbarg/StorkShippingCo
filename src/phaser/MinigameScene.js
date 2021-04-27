@@ -56,6 +56,8 @@ class MinigameScene extends Phaser.Scene {
 
     let bed1Btn = this.add.text(380, 300, "Protect the bed!", {...fontFam})
 
+    let bed2Btn = this.add.text(380, 350, "Chose the nightlight!", {...fontFam})
+
     stairs1Btn.setInteractive({ useHandCursor: true });
     stairs1Btn.on("pointerdown", () => this.scene.switch("stairs1Scene"));
 
@@ -85,6 +87,9 @@ class MinigameScene extends Phaser.Scene {
 
     bed1Btn.setInteractive({ useHandCursor: true });
     bed1Btn.on("pointerdown", () => this.scene.switch("bed1Scene"));
+
+    bed2Btn.setInteractive({ useHandCursor: true });
+    bed2Btn.on("pointerdown", () => this.scene.switch("bed2Scene"));
   }
 }
 

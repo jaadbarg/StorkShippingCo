@@ -11,7 +11,7 @@ let counter;
 let backButton;
 let fontFam = {
     // fontFamily: "cursive",
-    fontSize: 45,
+    fontSize: 30,
     color: "#000000",
     backgroundColor: "#FFFFFF",
 };
@@ -45,10 +45,10 @@ class bed2Scene extends Phaser.Scene {
         counter = 0;
 
         //add background
-        this.add.image(400, 300, "gray").setScale(2);
+        this.add.rectangle(400, 300, 800, 600, 0x56A0D3)
 
         //add minigame title text
-        this.add.text(90, 50, "BUY THE SAFEST NIGHTLIGHT AND DISCARD THE REST!", { ...fontFam, wordWrap:{width:650} });
+        this.add.text(140, 50, "BUY THE SAFEST NIGHTLIGHT AND DISCARD THE REST!", { ...fontFam, wordWrap:{width:500} });
 
         //shuffle chairs for replayability
         let lights = ["flashlight", "candle", "nightlight"];

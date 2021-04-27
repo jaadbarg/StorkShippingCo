@@ -88,13 +88,25 @@ class minigameDatabaseScene extends Phaser.Scene {
     }
 
     openwaterGame() {
-
+        this.scene.stop("water1Scene")
+        this.scene.run("water1Scene");
+        key = 'water1Scene'
     }
 
     babyEquipmentGame() {
-        this.scene.stop("baby1Scene")
-        this.scene.run("baby1Scene");
-        key = 'baby1Scene'
+        if(indexCounter[3] == 0) {
+            this.scene.stop("baby1Scene")
+            this.scene.run("baby1Scene");
+            key = 'baby1Scene'
+        } else {
+            this.scene.stop("baby2Scene")
+            this.scene.run("baby2Scene");
+            key = 'baby2Scene'
+        }
+        indexCounter[3]++;
+        if(indexCounter[3] >= 2) {
+            indexCounter[3] = 0
+        }
     }
 
     furnitureGame() {
@@ -114,7 +126,19 @@ class minigameDatabaseScene extends Phaser.Scene {
     }
 
     bedGame() {
-
+        if(indexCounter[5] == 0) {
+            this.scene.stop("bed1Scene")
+            this.scene.run("bed1Scene");
+            key = 'bed1Scene'
+        } else {
+            this.scene.stop("bed2Scene")
+            this.scene.run("bed2Scene");
+            key = 'bed2Scene'
+        }
+        indexCounter[5]++;
+        if(indexCounter[5] >= 2) {
+            indexCounter[5] = 0
+        }
     }
 
     update() {
