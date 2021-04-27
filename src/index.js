@@ -17,13 +17,15 @@ import Water1Scene from "./phaser/Water1Scene"
 import Windows1Scene from "./phaser/Windows1Scene.js";
 import Windows2Scene from "./phaser/Windows2Scene";
 import Baby1Scene from "./phaser/Baby1Scene";
+import Baby2Scene from "./phaser/Baby2Scene";
+import Bed1Scene from "./phaser/Bed1Scene";
+import Bed2Scene from "./phaser/Bed2Scene";
 import MinigameDatabaseScene from "./phaser/MinigameDatabaseScene";
 
 import PreloadScene from "./phaser/PreloadScene.js";
 import MinigameScene from "./phaser/MinigameScene.js";
-import baby1Scene from "./phaser/Baby1Scene";
-import baby2Scene from "./phaser/Baby2Scene";
-import bed1Scene from "./phaser/Bed1Scene";
+
+
 
 
 // Initializing game scenes
@@ -45,8 +47,9 @@ let water1Scene = new Water1Scene();
 let windows1Scene = new Windows1Scene();
 let windows2Scene = new Windows2Scene();
 let baby1Mini = new Baby1Scene();
-let baby2Mini = new baby2Scene();
-let bed1Mini = new bed1Scene();
+let baby2Mini = new Baby2Scene();
+let bed1Mini = new Bed1Scene();
+let bed2Mini = new Bed2Scene();
 let minigameDatabaseScene = new MinigameDatabaseScene();
 
 //set up phaser config
@@ -90,6 +93,7 @@ game.scene.add("windows2Scene", windows2Scene);
 game.scene.add("baby1Scene", baby1Mini);
 game.scene.add("baby2Scene", baby2Mini);
 game.scene.add("bed1Scene", bed1Mini);
+game.scene.add("bed2Scene", bed2Mini);
 game.scene.add("minigameDatabaseScene", minigameDatabaseScene);
 
 // start the title scene
