@@ -32,15 +32,8 @@ class TitleScene extends Phaser.Scene {
     this.add.image(400, 300, "background");
 
     let startBtn = this.add.text(350, 500, "Start", { ...fontFam });
-    let instructBtn = this.add.text(50, 550, "Instructions", { ...fontFam });
-    let resourceBtn = this.add.text(550, 550, "Resources", { ...fontFam });
-    let minigameBtn = this.add.text(317, 550, "Minigames", { ...fontFam });
-    //for testing minigame
-    //let testBtn = this.add.text(100, 100, "TEST", { ...fontFam });
-    //testBtn.setInteractive({ useHandCursor: true });
-    //testBtn.on("pointerdown", () => this.scene.switch("bed2Scene"));
-
-  
+    let instructBtn = this.add.text(180, 550, "Instructions", { ...fontFam });
+    let resourceBtn = this.add.text(420, 550, "Resources", { ...fontFam });  
 
     let muteBtn = this.add.image(720, 80, "mute").setScale(0.07);
     muteBar = this.add.rectangle(720, 80, 100, 5, 0x000000).setAngle(45);
@@ -57,9 +50,6 @@ class TitleScene extends Phaser.Scene {
 
     resourceBtn.setInteractive({ useHandCursor: true });
     resourceBtn.on("pointerdown", () => this.startResource());
-
-    minigameBtn.setInteractive({ useHandCursor: true });
-    minigameBtn.on("pointerdown", () => this.startMinigame());
   }
 
   startGame() {
@@ -70,9 +60,6 @@ class TitleScene extends Phaser.Scene {
   }
   startResource() {
     this.scene.switch("resourceScene");
-  }
-  startMinigame() {
-    this.scene.switch("minigameScene");
   }
 
   toggleMute() {

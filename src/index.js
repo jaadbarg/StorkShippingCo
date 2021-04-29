@@ -9,17 +9,17 @@ import InstructScene from "./phaser/InstructScene.js";
 import ResultsScene from "./phaser/ResultsScene.js"
 import QuizScene from "./phaser/QuizScene.js";
 // import QuizQuestions from "./phaser/QuizQuestions";
-import Stairs1Scene from "./phaser/Stairs1Scene";
-import Stairs2Scene from "./phaser/Stairs2Scene";
-import Furniture1Scene from "./phaser/Furniture1Scene";
-import Furniture2Scene from "./phaser/Furniture2Scene";
-import Water1Scene from "./phaser/Water1Scene"
-import Windows1Scene from "./phaser/Windows1Scene.js";
-import Windows2Scene from "./phaser/Windows2Scene";
-import Baby1Scene from "./phaser/Baby1Scene";
-import Baby2Scene from "./phaser/Baby2Scene";
-import Bed1Scene from "./phaser/Bed1Scene";
-import Bed2Scene from "./phaser/Bed2Scene";
+import Stairs1Scene from "./phaser/minigames/Stairs1Scene";
+import Stairs2Scene from "./phaser/minigames/Stairs2Scene";
+import Furniture1Scene from "./phaser/minigames/Furniture1Scene";
+import Furniture2Scene from "./phaser/minigames/Furniture2Scene";
+import Water1Scene from "./phaser/minigames/Water1Scene"
+import Windows1Scene from "./phaser/minigames/Windows1Scene.js";
+import Windows2Scene from "./phaser/minigames/Windows2Scene";
+import Baby1Scene from "./phaser/minigames/Baby1Scene";
+import Baby2Scene from "./phaser/minigames/Baby2Scene";
+import Bed1Scene from "./phaser/minigames/Bed1Scene";
+import Bed2Scene from "./phaser/minigames/Bed2Scene";
 import MinigameDatabaseScene from "./phaser/MinigameDatabaseScene";
 
 import PreloadScene from "./phaser/PreloadScene.js";

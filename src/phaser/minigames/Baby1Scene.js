@@ -1,7 +1,7 @@
 import Phaser from "phaser";
-import kitchen from "../assets/minigames/baby1/kitchenTopDown.png";
-import highChair from "../assets/minigames/baby1/highChair.png"
-import ground from "../assets/minigames/baby1/ground.jpg"
+import kitchen from "../../assets/minigames/baby1/kitchenTopDown.png";
+import highChair from "../../assets/minigames/baby1/highChair.png"
+import ground from "../../assets/minigames/baby1/ground.jpg"
 
 let counter;
 let fontFam = {
@@ -103,10 +103,6 @@ class baby1Scene extends Phaser.Scene {
             backBtn.setText("Return to game");
             backBtn.setInteractive({ useHandCursor: true });
             backBtn.on("pointerdown", () => this.returnToMini());
-
-            let homeBtn = this.add.text(25, 550, "<-- Back");
-            homeBtn.setInteractive({ useHandCursor: true });
-            homeBtn.on("pointerdown", () => this.scene.start("minigameScene"));
         }
     }
 

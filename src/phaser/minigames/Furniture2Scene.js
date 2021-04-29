@@ -1,11 +1,11 @@
 import Phaser from "phaser";
-import good_chair from "../assets/minigames/furniture2/good_chair.png";
-import wobbly_chair from "../assets/minigames/furniture2/wobbly_chair.png";
-import tall_chair from "../assets/minigames/furniture2/tall_chair.png"
-import gray from "../assets/minigames/furniture2/gray.jpg"
-import trashcan from "../assets/minigames/furniture2/trashcan.png"
-import basket from "../assets/minigames/furniture2/basket.png"
-import eventsCenter from "./EventsCenter"
+import good_chair from "../../assets/minigames/furniture2/good_chair.png";
+import wobbly_chair from "../../assets/minigames/furniture2/wobbly_chair.png";
+import tall_chair from "../../assets/minigames/furniture2/tall_chair.png"
+import gray from "../../assets/minigames/furniture2/gray.jpg"
+import trashcan from "../../assets/minigames/furniture2/trashcan.png"
+import basket from "../../assets/minigames/furniture2/basket.png"
+import eventsCenter from "../EventsCenter"
 
 let counter;
 let backButton;
@@ -162,10 +162,6 @@ class furniture2Scene extends Phaser.Scene {
             backBtn.setText("Return to game");
             backBtn.setInteractive({ useHandCursor: true });
             backBtn.on("pointerdown", () => this.returnToMini());
-
-            let homeBtn = this.add.text(25, 550, "<-- Back");
-            homeBtn.setInteractive({ useHandCursor: true });
-            homeBtn.on("pointerdown", () => this.scene.start("minigameScene"));
         }
     }
 

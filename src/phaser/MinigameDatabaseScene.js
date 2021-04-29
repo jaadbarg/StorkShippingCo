@@ -51,7 +51,7 @@ class minigameDatabaseScene extends Phaser.Scene {
         } else if (this.gateID == 5) {
             this.bedGame();
         } else {
-            alert("Something is wrong lol; gateID not recognized")
+            alert("Something is wrong! gateID not recognized")
         }
     }
 
@@ -141,6 +141,7 @@ class minigameDatabaseScene extends Phaser.Scene {
         }
     }
 
+    //sends timer information back to gamescene when minigame scene ends
     update() {
         if(this.scene.isVisible(key)){
             coin = true;
@@ -153,6 +154,7 @@ class minigameDatabaseScene extends Phaser.Scene {
         }
     }
 
+    //tracks time passed in minigame scene
     trackTime() {
         spawnEvent = this.time.addEvent({
             delay: 1000,

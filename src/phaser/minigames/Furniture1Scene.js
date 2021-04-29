@@ -1,6 +1,6 @@
 import Phaser from "phaser";
-import dresser from "../assets/minigames/furniture1/dresser.png";
-import drawer from "../assets/minigames/furniture1/drawer.png";
+import dresser from "../../assets/minigames/furniture1/dresser.png";
+import drawer from "../../assets/minigames/furniture1/drawer.png";
 
 let counter;
 let backButton;
@@ -78,10 +78,6 @@ class furniture1Scene extends Phaser.Scene {
             backBtn.setText("Return to game");
             backBtn.setInteractive({ useHandCursor: true });
             backBtn.on("pointerdown", () => this.returnToMini());
-
-            let homeBtn = this.add.text(25, 550, "<-- Back");
-            homeBtn.setInteractive({ useHandCursor: true });
-            homeBtn.on("pointerdown", () => this.scene.start("minigameScene"));
         }
     }
 

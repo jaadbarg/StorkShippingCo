@@ -1,11 +1,11 @@
 import Phaser from "phaser";
-import nightlight from "../assets/minigames/bed2/nightlight.png";
-import candle from "../assets/minigames/bed2/candle.png";
-import flashlight from "../assets/minigames/bed2/flashlight.png"
-import gray from "../assets/minigames/bed2/gray.jpg"
-import trashcan from "../assets/minigames/bed2/trashcan.png"
-import basket from "../assets/minigames/bed2/basket.png"
-import eventsCenter from "./EventsCenter"
+import nightlight from "../../assets/minigames/bed2/nightlight.png";
+import candle from "../../assets/minigames/bed2/candle.png";
+import flashlight from "../../assets/minigames/bed2/flashlight.png"
+import gray from "../../assets/minigames/bed2/gray.jpg"
+import trashcan from "../../assets/minigames/bed2/trashcan.png"
+import basket from "../../assets/minigames/bed2/basket.png"
+import eventsCenter from "../EventsCenter"
 
 let counter;
 let backButton;
@@ -162,10 +162,6 @@ class bed2Scene extends Phaser.Scene {
             backBtn.setText("Return to game");
             backBtn.setInteractive({ useHandCursor: true });
             backBtn.on("pointerdown", () => this.returnToMini());
-
-            let homeBtn = this.add.text(25, 550, "<-- Back");
-            homeBtn.setInteractive({ useHandCursor: true });
-            homeBtn.on("pointerdown", () => this.scene.start("minigameScene"));
         }
     }
 

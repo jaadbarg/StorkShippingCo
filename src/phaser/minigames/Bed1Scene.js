@@ -1,6 +1,6 @@
 import Phaser from "phaser";
-import bed from "../assets/minigames/bed1/bed.png"
-import fence from "../assets/minigames/bed1/fence.png"
+import bed from "../../assets/minigames/bed1/bed.png"
+import fence from "../../assets/minigames/bed1/fence.png"
 
 let counter;
 let backButton;
@@ -92,10 +92,6 @@ class bed1Scene extends Phaser.Scene {
             backBtn.setText("Return to game");
             backBtn.setInteractive({ useHandCursor: true });
             backBtn.on("pointerdown", () => this.returnToMini());
-
-            let homeBtn = this.add.text(25, 550, "<-- Back");
-            homeBtn.setInteractive({ useHandCursor: true });
-            homeBtn.on("pointerdown", () => this.scene.start("minigameScene"));
         }
     }
 

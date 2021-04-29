@@ -1,8 +1,8 @@
 import Phaser from "phaser";
-import carSeat from "../assets/minigames/baby2/carSeat.png"
-import background from "../assets/minigames/baby2/background.jpg"
-import openBelt from "../assets/minigames/baby2/openBelt.png"
-import closedBelt from "../assets/minigames/baby2/closedBelt.png"
+import carSeat from "../../assets/minigames/baby2/carSeat.png"
+import background from "../../assets/minigames/baby2/background.jpg"
+import openBelt from "../../assets/minigames/baby2/openBelt.png"
+import closedBelt from "../../assets/minigames/baby2/closedBelt.png"
 
 let counter;
 let fontFam = {
@@ -110,10 +110,6 @@ class baby2Scene extends Phaser.Scene {
             backBtn.setText("Return to game");
             backBtn.setInteractive({ useHandCursor: true });
             backBtn.on("pointerdown", () => this.returnToMini());
-
-            let homeBtn = this.add.text(25, 550, "<-- Back");
-            homeBtn.setInteractive({ useHandCursor: true });
-            homeBtn.on("pointerdown", () => this.scene.start("minigameScene"));
         }
     }
 

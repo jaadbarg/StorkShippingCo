@@ -17,20 +17,17 @@ class InstructScene extends Phaser.Scene {
 
   create() {
     const fontFam = {
-      //fontFamily: 'cursive',
       fontSize: 20,
       color: "#000000",
-      //backgroundColor: "#FFFFFF",
     };
 
     const titleFontFam = {
-      //fontFamily: 'cursive',
       fontSize: 40,
       color: "#000000",
       backgroundColor: "#FFFFFF",
     };
 
-    //setting copy for us
+    //setting up instructions
     const instructCopy1 = "Tap on Hazards as they appear on the track. When you tap a Hazard, you'll have to solve a Challenge to deactivate the Hazard and make the home safer. The babies won't be able to move past a Hazard until you deactivate it. Get as many babies to the Safe Zone at the end of the track and deactivate as many hazards as possible!";
 
     //setting background

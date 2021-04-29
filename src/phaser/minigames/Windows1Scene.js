@@ -1,9 +1,9 @@
 import Phaser from "phaser";
-import outside from "../assets/minigames/windows1/background.png";
-import window from "../assets/minigames/windows1/window.png";
-import openLock from "../assets/minigames/windows1/openLock.png";
-import closedLock from "../assets/minigames/windows1/closedLock.png";
-import eventsCenter from "./EventsCenter"
+import outside from "../../assets/minigames/windows1/background.png";
+import window from "../../assets/minigames/windows1/window.png";
+import openLock from "../../assets/minigames/windows1/openLock.png";
+import closedLock from "../../assets/minigames/windows1/closedLock.png";
+import eventsCenter from "../EventsCenter"
 
 let counter;
 let backButton;
@@ -163,10 +163,6 @@ class windows1Scene extends Phaser.Scene {
             backBtn.setText("Return to game");
             backBtn.setInteractive({ useHandCursor: true });
             backBtn.on("pointerdown", () => this.returnToMini());
-
-            let homeBtn = this.add.text(25, 550, "<-- Back");
-            homeBtn.setInteractive({ useHandCursor: true });
-            homeBtn.on("pointerdown", () => this.scene.start("minigameScene"));
         }
     }
 

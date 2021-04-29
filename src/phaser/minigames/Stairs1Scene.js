@@ -1,7 +1,7 @@
 import Phaser from "phaser";
-import stairs from "../assets/minigames/stairs1/stairs.png";
-import box from "../assets/minigames/stairs1/box.png";
-import blocks from "../assets/minigames/stairs1/blocks.png";
+import stairs from "../../assets/minigames/stairs1/stairs.png";
+import box from "../../assets/minigames/stairs1/box.png";
+import blocks from "../../assets/minigames/stairs1/blocks.png";
 
 let counter;
 let backButton;
@@ -130,10 +130,6 @@ class stairs1Scene extends Phaser.Scene {
             backBtn.setText("Return to game");
             backBtn.setInteractive({ useHandCursor: true });
             backBtn.on("pointerdown", () => this.returnToMini());
-
-            let homeBtn = this.add.text(25, 550, "<-- Back");
-            homeBtn.setInteractive({ useHandCursor: true });
-            homeBtn.on("pointerdown", () => this.scene.start("minigameScene"));
         }
     }
 

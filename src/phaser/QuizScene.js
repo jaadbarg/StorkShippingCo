@@ -20,7 +20,6 @@ const fontFam = {
     fontSize: 18,
     fontFamily: "Sans-serif",
     color: "#000000",
-    //backgroundColor: "#FFFFFF",
 };
 
 const fontFamBack = {
@@ -108,6 +107,7 @@ class QuizScene extends Phaser.Scene {
         let title = this.add.text(50, 50, `${question.questionText}`,
             { ...fontFam, wordWrap: { width: 700 } });
 
+        //determines whether to show correct or incorrect rationale
         for (let i = 0; i < question.responses.length; i++) {
             let choice;
             if (i == question.correct) {
@@ -127,10 +127,12 @@ class QuizScene extends Phaser.Scene {
         }
     }
 
+    //creates modal
     createSectionColors() {
         this.add.rectangle(400, 100, 730, 140, 0xFFFFFF);
     }
 
+    //tracks time during quiz question
     trackTime() {
         spawnEvent = this.time.addEvent({
             delay: 1000,
@@ -160,6 +162,7 @@ class QuizScene extends Phaser.Scene {
         return "error"
     }
 
+    //displays correct rationale
     correctResponse(question, length) {
         let modal = this.add.rectangle(400, 300, 600, 420, 0xffffff);
         modal.setStrokeStyle(10, 0x00bb00);
@@ -174,6 +177,7 @@ class QuizScene extends Phaser.Scene {
         backBtn.on("pointerdown", () => this.goBack());
     }
 
+    //displays incorrect rationale
     incorrectResponse(question, length) {
         let modal = this.add.rectangle(400, 300, 600, 420, 0xffffff);
         modal.setStrokeStyle(10, 0xe90000);

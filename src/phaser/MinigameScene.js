@@ -56,7 +56,7 @@ class MinigameScene extends Phaser.Scene {
 
     let bed1Btn = this.add.text(380, 300, "Protect the bed!", {...fontFam})
 
-    let bed2Btn = this.add.text(380, 350, "Chose the nightlight!", {...fontFam})
+    let bed2Btn = this.add.text(380, 350, "Choose the nightlight!", {...fontFam})
 
     stairs1Btn.setInteractive({ useHandCursor: true });
     stairs1Btn.on("pointerdown", () => this.scene.switch("stairs1Scene"));

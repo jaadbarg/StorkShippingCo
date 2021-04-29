@@ -22,14 +22,12 @@ class ResultsScene extends Phaser.Scene {
 
   create() {
     const fontFam = {
-      // fontFamily: "cursive",
       fontSize: 20,
       color: "#000000",
       backgroundColor: "#FFFFFF",
     };
 
     const titleFontFam = {
-      //fontFamily: 'cursive',
       fontSize: 40,
       color: "#000000",
       backgroundColor: "#FFFFFF",
@@ -43,7 +41,7 @@ class ResultsScene extends Phaser.Scene {
 
     let rankTitle = this.getTitle(this.totalScore);
 
-    //setting copy for us
+    //displays results with hazards and babies cleared
     const instructCopy1 =
       "You helped " +
       (this.totalScore / 200) +
@@ -80,11 +78,11 @@ class ResultsScene extends Phaser.Scene {
     this.scene.switch("titleScene");
   }
 
+  //converts score into title
   getTitle(score) {
     score += this.totalHazard * 75
     if (score < 800) {
       return "Novice Inspector";
-      //brown
     }
     if (score < 1600) {
       return "Adept Inspector";

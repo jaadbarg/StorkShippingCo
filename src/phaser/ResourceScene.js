@@ -17,14 +17,12 @@ class ResourceScene extends Phaser.Scene {
 
   create() {
     const fontFam = {
-      // fontFamily: 'cursive',
       fontSize: 20,
       color: "#000000",
       backgroundColor: "#FFFFFF",
     };
 
     const titleFontFam = {
-      //fontFamily: 'cursive',
       fontSize: 40,
       color: "#000000",
       backgroundColor: "#FFFFFF",
