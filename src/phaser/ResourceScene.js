@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import blueBackground from "../assets/blueBackground.png";
+import baby1 from "../assets/babies/baby1.png";
 import baby4 from "../assets/babies/baby4.png";
-import baby5 from "../assets/babies/baby5.png";
 
 class ResourceScene extends Phaser.Scene {
   constructor() {
@@ -11,8 +11,8 @@ class ResourceScene extends Phaser.Scene {
 
   preload() {
     this.load.image("blueBackground", blueBackground);
+    this.load.image("baby1", baby1);
     this.load.image("baby4", baby4);
-    this.load.image("baby5", baby5);
   }
 
   create() {
@@ -71,8 +71,8 @@ class ResourceScene extends Phaser.Scene {
 
   createBackground() {
     this.add.rectangle(400, 270, 700, 200, 0xFFFFFF)
-    this.add.image(150, 470, "baby4").setScale(0.36);
-    this.add.image(350, 470, "baby5").setScale(0.36);
+    this.add.image(150, 470, "baby1").setScale(0.07);
+    this.add.image(350, 470, "baby4").setScale(0.07);
   }
 
   openInNewTab(url) {

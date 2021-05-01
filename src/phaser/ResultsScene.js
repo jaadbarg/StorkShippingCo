@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import blueBackground from "../assets/blueBackground.png";
-import baby7 from "../assets/babies/baby7.png";
-import baby5 from "../assets/babies/baby5.png";
+import baby4 from "../assets/babies/baby4.png";
+import baby1 from "../assets/babies/baby1.png";
 
 class ResultsScene extends Phaser.Scene {
   constructor() {
@@ -16,8 +16,8 @@ class ResultsScene extends Phaser.Scene {
 
   preload() {
     this.load.image("blueBackground", blueBackground);
-    this.load.image("baby7", baby7);
-    this.load.image("baby5", baby5);
+    this.load.image("baby4", baby4);
+    this.load.image("baby1", baby1);
   }
 
   create() {
@@ -54,7 +54,6 @@ class ResultsScene extends Phaser.Scene {
     this.background = this.add.image(400, 300, "blueBackground");
     this.background.displayWidth = this.sys.canvas.width;
     this.background.displayHeight = this.sys.canvas.height;
-
     this.createBackground();
 
     //title
@@ -66,16 +65,10 @@ class ResultsScene extends Phaser.Scene {
     let copy4 = this.add.text(100, 305, `${instructCopy4}`, { ...fontFam, wordWrap:{width:600} });
     let copy7 = this.add.text(100, 400, `${instructCopy7}`, { ...fontFam, wordWrap:{width:600} });
 
+    //back button returns to title scene
     let backBtn = this.add.text(570, 480, "Back", { ...titleFontFam });
-
-    //button resources
     backBtn.setInteractive({ useHandCursor: true });
-    backBtn.on("pointerdown", () => this.goBack());
-  }
-
-  // button method
-  goBack() {
-    this.scene.switch("titleScene");
+    backBtn.on("pointerdown", () => this.scene.switch("titleScene"));
   }
 
   //converts score into title
@@ -88,21 +81,22 @@ class ResultsScene extends Phaser.Scene {
       return "Adept Inspector";
     }
     if (score < 2400) {
-      return "Magnus Inspector";
+      return "Super Inspector";
     }
     if (score < 3200) {
-      return "Grandmaster Inspector";
+      return "Expert Inspector";
     }
     if (score < 4000) {
       return "Legendary Inspector";
     }
-    return "Visionary Inspector";
+    return "Grandmaster Inspector";
   }
 
+  //generates background
   createBackground() {
     this.add.rectangle(400, 310, 620, 500, 0xFFFFFF)
-    this.add.image(170, 480, "baby4").setScale(0.07);
-    this.add.image(370, 480, "baby5").setScale(0.07);
+    this.add.image(170, 480, "baby1").setScale(0.07);
+    this.add.image(370, 480, "baby4").setScale(0.07);
   }
 }
 
