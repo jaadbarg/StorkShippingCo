@@ -12,6 +12,7 @@ import baby10 from "../assets/babies/baby10.png";
 import gate1 from "../assets/stop.png";
 import map from "../assets/map.png";
 import lightbulb from "../assets/lightbulb.png";
+import fullscreen from "../assets/fullscreen.png";
 import boundary from "../assets/boundary.png";
 import eventsCenter from "./EventsCenter"
 
@@ -74,6 +75,7 @@ class gameScene extends Phaser.Scene {
     this.load.image("gate1", gate1);
     this.load.image("boundary", boundary);
     this.load.image("lightbulb", lightbulb);
+    this.load.image("fullscreen", fullscreen);
   }
 
   create() {
@@ -96,8 +98,18 @@ class gameScene extends Phaser.Scene {
     this.createScoreBoard();
     this.createTimer();
     this.createHazardBoard();
-
     this.createInactiveTip();
+
+    //sets fullscreen button
+    let fullscreenBtn = this.add.image(20, 20, "fullscreen").setScale(0.15);
+    fullscreenBtn.setInteractive();
+    fullscreenBtn.on("pointerdown", function () {
+        if (this.scale.isFullscreen){
+            this.scale.stopFullscreen();
+        }
+        else{
+            this.scale.startFullscreen();
+        }}, this);
 
     //setting up timer to keep track of time during minigame and quiz
     eventsCenter.on("timePassedData", this.subtractTime, this);

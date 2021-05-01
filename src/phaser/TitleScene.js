@@ -1,7 +1,8 @@
 import Phaser from "phaser";
 import background from "../assets/logo.png";
-import muteSymbol from "../assets/muteSymbol.png"
+import muteSymbol from "../assets/muteSymbol.png";
 import smoov from "../assets/smoov.mp3";
+import fullscreen from "../assets/fullscreen.png";
 
 let muteBar;
 
@@ -15,6 +16,7 @@ class TitleScene extends Phaser.Scene {
     this.load.image("background", background);
     this.load.image('mute', muteSymbol);
     this.load.audio("smoov", smoov);
+    this.load.image("fullscreen", fullscreen);
   }
 
   create() {
@@ -39,8 +41,18 @@ class TitleScene extends Phaser.Scene {
     muteBar = this.add.rectangle(720, 80, 100, 5, 0x000000).setAngle(45);
     muteBar.setVisible(false);
     muteBtn.setInteractive({ useHandCursor: true });
-
     muteBtn.on("pointerdown", () => this.toggleMute());
+
+
+    let fullscreenBtn = this.add.image(80, 80, "fullscreen").setScale(0.35);
+    fullscreenBtn.setInteractive();
+    fullscreenBtn.on("pointerdown", function () {
+        if (this.scale.isFullscreen){
+            this.scale.stopFullscreen();
+        }
+        else{
+            this.scale.startFullscreen();
+        }}, this);
 
     startBtn.setInteractive({ useHandCursor: true });
     startBtn.on("pointerdown", () => this.startGame());
