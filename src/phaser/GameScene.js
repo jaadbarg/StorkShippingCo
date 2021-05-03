@@ -14,6 +14,7 @@ import map from "../assets/map.png";
 import lightbulb from "../assets/lightbulb.png";
 import fullscreen from "../assets/fullscreen.png";
 import boundary from "../assets/boundary.png";
+import pauseBtn from "../assets/pauseButton.png"
 import eventsCenter from "./EventsCenter"
 
 let gateGroup;
@@ -37,10 +38,8 @@ let totalScore;
 let timeLeft;
 let MAXIMUMBABIES;
 let fontFam = {
-  // fontFamily: "cursive",
   fontSize: 17,
   color: "#9f5919",
-  //backgroundColor: "#6e82d4",
   fontStyle: "bold"
 };
 let timeAdjustment;
@@ -76,6 +75,7 @@ class gameScene extends Phaser.Scene {
     this.load.image("boundary", boundary);
     this.load.image("lightbulb", lightbulb);
     this.load.image("fullscreen", fullscreen);
+    this.load.image("pauseBtn", pauseBtn);
   }
 
   create() {
@@ -99,6 +99,7 @@ class gameScene extends Phaser.Scene {
     this.createTimer();
     this.createHazardBoard();
     this.createInactiveTip();
+    this.createPause();
 
     //sets fullscreen button
     let fullscreenBtn = this.add.image(20, 20, "fullscreen").setScale(0.15);
@@ -142,6 +143,14 @@ class gameScene extends Phaser.Scene {
       this.scene.start("resultsScene", { score: [totalScore - (75 * hazardsCleared), hazardsCleared] });
       this.scene.stop('quizScene');
     }
+  }
+
+  //allows players to pause the game
+  createPause() {
+    let pauseBtn = this.add.image(780, 580, "pauseBtn").setScale(0.1);
+    pauseBtn.setInteractive({ useHandCursor: true });
+    pauseBtn.on("pointerdown", () => this.scene.sleep("gameScene"));
+    pauseBtn.on("pointerdown", () => this.scene.run("pauseScene"));
   }
 
   createScoreBoard() {
@@ -300,12 +309,6 @@ class gameScene extends Phaser.Scene {
 
     inactiveModal.setVisible(false);
     inactiveTip.setVisible(false);
-  }
-
-  openMiniGame(gateID) {
-    this.scene.stop("quizScene")
-    this.scene.sleep("gameScene")
-    this.scene.run("stairs1Scene");
   }
 
   //opens a quiz question or minigame

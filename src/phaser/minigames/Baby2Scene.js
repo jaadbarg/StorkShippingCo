@@ -62,6 +62,7 @@ class baby2Scene extends Phaser.Scene {
         
     }
 
+    //adding each belt and making them interactive
     addBelt() {
         openBelt1 = this.add.image(335, 405, "openBelt").setScale(0.3).setAngle(2)
         openBelt2 = this.add.image(540, 415, "openBelt").setScale(0.3).setAngle(2)
@@ -88,6 +89,7 @@ class baby2Scene extends Phaser.Scene {
         this.testBelt(openBelt5, closedBelt5);
     }
 
+    //when belt is secured, counter++
     testBelt(open, closed) {
         open.setInteractive();
         open.on("pointerdown", function () {
@@ -114,7 +116,6 @@ class baby2Scene extends Phaser.Scene {
     }
 
     returnToMini() {
-        //this.scene.restart("windows2Scene")
         this.scene.stop("baby2Scene")
         this.scene.switch("gameScene")
     }

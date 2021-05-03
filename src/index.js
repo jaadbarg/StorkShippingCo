@@ -7,8 +7,8 @@ import TitleScene from "./phaser/TitleScene.js";
 import ResourceScene from "./phaser/ResourceScene.js";
 import InstructScene from "./phaser/InstructScene.js";
 import ResultsScene from "./phaser/ResultsScene.js"
+import PauseScene from "./phaser/PauseScene.js"
 import QuizScene from "./phaser/QuizScene.js";
-// import QuizQuestions from "./phaser/QuizQuestions";
 import Stairs1Scene from "./phaser/minigames/Stairs1Scene";
 import Stairs2Scene from "./phaser/minigames/Stairs2Scene";
 import Furniture1Scene from "./phaser/minigames/Furniture1Scene";
@@ -35,9 +35,11 @@ let titleScene = new TitleScene();
 
 let resourceScene = new ResourceScene();
 let instructScene = new InstructScene();
+let pauseScene = new PauseScene()
 let resultsScene = new ResultsScene();
 let quizScene = new QuizScene();
-// let quizQuestions = new QuizQuestions();
+
+
 let minigameScene = new MinigameScene();
 let stairs1Scene = new Stairs1Scene();
 let stairs2Scene = new Stairs2Scene();
@@ -78,10 +80,10 @@ game.scene.add("gameScene", gameScene);
 
 game.scene.add("resourceScene", resourceScene);
 game.scene.add("instructScene", instructScene);
-game.scene.add("resultsScene", resultsScene)
+game.scene.add("resultsScene", resultsScene);
+game.scene.add("pauseScene", pauseScene);
 
 game.scene.add("quizScene", quizScene);
-// game.scene.add("quizQuestions", quizQuestions);
 game.scene.add("minigameScene", minigameScene);
 game.scene.add("stairs1Scene", stairs1Scene);
 game.scene.add("stairs2Scene", stairs2Scene);

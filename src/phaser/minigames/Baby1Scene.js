@@ -35,8 +35,10 @@ class baby1Scene extends Phaser.Scene {
 
         counter = 0;
 
+        //creating background
         this.add.image(400, 300, "ground").setScale(0.7)
 
+        //adding images
         let chair1 = this.add.image(162, 400, "highChair").setScale(0.3);
         let chair2 = this.add.image(460, 400, "highChair").setScale(0.3);
         let chair3 = this.add.image(320, 350, "highChair").setScale(0.3);
@@ -45,6 +47,7 @@ class baby1Scene extends Phaser.Scene {
         chair2.setInteractive();
         chair3.setInteractive();
 
+        //making chairs draggable
         this.input.setDraggable(chair1);
         this.input.setDraggable(chair2);
         this.input.setDraggable(chair3);
@@ -91,6 +94,7 @@ class baby1Scene extends Phaser.Scene {
         })
     }
 
+    //game ends when all 3 chairs are placed
     update() {
         if (counter >= 3) {
             counter = 0;
