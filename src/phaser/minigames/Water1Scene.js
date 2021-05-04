@@ -22,6 +22,7 @@ let spawnEvent;
 let instructionText;
 let backBtn;
 let titleText;
+let lockTappable
 
 
 class water1Scene extends Phaser.Scene {
@@ -107,7 +108,7 @@ class water1Scene extends Phaser.Scene {
     secureLock() {
         instructionText.setText("Press the lock repeatedly to secure it!")
 
-        var lockTappable = this.add.image(410, 290, "toiletlock").setScale(0.8).setInteractive();
+        lockTappable = this.add.image(410, 290, "toiletlock").setScale(0.8).setInteractive();
         
         lockTappable.on("pointerdown", function () {
             counter++
@@ -122,6 +123,7 @@ class water1Scene extends Phaser.Scene {
         }
         if (counter >= 8) {
             counter = 0;
+            lockTappable.destroy()
             
             let modal = this.add.rectangle(400, 300, 400, 220, 0xffffff);
             modal.setStrokeStyle(10, 0x00bb00);
